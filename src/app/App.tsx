@@ -1,0 +1,31 @@
+import React from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import Layout from '@/app/layouts/Layout';
+import Dashboard from '@/pages/Dashboard';
+import ModalManager from '@/app/components/ModalManager';
+import Assignments from '@/pages/My Assignments';
+import Classes from '@/pages/My Classes';
+import Schedule from '@/pages/My Schedule';
+import Calendar from '@/pages/Calendar';
+import Settings from '@/pages/Settings';
+
+const App: React.FC = () => {
+  return (
+    <>
+      <ModalManager />
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Navigate to="/dashboard" replace />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="calendar" element={<Calendar />} />
+          <Route path="assignments" element={<Assignments />} />
+          <Route path="classes" element={<Classes />} />
+          <Route path="schedule" element={<Schedule />} />
+          <Route path="settings" element={<Settings />} />
+        </Route>
+      </Routes>
+    </>
+  );
+};
+
+export default App;
