@@ -120,7 +120,10 @@ export const DASHBOARD = {
 
     // Today's Assignments Box
     CLASS_ITEM_BG: '#161b22',
-    CLASS_ITEM_HOVER_BG: '#1c2128'
+    CLASS_ITEM_HOVER_BG: '#1c2128',
+    // Today's Events Box
+    EVENT_ITEM_BG: '#161b22',
+    EVENT_ITEM_HOVER_BG: '#1c2128'
 }
 
 // Calendar page

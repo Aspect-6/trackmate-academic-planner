@@ -19,12 +19,12 @@ const EventItem: React.FC<EventItemProps> = ({ event, onClick }) => {
     return (
         <div
             onClick={onClick}
-            className="flex items-center p-3 rounded-lg border mb-2 cursor-pointer hover:bg-[var(--card-hover-bg)] transition-colors"
+            className="flex items-center p-3 rounded-lg border mb-2 cursor-pointer bg-[var(--card-bg)] hover:bg-[var(--card-hover-bg)] transition-colors"
             style={{
-                backgroundColor: '#161b22',
                 borderColor: '#30363d',
                 borderLeft: `4px solid ${event.color}`,
-                '--card-hover-bg': '#1c2128'
+                '--card-bg': DASHBOARD.EVENT_ITEM_BG,
+                '--card-hover-bg': DASHBOARD.EVENT_ITEM_HOVER_BG
             } as React.CSSProperties}
         >
             <div className="flex-grow">
