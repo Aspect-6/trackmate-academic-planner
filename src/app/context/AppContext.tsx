@@ -140,9 +140,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     };
 
     const deleteAssignment = (id: string): void => {
-        if (window.confirm('Are you sure you want to delete this assignment?')) {
-            setAssignments(prev => prev.filter(a => a.id !== id));
-        }
+        setAssignments(prev => prev.filter(a => a.id !== id));
     };
 
     const addClass = (newClass: Omit<Class, 'id'>): boolean => {

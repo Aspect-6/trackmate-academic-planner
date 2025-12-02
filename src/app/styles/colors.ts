@@ -210,8 +210,10 @@ export const MY_CLASSES = {
     CLASS_MODAL_BUTTON_BG_HOVER: SEMANTIC_COLORS.CLASS_BLUE_DARK,
     CLASS_CARD_BG: GLOBAL.MODULE_BG,
     CLASS_COLORS: [
-        '#ef4444', '#f97316', '#f59e0b','#22c55e', '#14b8a6', '#0ea5e9',
-        '#3b82f6', '#6366f1', '#8b5cf6', '#d946ef', '#ec4899', '#64748b'
+        'hsl(0, 75%, 57%)', 'hsl(10, 75%, 57%)', 'hsl(25, 75%, 57%)', 'hsl(38, 75%, 57%)',
+        'hsl(60, 75%, 57%)', 'hsl(142, 75%, 57%)', 'hsl(173, 75%, 57%)', 'hsl(199, 75%, 57%)',
+        'hsl(217, 75%, 57%)', 'hsl(239, 75%, 57%)', 'hsl(258, 75%, 57%)', 'hsl(292, 75%, 57%)',
+        'hsl(330, 75%, 57%)',
     ]
 }
 
