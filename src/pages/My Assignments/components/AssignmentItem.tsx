@@ -26,9 +26,15 @@ const AssignmentItem: React.FC<AssignmentItemProps> = ({
         isDragging
     } = useSortable({ id, disabled: !dragEnabled });
 
+    const transformTransition = !isDragging && transition ? transition : null;
+    const baseHoverTransition = 'background-color 200ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1)';
+    const combinedTransition = [transformTransition, baseHoverTransition]
+        .filter(Boolean)
+        .join(', ');
+
     const dragStyle = {
         transform: CSS.Transform.toString(transform),
-        transition: isDragging ? 'none' : transition,
+        transition: combinedTransition,
         willChange: 'transform',
     };
 
