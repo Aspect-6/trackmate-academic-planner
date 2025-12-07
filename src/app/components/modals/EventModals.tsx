@@ -110,7 +110,11 @@ export const AddEventModal: React.FC<ModalProps> = ({ onClose }) => {
                         type="button"
                         onClick={onClose}
                         className="px-4 py-2 rounded-lg text-sm font-medium"
-                        style={{ backgroundColor: GLOBAL.CANCEL_BUTTON_BG, color: GLOBAL.CANCEL_BUTTON_TEXT }}
+                        style={{
+                            backgroundColor: GLOBAL.CANCEL_BUTTON_BG,
+                            color: GLOBAL.CANCEL_BUTTON_TEXT,
+                            border: `1px solid ${GLOBAL.CANCEL_BUTTON_BORDER}`
+                        }}
                         onMouseEnter={(e) => e.currentTarget.style.backgroundColor = GLOBAL.CANCEL_BUTTON_BG_HOVER}
                         onMouseLeave={(e) => e.currentTarget.style.backgroundColor = GLOBAL.CANCEL_BUTTON_BG}
                     >
@@ -232,7 +236,11 @@ export const EditEventModal: React.FC<EventModalProps> = ({ onClose, eventId }) 
                             type="button"
                             onClick={onClose}
                             className="px-4 py-2 rounded-lg text-sm font-medium"
-                            style={{ backgroundColor: GLOBAL.CANCEL_BUTTON_BG, color: GLOBAL.CANCEL_BUTTON_TEXT }}
+                            style={{
+                                backgroundColor: GLOBAL.CANCEL_BUTTON_BG,
+                                color: GLOBAL.CANCEL_BUTTON_TEXT,
+                                border: `1px solid ${GLOBAL.CANCEL_BUTTON_BORDER}`
+                            }}
                             onMouseEnter={(e) => e.currentTarget.style.backgroundColor = GLOBAL.CANCEL_BUTTON_BG_HOVER}
                             onMouseLeave={(e) => e.currentTarget.style.backgroundColor = GLOBAL.CANCEL_BUTTON_BG}
                         >
@@ -275,7 +283,11 @@ export const DeleteEventModal: React.FC<EventModalProps> = ({ onClose, eventId }
                 <button
                     onClick={onClose}
                     className="px-4 py-2 rounded-lg text-sm font-medium"
-                    style={{ backgroundColor: GLOBAL.CANCEL_BUTTON_BG, color: GLOBAL.CANCEL_BUTTON_TEXT }}
+                    style={{
+                        backgroundColor: GLOBAL.CANCEL_BUTTON_BG,
+                        color: GLOBAL.CANCEL_BUTTON_TEXT,
+                        border: `1px solid ${GLOBAL.CANCEL_BUTTON_BORDER}`
+                    }}
                     onMouseEnter={(e) => e.currentTarget.style.backgroundColor = GLOBAL.CANCEL_BUTTON_BG_HOVER}
                     onMouseLeave={(e) => e.currentTarget.style.backgroundColor = GLOBAL.CANCEL_BUTTON_BG}
                 >

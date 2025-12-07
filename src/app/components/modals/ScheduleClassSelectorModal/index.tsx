@@ -26,7 +26,14 @@ export const ScheduleClassSelectorModal: React.FC<ScheduleModalProps> = ({ onClo
     const dayLabel = dayType === 'A' ? 'A-Day' : 'B-Day';
 
     return (
-        <div className="w-full max-w-md p-6 rounded-xl" style={{ backgroundColor: GLOBAL.MODAL_BG }}>
+        <div
+            className="w-full max-w-md p-6 rounded-xl"
+            style={{
+                backgroundColor: GLOBAL.MODAL_BG,
+                border: `1px solid ${GLOBAL.BORDER_PRIMARY}`,
+                boxShadow: '0 12px 30px rgba(0,0,0,0.25)'
+            }}
+        >
             <h2 className="text-xl font-bold mb-4" style={{ color: GLOBAL.CLASS_BUTTON_TEXT }}>
                 Select Class for {dayLabel} Period {index + 1}
             </h2>
@@ -47,7 +54,11 @@ export const ScheduleClassSelectorModal: React.FC<ScheduleModalProps> = ({ onClo
                 <button
                     onClick={onClose}
                     className="py-2 px-4 rounded-lg text-sm font-medium transition-colors"
-                    style={{ backgroundColor: GLOBAL.CANCEL_BUTTON_BG, color: GLOBAL.CANCEL_BUTTON_TEXT }}
+                    style={{
+                        backgroundColor: GLOBAL.CANCEL_BUTTON_BG,
+                        color: GLOBAL.CANCEL_BUTTON_TEXT,
+                        border: `1px solid ${GLOBAL.CANCEL_BUTTON_BORDER}`
+                    }}
                     onMouseEnter={(e) => e.currentTarget.style.backgroundColor = GLOBAL.CANCEL_BUTTON_BG_HOVER}
                     onMouseLeave={(e) => e.currentTarget.style.backgroundColor = GLOBAL.CANCEL_BUTTON_BG}
                 >

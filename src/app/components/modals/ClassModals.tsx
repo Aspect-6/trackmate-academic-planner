@@ -94,7 +94,11 @@ export const AddClassModal: React.FC<ModalProps> = ({ onClose }) => {
                         type="button"
                         onClick={onClose}
                         className="px-4 py-2 rounded-lg text-sm font-medium"
-                        style={{ backgroundColor: GLOBAL.CANCEL_BUTTON_BG, color: GLOBAL.CANCEL_BUTTON_TEXT }}
+                        style={{
+                            backgroundColor: GLOBAL.CANCEL_BUTTON_BG,
+                            color: GLOBAL.CANCEL_BUTTON_TEXT,
+                            border: `1px solid ${GLOBAL.CANCEL_BUTTON_BORDER}`
+                        }}
                         onMouseEnter={(e) => e.currentTarget.style.backgroundColor = GLOBAL.CANCEL_BUTTON_BG_HOVER}
                         onMouseLeave={(e) => e.currentTarget.style.backgroundColor = GLOBAL.CANCEL_BUTTON_BG}
                     >
@@ -196,7 +200,11 @@ export const EditClassModal: React.FC<ClassModalProps> = ({ onClose, classId }) 
                             type="button"
                             onClick={onClose}
                             className="px-4 py-2 rounded-lg text-sm font-medium"
-                            style={{ backgroundColor: GLOBAL.CANCEL_BUTTON_BG, color: GLOBAL.CANCEL_BUTTON_TEXT }}
+                            style={{
+                                backgroundColor: GLOBAL.CANCEL_BUTTON_BG,
+                                color: GLOBAL.CANCEL_BUTTON_TEXT,
+                                border: `1px solid ${GLOBAL.CANCEL_BUTTON_BORDER}`
+                            }}
                             onMouseEnter={(e) => e.currentTarget.style.backgroundColor = GLOBAL.CANCEL_BUTTON_BG_HOVER}
                             onMouseLeave={(e) => e.currentTarget.style.backgroundColor = GLOBAL.CANCEL_BUTTON_BG}
                         >
@@ -239,7 +247,11 @@ export const DeleteClassModal: React.FC<ClassModalProps> = ({ onClose, classId }
                 <button
                     onClick={onClose}
                     className="px-4 py-2 rounded-lg text-sm font-medium"
-                    style={{ backgroundColor: GLOBAL.CANCEL_BUTTON_BG, color: GLOBAL.CANCEL_BUTTON_TEXT }}
+                    style={{
+                        backgroundColor: GLOBAL.CANCEL_BUTTON_BG,
+                        color: GLOBAL.CANCEL_BUTTON_TEXT,
+                        border: `1px solid ${GLOBAL.CANCEL_BUTTON_BORDER}`
+                    }}
                     onMouseEnter={(e) => e.currentTarget.style.backgroundColor = GLOBAL.CANCEL_BUTTON_BG_HOVER}
                     onMouseLeave={(e) => e.currentTarget.style.backgroundColor = GLOBAL.CANCEL_BUTTON_BG}
                 >

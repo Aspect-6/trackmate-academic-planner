@@ -5,7 +5,7 @@ export const GLOBAL = {
     // General
     BACKGROUND: 'var(--webpage-background-color)',
     BLOCK_MODULE_BG: 'var(--block-module-bg)',
-    MODAL_BG: 'var(--block-module-bg)',
+    MODAL_BG: 'var(--modal-surface-bg)',
     MODAL_BACKDROP: 'var(--modal-underlay-dark)',
     PAGE_HEADER_TEXT: 'var(--page-header-green)',
     ADDITEM_HEADER_TEXT: 'var(--additem-text-green)',
@@ -70,6 +70,7 @@ export const GLOBAL = {
     CANCEL_BUTTON_BG: 'var(--cancel-button-background)',
     CANCEL_BUTTON_BG_HOVER: 'var(--cancel-button-background-hover)',
     CANCEL_BUTTON_TEXT: 'var(--cancel-text)',
+    CANCEL_BUTTON_BORDER: 'var(--cancel-button-border)',
 
     // Delete button colors
     DELETE_BUTTON_BG: 'var(--delete-button-bg)',

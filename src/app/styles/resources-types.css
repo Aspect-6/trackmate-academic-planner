@@ -18,6 +18,7 @@
     /* Common buttons */
     --cancel-button-background: hsl(215, 20%, 83%);
     --cancel-button-background-hover: hsl(215, 20%, 76%);
+    --cancel-button-border: hsl(215, 20%, 78%);
 
     --delete-button-bg: hsl(0, 72%, 51%);
     --delete-button-bg-hover: hsl(0, 72%, 43%);
@@ -44,6 +45,7 @@
     /* Common buttons */
     --cancel-button-background: hsl(217, 20%, 27%);
     --cancel-button-background-hover: hsl(217, 20%, 19%);
+    --cancel-button-border: hsl(215, 20%, 34%);
 
     --delete-button-bg: hsl(0, 62%, 45%);
     --delete-button-bg-hover: hsl(0, 62%, 35%);

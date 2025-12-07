@@ -11,6 +11,7 @@
     /* General Colors */
     --webpage-background-color: hsl(215, 28%, 7%);
     --block-module-bg: hsl(215, 21%, 10.5%);
+    --modal-surface-bg: hsl(215, 21%, 10.5%);
 
     /* Header Menu Icon */
     --header-menu-icon: hsl(215, 18%, 70%);
@@ -41,6 +42,7 @@
     /* General Colors */
     --webpage-background-color: hsl(215, 36%, 93%);
     --block-module-bg: hsl(215, 20%, 93.5%);
+    --modal-surface-bg: hsl(215, 0%, 95%);
 
     /* Header Menu Icon */
     --header-menu-icon: hsl(215, 15%, 45%);
