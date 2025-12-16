@@ -11,6 +11,11 @@ export type Priority = 'High' | 'Medium' | 'Low';
 export type Status = 'To Do' | 'In Progress' | 'Done';
 
 /**
+ * Represents the category/type of an assignment.
+ */
+export type AssignmentType = 'assignment' | 'project' | 'quiz' | 'exam';
+
+/**
  * Represents the type of school day in the schedule rotation.
  * 'A' and 'B' are alternating block schedule days.
  * null represents a day with no specific schedule type (e.g. weekend or break).
@@ -32,12 +37,16 @@ export interface Assignment {
     title: string;
     /** The due date in ISO format (YYYY-MM-DD) */
     dueDate: string;
+    /** The due time in 24-hour format (HH:MM) */
+    dueTime: string;
     /** The priority level of the assignment */
     priority: Priority;
     /** The current completion status */
     status: Status;
     /** The ID of the class this assignment belongs to */
     classId: string;
+    /** The assignment category/type */
+    type: AssignmentType;
     /** Optional subject tag (often redundant with classId but useful for display) */
     subject?: string;
     /** Timestamp of when the assignment was created */

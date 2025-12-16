@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useApp } from '@/app/context/AppContext';
+import { useToast } from '@/app/context/ToastContext';
 import { todayString } from '@/app/lib/utils';
-import { Assignment, Priority, Status } from '@/app/types';
+import { Assignment, AssignmentType, Priority, Status } from '@/app/types';
 import { GLOBAL } from '@/app/styles/colors';
 
 interface ModalProps {
@@ -14,37 +15,77 @@ interface EditModalProps extends ModalProps {
 
 export const AddAssignmentModal: React.FC<ModalProps> = ({ onClose }) => {
     const { classes, addAssignment } = useApp();
+    const { showToast } = useToast();
+    const [activeTab, setActiveTab] = useState<'details' | 'settings'>('details');
+    const [formData, setFormData] = useState<{
+        title: string;
+        classId: string;
+        description: string;
+        dueDate: string;
+        dueTime: string;
+        priority: Priority;
+        status: Status;
+        type: AssignmentType;
+    }>({
+        title: '',
+        classId: '',
+        description: '',
+        dueDate: todayString(),
+        dueTime: '23:59',
+        priority: 'Low',
+        status: 'To Do',
+        type: 'assignment'
+    });
+
+    useEffect(() => {
+        if (classes.length > 0 && !formData.classId) {
+            const firstClassId = classes[0]?.id || '';
+            if (firstClassId) {
+                setFormData(prev => ({ ...prev, classId: prev.classId || firstClassId }));
+            }
+        }
+    }, [classes, formData.classId]);
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const form = e.currentTarget;
-        const formData = new FormData(form);
 
-        let dueDate = formData.get('dueDate') as string;
-        // Validate date: if missing or invalid, default to today
-        if (!dueDate || isNaN(new Date(dueDate).getTime())) {
-            dueDate = todayString();
+        const validPriorities: Priority[] = ['High', 'Medium', 'Low'];
+        const validStatuses: Status[] = ['To Do', 'In Progress', 'Done'];
+        const validTypes: AssignmentType[] = ['assignment', 'project', 'quiz', 'exam'];
+
+        const safeData = { ...formData };
+
+        if (!safeData.title.trim()) {
+            showToast('Please enter a title.', 'error');
+            return;
         }
 
-        let priority = formData.get('priority') as string;
-        if (!['High', 'Medium', 'Low'].includes(priority)) {
-            priority = 'Low';
+        if (!safeData.classId && classes.length > 0) {
+            safeData.classId = classes[0]?.id || '';
         }
 
-        let status = formData.get('status') as string;
-        if (!['To Do', 'In Progress', 'Done'].includes(status)) {
-            status = 'To Do';
+        if (!validPriorities.includes(safeData.priority)) {
+            safeData.priority = 'Low';
         }
 
-        const newAssignment = {
-            title: formData.get('title') as string,
-            classId: formData.get('classId') as string,
-            description: formData.get('description') as string,
-            dueDate: dueDate,
-            priority: priority as Priority,
-            status: status as Status
-        };
-        addAssignment(newAssignment);
+        if (!validStatuses.includes(safeData.status)) {
+            safeData.status = 'To Do';
+        }
+
+        if (!safeData.dueDate || isNaN(new Date(safeData.dueDate).getTime())) {
+            safeData.dueDate = todayString();
+        }
+
+        if (!safeData.dueTime || typeof safeData.dueTime !== 'string') {
+            safeData.dueTime = '23:59';
+        }
+
+        if (!safeData.type || !validTypes.includes(safeData.type as AssignmentType)) {
+            safeData.type = 'assignment';
+        }
+
+        addAssignment(safeData);
+        showToast('Assignment added!', 'success');
         onClose();
     };
 
@@ -52,62 +93,140 @@ export const AddAssignmentModal: React.FC<ModalProps> = ({ onClose }) => {
         <div className="modal-container" style={{ backgroundColor: GLOBAL.MODAL_BG }}>
             <h2 className="text-xl font-bold mb-4" style={{ color: GLOBAL.ASSIGNMENT_HEADING_TEXT }}>Add New Assignment</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                    <label className="modal-label">Title</label>
-                    <input type="text" name="title" required
-                        className="modal-input"
-                        placeholder="e.g. Read Chapter 4"
-                        style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
-                    />
-                </div>
-                <div>
-                    <label className="modal-label">Class</label>
-                    <select name="classId" required
-                        className="modal-select"
-                        style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
+                <div className="modal-tabs" role="tablist" aria-label="Assignment form sections">
+                    <button
+                        type="button"
+                        className={`modal-tab ${activeTab === 'details' ? 'active' : ''}`}
+                        onClick={() => setActiveTab('details')}
+                        aria-selected={activeTab === 'details'}
                     >
-                        {classes.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
-                    </select>
+                        Details
+                    </button>
+                    <button
+                        type="button"
+                        className={`modal-tab ${activeTab === 'settings' ? 'active' : ''}`}
+                        onClick={() => setActiveTab('settings')}
+                        aria-selected={activeTab === 'settings'}
+                    >
+                        Settings
+                    </button>
                 </div>
-                <div>
-                    <label className="modal-label">Due Date</label>
-                    <input type="date" name="dueDate" required defaultValue={todayString()}
-                        className="modal-date-input"
-                        style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
-                    />
-                </div>
-                <div>
-                    <label className="modal-label">Description (Optional)</label>
-                    <textarea name="description" rows={2}
-                        className="modal-textarea"
-                        style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
-                    ></textarea>
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                    <div>
-                        <label className="modal-label">Priority</label>
-                        <select name="priority"
-                            className="modal-select"
-                            style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
-                        >
-                            <option value="Low">Low</option>
-                            <option value="Medium">Medium</option>
-                            <option value="High">High</option>
-                        </select>
+
+                {activeTab === 'details' ? (
+                    <div className="space-y-4">
+                        <div>
+                            <label className="modal-label">Title</label>
+                            <input
+                                type="text"
+                                name="title"
+                                value={formData.title}
+                                onChange={e => setFormData({ ...formData, title: e.target.value })}
+                                className="modal-input"
+                                placeholder="e.g. Read Chapter 4"
+                                style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
+                            />
+                        </div>
+                        <div>
+                            <label className="modal-label">Class</label>
+                            <select
+                                name="classId"
+                                value={formData.classId}
+                                onChange={e => setFormData({ ...formData, classId: e.target.value })}
+                                required
+                                className="modal-select"
+                                style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
+                            >
+                                {classes.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+                            </select>
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
+                                <label className="modal-label">Due Date</label>
+                                <input
+                                    type="date"
+                                    name="dueDate"
+                                    value={formData.dueDate}
+                                    onChange={e => setFormData({ ...formData, dueDate: e.target.value })}
+                                    required
+                                    className="modal-date-input"
+                                    style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
+                                />
+                            </div>
+                            <div>
+                                <label className="modal-label">Due Time</label>
+                                <input
+                                    type="time"
+                                    name="dueTime"
+                                    value={formData.dueTime}
+                                    onChange={e => setFormData({ ...formData, dueTime: e.target.value || '23:59' })}
+                                    required
+                                    className="modal-date-input"
+                                    style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
+                                />
+                            </div>
+                        </div>
+                        <div>
+                            <label className="modal-label">Description (Optional)</label>
+                            <textarea
+                                name="description"
+                                rows={2}
+                                value={formData.description}
+                                onChange={e => setFormData({ ...formData, description: e.target.value })}
+                                className="modal-textarea"
+                                style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
+                            ></textarea>
+                        </div>
                     </div>
-                    <div>
-                        <label className="modal-label">Status</label>
-                        <select name="status"
-                            className="modal-select"
-                            defaultValue="To Do"
-                            style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
-                        >
-                            <option value="To Do">To Do</option>
-                            <option value="In Progress">In Progress</option>
-                            <option value="Done">Done</option>
-                        </select>
+                ) : (
+                    <div className="space-y-4">
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
+                                <label className="modal-label">Priority</label>
+                                <select
+                                    name="priority"
+                                    value={formData.priority}
+                                    onChange={e => setFormData({ ...formData, priority: e.target.value as Priority })}
+                                    className="modal-select"
+                                    style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
+                                >
+                                    <option value="Low">Low</option>
+                                    <option value="Medium">Medium</option>
+                                    <option value="High">High</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label className="modal-label">Status</label>
+                                <select
+                                    name="status"
+                                    value={formData.status}
+                                    onChange={e => setFormData({ ...formData, status: e.target.value as Status })}
+                                    className="modal-select"
+                                    style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
+                                >
+                                    <option value="To Do">To Do</option>
+                                    <option value="In Progress">In Progress</option>
+                                    <option value="Done">Done</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label className="modal-label">Type</label>
+                            <select
+                                name="type"
+                                className="modal-select"
+                                value={formData.type}
+                                onChange={e => setFormData({ ...formData, type: e.target.value as AssignmentType })}
+                                style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
+                            >
+                                <option value="assignment">Assignment</option>
+                                <option value="project">Project</option>
+                                <option value="quiz">Quiz</option>
+                                <option value="exam">Exam</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
+                )}
+
                 <div className="flex justify-end space-x-3 mt-6">
                     <button
                         type="button"
@@ -141,7 +260,9 @@ export const AddAssignmentModal: React.FC<ModalProps> = ({ onClose }) => {
 
 export const EditAssignmentModal: React.FC<EditModalProps> = ({ onClose, assignmentId }) => {
     const { classes, assignments, updateAssignment, openModal } = useApp();
+    const { showToast } = useToast();
     const [formData, setFormData] = useState<Assignment | null>(null);
+    const [activeTab, setActiveTab] = useState<'details' | 'settings'>('details');
 
     useEffect(() => {
         const assignment = assignments.find(a => a.id === assignmentId);
@@ -156,6 +277,7 @@ export const EditAssignmentModal: React.FC<EditModalProps> = ({ onClose, assignm
         // Validate data before updating
         const validPriorities: Priority[] = ['High', 'Medium', 'Low'];
         const validStatuses: Status[] = ['To Do', 'In Progress', 'Done'];
+        const validTypes: AssignmentType[] = ['assignment', 'project', 'quiz', 'exam'];
 
         const safeData = { ...formData };
 
@@ -171,7 +293,21 @@ export const EditAssignmentModal: React.FC<EditModalProps> = ({ onClose, assignm
             safeData.dueDate = todayString();
         }
 
+        if (!safeData.dueTime || typeof safeData.dueTime !== 'string') {
+            safeData.dueTime = '23:59';
+        }
+
+        if (!safeData.type || !validTypes.includes(safeData.type as AssignmentType)) {
+            safeData.type = 'assignment';
+        }
+
+        if (!safeData.title.trim()) {
+            showToast('Please enter a title.', 'error');
+            return;
+        }
+
         updateAssignment(assignmentId, safeData);
+        showToast('Assignment updated.', 'success');
         onClose();
     };
 
@@ -179,78 +315,132 @@ export const EditAssignmentModal: React.FC<EditModalProps> = ({ onClose, assignm
         <div className="modal-container" style={{ backgroundColor: GLOBAL.MODAL_BG }}>
             <h2 className="text-xl font-bold mb-4" style={{ color: GLOBAL.ASSIGNMENT_HEADING_TEXT }}>Edit Assignment</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                    <label className="modal-label">Title</label>
-                    <input
-                        type="text"
-                        value={formData.title}
-                        onChange={e => setFormData({ ...formData, title: e.target.value })}
-                        required
-                        className="modal-input"
-                        style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
-                    />
-                </div>
-                <div>
-                    <label className="modal-label">Class</label>
-                    <select
-                        value={formData.classId}
-                        onChange={e => setFormData({ ...formData, classId: e.target.value })}
-                        required
-                        className="modal-select"
-                        style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
+                <div className="modal-tabs" role="tablist" aria-label="Assignment form sections">
+                    <button
+                        type="button"
+                        className={`modal-tab ${activeTab === 'details' ? 'active' : ''}`}
+                        onClick={() => setActiveTab('details')}
+                        aria-selected={activeTab === 'details'}
                     >
-                        {classes.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
-                    </select>
+                        Details
+                    </button>
+                    <button
+                        type="button"
+                        className={`modal-tab ${activeTab === 'settings' ? 'active' : ''}`}
+                        onClick={() => setActiveTab('settings')}
+                        aria-selected={activeTab === 'settings'}
+                    >
+                        Settings
+                    </button>
                 </div>
-                <div>
-                    <label className="modal-label">Due Date</label>
-                    <input
-                        type="date"
-                        value={formData.dueDate}
-                        onChange={e => setFormData({ ...formData, dueDate: e.target.value })}
-                        required
-                        className="modal-input"
-                        style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
-                    />
-                </div>
-                <div>
-                    <label className="modal-label">Description</label>
-                    <textarea
-                        value={formData.description || ''}
-                        onChange={e => setFormData({ ...formData, description: e.target.value })}
-                        rows={2}
-                        className="modal-textarea"
-                        style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
-                    />
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                    <div>
-                        <label className="modal-label">Priority</label>
-                        <select
-                            value={formData.priority}
-                            onChange={e => setFormData({ ...formData, priority: e.target.value as Priority })}
-                            className="modal-select"
-                            style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
-                        >
-                            <option value="Low">Low</option>
-                            <option value="Medium">Medium</option>
-                            <option value="High">High</option>
-                        </select>
+
+                {activeTab === 'details' ? (
+                    <div className="space-y-4">
+                        <div>
+                            <label className="modal-label">Title</label>
+                            <input
+                                type="text"
+                                value={formData.title}
+                                onChange={e => setFormData({ ...formData, title: e.target.value })}
+                                className="modal-input"
+                                style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
+                            />
+                        </div>
+                        <div>
+                            <label className="modal-label">Class</label>
+                            <select
+                                value={formData.classId}
+                                onChange={e => setFormData({ ...formData, classId: e.target.value })}
+                                required
+                                className="modal-select"
+                                style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
+                            >
+                                {classes.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+                            </select>
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
+                                <label className="modal-label">Due Date</label>
+                                <input
+                                    type="date"
+                                    value={formData.dueDate}
+                                    onChange={e => setFormData({ ...formData, dueDate: e.target.value })}
+                                    required
+                                    className="modal-date-input"
+                                    style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
+                                />
+                            </div>
+                            <div>
+                                <label className="modal-label">Due Time</label>
+                                <input
+                                    type="time"
+                                    value={formData.dueTime || '23:59'}
+                                    onChange={e => setFormData({ ...formData, dueTime: e.target.value || '23:59' })}
+                                    required
+                                    className="modal-date-input"
+                                    style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
+                                />
+                            </div>
+                        </div>
+                        <div>
+                            <label className="modal-label">Description</label>
+                            <textarea
+                                value={formData.description || ''}
+                                onChange={e => setFormData({ ...formData, description: e.target.value })}
+                                rows={2}
+                                className="modal-textarea"
+                                style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
+                            />
+                        </div>
                     </div>
-                    <div>
-                        <label className="modal-label">Status</label>
-                        <select
-                            value={formData.status}
-                            onChange={e => setFormData({ ...formData, status: e.target.value as Status })}
-                            className="modal-select"
-                            style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
-                        >
-                            <option value="To Do">To Do</option>
-                            <option value="In Progress">In Progress</option>
-                            <option value="Done">Done</option>
-                        </select>
+                ) : (
+                    <div className="space-y-4">
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
+                                <label className="modal-label">Priority</label>
+                                <select
+                                    value={formData.priority}
+                                    onChange={e => setFormData({ ...formData, priority: e.target.value as Priority })}
+                                    className="modal-select"
+                                    style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
+                                >
+                                    <option value="Low">Low</option>
+                                    <option value="Medium">Medium</option>
+                                    <option value="High">High</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label className="modal-label">Status</label>
+                                <select
+                                    value={formData.status}
+                                    onChange={e => setFormData({ ...formData, status: e.target.value as Status })}
+                                    className="modal-select"
+                                    style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
+                                >
+                                    <option value="To Do">To Do</option>
+                                    <option value="In Progress">In Progress</option>
+                                    <option value="Done">Done</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label className="modal-label">Type</label>
+                            <select
+                                name="type"
+                                className="modal-select"
+                                value={formData.type || 'assignment'}
+                                onChange={e => setFormData({ ...formData, type: e.target.value as any })}
+                                style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
+                            >
+                                <option value="assignment">Assignment</option>
+                                <option value="project">Project</option>
+                                <option value="quiz">Quiz</option>
+                                <option value="exam">Exam</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
+                )}
+
                 <div className="flex justify-between mt-6">
                     <button
                         type="button"

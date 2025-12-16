@@ -3,6 +3,7 @@ import { generateId, todayString, parseDateLocal } from '@/app/lib/utils';
 import { useToast } from '@/app/context/ToastContext';
 import type {
     Assignment,
+    AssignmentType,
     Class,
     Event,
     NoSchoolPeriod,
@@ -103,6 +104,13 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
             }
             if (typeof a.classId === 'undefined' && loadedClasses.length > 0) {
                 a.classId = loadedClasses[0]?.id;
+            }
+            if (!a.dueTime || typeof a.dueTime !== 'string') {
+                a.dueTime = '23:59';
+            }
+            const validTypes: AssignmentType[] = ['assignment', 'project', 'quiz', 'exam'];
+            if (!a.type || !validTypes.includes(a.type)) {
+                a.type = 'assignment';
             }
             return a;
         }).filter(a => a.classId);

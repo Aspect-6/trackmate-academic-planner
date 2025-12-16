@@ -13,6 +13,13 @@
     --modal-color-tile-hover: #ffffff;
     --modal-color-tile-selected: #ffffff;
     --modal-select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239ca3af'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+
+    --modal-tab-bg: rgba(255, 255, 255, 0.04);
+    --modal-tab-border: rgba(255, 255, 255, 0.06);
+    --modal-tab-hover-bg: rgba(255, 255, 255, 0.03);
+    --modal-tab-hover-border: rgba(255, 255, 255, 0.08);
+    --modal-tab-active-bg: rgba(255, 255, 255, 0.08);
+    --modal-tab-active-border: rgba(255, 255, 255, 0.12);
 }
 
 :root.light {
@@ -29,6 +36,13 @@
     --modal-color-tile-hover: hsl(215, 25%, 95%);
     --modal-color-tile-selected: hsl(215, 25%, 15%);
     --modal-select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+
+    --modal-tab-bg: rgba(0, 0, 0, 0.04);
+    --modal-tab-border: rgba(0, 0, 0, 0.05);
+    --modal-tab-hover-bg: rgba(0, 0, 0, 0.035);
+    --modal-tab-hover-border: rgba(0, 0, 0, 0.08);
+    --modal-tab-active-bg: rgba(0, 0, 0, 0.08);
+    --modal-tab-active-border: rgba(0, 0, 0, 0.12);
 }
 
 /* Modal Container */
@@ -77,6 +91,54 @@
     font-weight: 500;
     width: auto;
     padding: 0.625rem 1rem;
+}
+
+.modal-tabs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.35rem;
+    padding: 0.25rem;
+    border-radius: 999px;
+    background: var(--modal-tab-bg);
+    border: 1px solid var(--modal-tab-border);
+}
+
+.modal-tab {
+    border: 1px solid transparent;
+    border-radius: 999px;
+    padding: 0.3rem 0.6rem;
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: var(--modal-label-color);
+    background: transparent;
+    transition: background-color 140ms ease, color 140ms ease, border-color 140ms ease;
+}
+
+.modal-tab:first-of-type {
+    border-top-right-radius: 0.4rem;
+    border-bottom-right-radius: 0.4rem;
+}
+
+.modal-tab:last-of-type {
+    border-top-left-radius: 0.4rem;
+    border-bottom-left-radius: 0.4rem;
+}
+
+.modal-tab:hover {
+    color: var(--modal-input-text);
+    background: var(--modal-tab-hover-bg);
+    border-color: var(--modal-tab-hover-border);
+}
+
+.modal-tab.active {
+    color: var(--modal-input-text);
+    background: var(--modal-tab-active-bg);
+    border-color: var(--modal-tab-active-border);
+}
+
+.modal-tab:focus-visible {
+    outline: 2px solid var(--focus-color, var(--modal-input-border));
+    outline-offset: 1px;
 }
 
 @media (max-width: 480px) {
