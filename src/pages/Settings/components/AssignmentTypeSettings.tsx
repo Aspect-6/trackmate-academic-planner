@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { DndContext, MouseSensor, TouchSensor, useSensor, useSensors, closestCenter } from '@dnd-kit/core';
 import { SortableContext, arrayMove, verticalListSortingStrategy, useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { Plus, Trash2, GripVertical } from 'lucide-react';
+import { Plus, Trash2, GripVertical, ChevronUp, ChevronDown } from 'lucide-react';
 import { AssignmentType } from '@/app/types';
 import { SETTINGS, GLOBAL } from '@/app/styles/colors';
 import { AssignmentTypeSettingsProps } from '@/pages/Settings/types';
@@ -36,6 +36,14 @@ const AssignmentTypeSettings: React.FC<AssignmentTypeSettingsProps> = ({
         onReorderTypes(updated);
     };
 
+    const moveType = (type: AssignmentType, direction: 'up' | 'down') => {
+        const index = types.findIndex(t => t === type);
+        if (index === -1) return;
+        const targetIndex = direction === 'up' ? Math.max(0, index - 1) : Math.min(types.length - 1, index + 1);
+        if (targetIndex === index) return;
+        onReorderTypes(arrayMove(types, index, targetIndex));
+    };
+
     const SortableRow: React.FC<{ type: AssignmentType }> = ({ type }) => {
         const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: type });
         const style = {
@@ -66,6 +74,26 @@ const AssignmentTypeSettings: React.FC<AssignmentTypeSettingsProps> = ({
                     <span className="font-medium">{type}</span>
                 </div>
                 <div className="flex items-center gap-2">
+                    <button
+                        type="button"
+                        onClick={() => moveType(type, 'up')}
+                        disabled={types[0] === type}
+                        className="p-2 rounded-lg border disabled:opacity-40 hover:bg-white/5"
+                        style={{ borderColor: SETTINGS.CARD_BORDER, color: SETTINGS.BODY_TEXT }}
+                        aria-label={`Move ${type} up`}
+                    >
+                        <ChevronUp className="w-4 h-4" />
+                    </button>
+                    <button
+                        type="button"
+                        onClick={() => moveType(type, 'down')}
+                        disabled={types[types.length - 1] === type}
+                        className="p-2 rounded-lg border disabled:opacity-40 hover:bg-white/5"
+                        style={{ borderColor: SETTINGS.CARD_BORDER, color: SETTINGS.BODY_TEXT }}
+                        aria-label={`Move ${type} down`}
+                    >
+                        <ChevronDown className="w-4 h-4" />
+                    </button>
                     <button
                         type="button"
                         onClick={() => onRemoveType(type)}
