@@ -2,9 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useApp } from '@/app/context/AppContext';
 import { todayString } from '@/app/lib/utils';
 import { NoSchoolPeriod } from '@/app/types';
-import {
-    GLOBAL
-} from '@/app/styles/colors';
+import { MODALS } from '@/app/styles/colors';
 
 interface ModalProps {
     onClose: () => void;
@@ -42,15 +40,15 @@ export const AddNoSchoolModal: React.FC<ModalProps> = ({ onClose }) => {
     };
 
     return (
-        <div className="modal-container" style={{ backgroundColor: GLOBAL.MODAL_BG }}>
-            <h2 className="text-xl font-bold mb-4" style={{ color: GLOBAL.NOSCHOOL_HEADING_TEXT }}>Add No School Period</h2>
+        <div className="modal-container" style={{ backgroundColor: MODALS.BASE.BG }}>
+            <h2 className="text-xl font-bold mb-4" style={{ color: MODALS.NOSCHOOL.HEADING }}>Add No School Period</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                     <label className="modal-label">Reason / Name</label>
                     <input type="text" name="name" required
                         className="modal-input"
                         placeholder="e.g. Winter Break"
-                        style={{ '--focus-color': GLOBAL.NOSCHOOL_BUTTON_BG } as React.CSSProperties}
+                        style={{ '--focus-color': MODALS.NOSCHOOL.PRIMARY_BG } as React.CSSProperties}
                     />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
@@ -58,14 +56,14 @@ export const AddNoSchoolModal: React.FC<ModalProps> = ({ onClose }) => {
                         <label className="modal-label">Start Date</label>
                         <input type="date" name="startDate" required defaultValue={todayString()}
                             className="modal-date-input"
-                            style={{ '--focus-color': GLOBAL.NOSCHOOL_BUTTON_BG } as React.CSSProperties}
+                            style={{ '--focus-color': MODALS.NOSCHOOL.PRIMARY_BG } as React.CSSProperties}
                         />
                     </div>
                     <div>
                         <label className="modal-label">End Date</label>
                         <input type="date" name="endDate" required defaultValue={todayString()}
                             className="modal-date-input"
-                            style={{ '--focus-color': GLOBAL.NOSCHOOL_BUTTON_BG } as React.CSSProperties}
+                            style={{ '--focus-color': MODALS.NOSCHOOL.PRIMARY_BG } as React.CSSProperties}
                         />
                     </div>
                 </div>
@@ -75,10 +73,10 @@ export const AddNoSchoolModal: React.FC<ModalProps> = ({ onClose }) => {
                         onClick={onClose}
                         className="modal-btn modal-btn-cancel modal-btn-inline"
                         style={{
-                            '--modal-btn-bg': GLOBAL.CANCEL_BUTTON_BG,
-                            '--modal-btn-bg-hover': GLOBAL.CANCEL_BUTTON_BG_HOVER,
-                            '--modal-btn-text': GLOBAL.CANCEL_BUTTON_TEXT,
-                            '--modal-btn-border': GLOBAL.CANCEL_BUTTON_BORDER
+                            '--modal-btn-bg': MODALS.BASE.CANCEL_BG,
+                            '--modal-btn-bg-hover': MODALS.BASE.CANCEL_BG_HOVER,
+                            '--modal-btn-text': MODALS.BASE.CANCEL_TEXT,
+                            '--modal-btn-border': MODALS.BASE.CANCEL_BORDER
                         } as React.CSSProperties}
                     >
                         Cancel
@@ -87,9 +85,9 @@ export const AddNoSchoolModal: React.FC<ModalProps> = ({ onClose }) => {
                         type="submit"
                         className="modal-btn modal-btn-inline"
                         style={{
-                            '--modal-btn-bg': GLOBAL.NOSCHOOL_BUTTON_BG,
-                            '--modal-btn-bg-hover': GLOBAL.NOSCHOOL_BUTTON_BG_HOVER,
-                            '--modal-btn-text': '#ffffff'
+                            '--modal-btn-bg': MODALS.NOSCHOOL.PRIMARY_BG,
+                            '--modal-btn-bg-hover': MODALS.NOSCHOOL.PRIMARY_BG_HOVER,
+                            '--modal-btn-text': MODALS.NOSCHOOL.PRIMARY_TEXT
                         } as React.CSSProperties}
                     >
                         Add Period
@@ -127,8 +125,8 @@ export const EditNoSchoolModal: React.FC<NoSchoolModalProps> = ({ onClose, noSch
     };
 
     return (
-        <div className="modal-container" style={{ backgroundColor: GLOBAL.MODAL_BG }}>
-            <h2 className="text-xl font-bold mb-4" style={{ color: GLOBAL.NOSCHOOL_HEADING_TEXT }}>Edit No School Period</h2>
+        <div className="modal-container" style={{ backgroundColor: MODALS.BASE.BG }}>
+            <h2 className="text-xl font-bold mb-4" style={{ color: MODALS.NOSCHOOL.HEADING }}>Edit No School Period</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                     <label className="modal-label">Reason / Name</label>
@@ -138,7 +136,7 @@ export const EditNoSchoolModal: React.FC<NoSchoolModalProps> = ({ onClose, noSch
                         onChange={e => setFormData({ ...formData, name: e.target.value })}
                         required
                         className="modal-input"
-                        style={{ '--focus-color': GLOBAL.NOSCHOOL_BUTTON_BG } as React.CSSProperties}
+                        style={{ '--focus-color': MODALS.NOSCHOOL.PRIMARY_BG } as React.CSSProperties}
                     />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
@@ -150,7 +148,7 @@ export const EditNoSchoolModal: React.FC<NoSchoolModalProps> = ({ onClose, noSch
                             onChange={e => setFormData({ ...formData, startDate: e.target.value })}
                             required
                             className="modal-date-input"
-                            style={{ '--focus-color': GLOBAL.NOSCHOOL_BUTTON_BG } as React.CSSProperties}
+                            style={{ '--focus-color': MODALS.NOSCHOOL.PRIMARY_BG } as React.CSSProperties}
                         />
                     </div>
                     <div>
@@ -161,7 +159,7 @@ export const EditNoSchoolModal: React.FC<NoSchoolModalProps> = ({ onClose, noSch
                             onChange={e => setFormData({ ...formData, endDate: e.target.value })}
                             required
                             className="modal-date-input"
-                            style={{ '--focus-color': GLOBAL.NOSCHOOL_BUTTON_BG } as React.CSSProperties}
+                            style={{ '--focus-color': MODALS.NOSCHOOL.PRIMARY_BG } as React.CSSProperties}
                         />
                     </div>
                 </div>
@@ -171,9 +169,9 @@ export const EditNoSchoolModal: React.FC<NoSchoolModalProps> = ({ onClose, noSch
                         onClick={() => { onClose(); openModal('delete-no-school', noSchoolId); }}
                         className="modal-btn modal-btn-inline"
                         style={{
-                            '--modal-btn-bg': GLOBAL.DELETE_BUTTON_BG,
-                            '--modal-btn-bg-hover': GLOBAL.DELETE_BUTTON_BG_HOVER,
-                            '--modal-btn-text': GLOBAL.DELETE_BUTTON_TEXT
+                            '--modal-btn-bg': MODALS.BASE.DELETE_BG,
+                            '--modal-btn-bg-hover': MODALS.BASE.DELETE_BG_HOVER,
+                            '--modal-btn-text': MODALS.BASE.DELETE_TEXT
                         } as React.CSSProperties}
                     >
                         Delete
@@ -184,10 +182,10 @@ export const EditNoSchoolModal: React.FC<NoSchoolModalProps> = ({ onClose, noSch
                             onClick={onClose}
                             className="modal-btn modal-btn-cancel modal-btn-inline"
                             style={{
-                                '--modal-btn-bg': GLOBAL.CANCEL_BUTTON_BG,
-                                '--modal-btn-bg-hover': GLOBAL.CANCEL_BUTTON_BG_HOVER,
-                                '--modal-btn-text': GLOBAL.CANCEL_BUTTON_TEXT,
-                                '--modal-btn-border': GLOBAL.CANCEL_BUTTON_BORDER
+                                '--modal-btn-bg': MODALS.BASE.CANCEL_BG,
+                                '--modal-btn-bg-hover': MODALS.BASE.CANCEL_BG_HOVER,
+                                '--modal-btn-text': MODALS.BASE.CANCEL_TEXT,
+                                '--modal-btn-border': MODALS.BASE.CANCEL_BORDER
                             } as React.CSSProperties}
                         >
                             Cancel
@@ -196,9 +194,9 @@ export const EditNoSchoolModal: React.FC<NoSchoolModalProps> = ({ onClose, noSch
                             type="submit"
                             className="modal-btn modal-btn-inline"
                             style={{
-                                '--modal-btn-bg': GLOBAL.NOSCHOOL_BUTTON_BG,
-                                '--modal-btn-bg-hover': GLOBAL.NOSCHOOL_BUTTON_BG_HOVER,
-                                '--modal-btn-text': '#ffffff'
+                                '--modal-btn-bg': MODALS.NOSCHOOL.PRIMARY_BG,
+                                '--modal-btn-bg-hover': MODALS.NOSCHOOL.PRIMARY_BG_HOVER,
+                                '--modal-btn-text': MODALS.NOSCHOOL.PRIMARY_TEXT
                             } as React.CSSProperties}
                         >
                             Save Changes
@@ -222,9 +220,9 @@ export const DeleteNoSchoolModal: React.FC<NoSchoolModalProps> = ({ onClose, noS
     };
 
     return (
-        <div className="modal-container" style={{ backgroundColor: GLOBAL.MODAL_BG }}>
-            <h2 className="text-xl font-bold mb-4 text-red-400">Delete No School Period?</h2>
-            <p className="text-gray-300 mb-4" style={{ color: GLOBAL.MODAL_DELETE_BODY }}>
+        <div className="modal-container" style={{ backgroundColor: MODALS.BASE.BG }}>
+            <h2 className="text-xl font-bold mb-4" style={{ color: MODALS.BASE.DELETE_HEADING }}>Delete No School Period?</h2>
+            <p className="text-gray-300 mb-4" style={{ color: MODALS.BASE.DELETE_BODY }}>
                 Are you sure you want to delete <strong>{periodToDelete.name}</strong>?
             </p>
             <div className="flex justify-end space-x-3">
@@ -232,10 +230,10 @@ export const DeleteNoSchoolModal: React.FC<NoSchoolModalProps> = ({ onClose, noS
                     onClick={onClose}
                     className="modal-btn modal-btn-cancel modal-btn-inline"
                     style={{
-                        '--modal-btn-bg': GLOBAL.CANCEL_BUTTON_BG,
-                        '--modal-btn-bg-hover': GLOBAL.CANCEL_BUTTON_BG_HOVER,
-                        '--modal-btn-text': GLOBAL.CANCEL_BUTTON_TEXT,
-                        '--modal-btn-border': GLOBAL.CANCEL_BUTTON_BORDER
+                        '--modal-btn-bg': MODALS.BASE.CANCEL_BG,
+                        '--modal-btn-bg-hover': MODALS.BASE.CANCEL_BG_HOVER,
+                        '--modal-btn-text': MODALS.BASE.CANCEL_TEXT,
+                        '--modal-btn-border': MODALS.BASE.CANCEL_BORDER
                     } as React.CSSProperties}
                 >
                     Cancel
@@ -244,9 +242,9 @@ export const DeleteNoSchoolModal: React.FC<NoSchoolModalProps> = ({ onClose, noS
                     onClick={handleDelete}
                     className="modal-btn modal-btn-inline"
                     style={{
-                        '--modal-btn-bg': GLOBAL.DELETE_BUTTON_BG,
-                        '--modal-btn-bg-hover': GLOBAL.DELETE_BUTTON_BG_HOVER,
-                        '--modal-btn-text': GLOBAL.DELETE_BUTTON_TEXT
+                        '--modal-btn-bg': MODALS.BASE.DELETE_BG,
+                        '--modal-btn-bg-hover': MODALS.BASE.DELETE_BG_HOVER,
+                        '--modal-btn-text': MODALS.BASE.DELETE_TEXT
                     } as React.CSSProperties}
                 >
                     Delete Period

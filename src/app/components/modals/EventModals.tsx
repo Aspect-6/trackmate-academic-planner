@@ -2,11 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useApp } from '@/app/context/AppContext';
 import { todayString } from '@/app/lib/utils';
 import { Event } from '@/app/types';
-import {
-    GLOBAL
-} from '@/app/styles/colors';
-
-const COLORS = ['#58a6ff', '#588157', '#d29922', '#da3633', '#8957e5', '#db61a2'];
+import { GLOBAL, MODALS } from '@/app/styles/colors';
 
 interface ModalProps {
     onClose: () => void;
@@ -18,7 +14,7 @@ interface EventModalProps extends ModalProps {
 
 export const AddEventModal: React.FC<ModalProps> = ({ onClose }) => {
     const { addEvent } = useApp();
-    const [selectedColor, setSelectedColor] = useState<string>(COLORS[0]!);
+    const [selectedColor, setSelectedColor] = useState<string>(MODALS.EVENT.COLORS[0]!);
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -98,7 +94,7 @@ export const AddEventModal: React.FC<ModalProps> = ({ onClose }) => {
                 <div>
                     <label className="block text-sm font-medium text-gray-400 mb-2">Color Code</label>
                     <div className="color-tile-grid">
-                        {COLORS.map(color => (
+                        {MODALS.EVENT.COLORS.map(color => (
                             <div
                                 key={color}
                                 onClick={() => setSelectedColor(color)}
@@ -224,7 +220,7 @@ export const EditEventModal: React.FC<EventModalProps> = ({ onClose, eventId }) 
                 <div>
                     <label className="block text-sm font-medium text-gray-400 mb-2">Color Code</label>
                     <div className="color-tile-grid">
-                        {COLORS.map(color => (
+                        {MODALS.EVENT.COLORS.map(color => (
                             <div
                                 key={color}
                                 onClick={() => setFormData({ ...formData, color })}
@@ -240,9 +236,9 @@ export const EditEventModal: React.FC<EventModalProps> = ({ onClose, eventId }) 
                         onClick={() => { onClose(); openModal('delete-event', eventId); }}
                         className="modal-btn modal-btn-inline"
                         style={{
-                            '--modal-btn-bg': GLOBAL.DELETE_BUTTON_BG,
-                            '--modal-btn-bg-hover': GLOBAL.DELETE_BUTTON_BG_HOVER,
-                            '--modal-btn-text': GLOBAL.DELETE_BUTTON_TEXT
+                            '--modal-btn-bg': MODALS.BASE.DELETE_BG,
+                            '--modal-btn-bg-hover': MODALS.BASE.DELETE_BG_HOVER,
+                            '--modal-btn-text': MODALS.BASE.DELETE_TEXT
                         } as React.CSSProperties}
                     >
                         Delete
@@ -253,10 +249,10 @@ export const EditEventModal: React.FC<EventModalProps> = ({ onClose, eventId }) 
                             onClick={onClose}
                             className="modal-btn modal-btn-cancel modal-btn-inline"
                             style={{
-                                '--modal-btn-bg': GLOBAL.CANCEL_BUTTON_BG,
-                                '--modal-btn-bg-hover': GLOBAL.CANCEL_BUTTON_BG_HOVER,
-                                '--modal-btn-text': GLOBAL.CANCEL_BUTTON_TEXT,
-                                '--modal-btn-border': GLOBAL.CANCEL_BUTTON_BORDER
+                                '--modal-btn-bg': MODALS.BASE.CANCEL_BG,
+                                '--modal-btn-bg-hover': MODALS.BASE.CANCEL_BG_HOVER,
+                                '--modal-btn-text': MODALS.BASE.CANCEL_TEXT,
+                                '--modal-btn-border': MODALS.BASE.CANCEL_BORDER
                             } as React.CSSProperties}
                         >
                             Cancel
@@ -291,9 +287,9 @@ export const DeleteEventModal: React.FC<EventModalProps> = ({ onClose, eventId }
     };
 
     return (
-        <div className="modal-container" style={{ backgroundColor: GLOBAL.MODAL_BG }}>
-            <h2 className="text-xl font-bold mb-4 text-red-400">Delete Event?</h2>
-            <p className="text-gray-300 mb-4" style={{ color: GLOBAL.MODAL_DELETE_BODY }}>
+        <div className="modal-container" style={{ backgroundColor: MODALS.BASE.BG }}>
+            <h2 className="text-xl font-bold mb-4" style={{ color: MODALS.BASE.DELETE_HEADING }}>Delete Event?</h2>
+            <p className="text-gray-300 mb-4" style={{ color: MODALS.BASE.DELETE_BODY }}>
                 Are you sure you want to delete <strong>{eventToDelete.title}</strong>?
             </p>
             <div className="flex justify-end space-x-3">
@@ -301,10 +297,10 @@ export const DeleteEventModal: React.FC<EventModalProps> = ({ onClose, eventId }
                     onClick={onClose}
                     className="modal-btn modal-btn-cancel modal-btn-inline"
                     style={{
-                        '--modal-btn-bg': GLOBAL.CANCEL_BUTTON_BG,
-                        '--modal-btn-bg-hover': GLOBAL.CANCEL_BUTTON_BG_HOVER,
-                        '--modal-btn-text': GLOBAL.CANCEL_BUTTON_TEXT,
-                        '--modal-btn-border': GLOBAL.CANCEL_BUTTON_BORDER
+                        '--modal-btn-bg': MODALS.BASE.CANCEL_BG,
+                        '--modal-btn-bg-hover': MODALS.BASE.CANCEL_BG_HOVER,
+                        '--modal-btn-text': MODALS.BASE.CANCEL_TEXT,
+                        '--modal-btn-border': MODALS.BASE.CANCEL_BORDER
                     } as React.CSSProperties}
                 >
                     Cancel
@@ -313,9 +309,9 @@ export const DeleteEventModal: React.FC<EventModalProps> = ({ onClose, eventId }
                     onClick={handleDelete}
                     className="modal-btn modal-btn-inline"
                     style={{
-                        '--modal-btn-bg': GLOBAL.DELETE_BUTTON_BG,
-                        '--modal-btn-bg-hover': GLOBAL.DELETE_BUTTON_BG_HOVER,
-                        '--modal-btn-text': GLOBAL.DELETE_BUTTON_TEXT
+                        '--modal-btn-bg': MODALS.BASE.DELETE_BG,
+                        '--modal-btn-bg-hover': MODALS.BASE.DELETE_BG_HOVER,
+                        '--modal-btn-text': MODALS.BASE.DELETE_TEXT
                     } as React.CSSProperties}
                 >
                     Delete Event

@@ -3,7 +3,7 @@ import { DEFAULT_ASSIGNMENT_TYPES, useApp } from '@/app/context/AppContext';
 import { useToast } from '@/app/context/ToastContext';
 import { todayString } from '@/app/lib/utils';
 import { Assignment, AssignmentType, Priority, Status } from '@/app/types';
-import { GLOBAL } from '@/app/styles/colors';
+import { MODALS } from '@/app/styles/colors';
 
 interface ModalProps {
     onClose: () => void;
@@ -103,8 +103,8 @@ export const AddAssignmentModal: React.FC<ModalProps> = ({ onClose }) => {
     };
 
     return (
-        <div className="modal-container" style={{ backgroundColor: GLOBAL.MODAL_BG }}>
-            <h2 className="text-xl font-bold mb-4" style={{ color: GLOBAL.ASSIGNMENT_HEADING_TEXT }}>Add New Assignment</h2>
+        <div className="modal-container" style={{ backgroundColor: MODALS.BASE.BG }}>
+            <h2 className="text-xl font-bold mb-4" style={{ color: MODALS.ASSIGNMENT.HEADING }}>Add New Assignment</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="modal-tabs" role="tablist" aria-label="Assignment form sections">
                     <button
@@ -136,7 +136,7 @@ export const AddAssignmentModal: React.FC<ModalProps> = ({ onClose }) => {
                                 onChange={e => setFormData({ ...formData, title: e.target.value })}
                                 className="modal-input"
                                 placeholder="e.g. Read Chapter 4"
-                                style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
+                                style={{ '--focus-color': MODALS.ASSIGNMENT.PRIMARY_BG } as React.CSSProperties}
                             />
                         </div>
                         <div>
@@ -147,7 +147,7 @@ export const AddAssignmentModal: React.FC<ModalProps> = ({ onClose }) => {
                                 onChange={e => setFormData({ ...formData, classId: e.target.value })}
                                 required
                                 className="modal-select"
-                                style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
+                                style={{ '--focus-color': MODALS.ASSIGNMENT.PRIMARY_BG } as React.CSSProperties}
                             >
                                 {classes.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                             </select>
@@ -162,7 +162,7 @@ export const AddAssignmentModal: React.FC<ModalProps> = ({ onClose }) => {
                                     onChange={e => setFormData({ ...formData, dueDate: e.target.value })}
                                     required
                                     className="modal-date-input"
-                                    style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
+                                    style={{ '--focus-color': MODALS.ASSIGNMENT.PRIMARY_BG } as React.CSSProperties}
                                 />
                             </div>
                             <div>
@@ -174,7 +174,7 @@ export const AddAssignmentModal: React.FC<ModalProps> = ({ onClose }) => {
                                     onChange={e => setFormData({ ...formData, dueTime: e.target.value || '23:59' })}
                                     required
                                     className="modal-date-input"
-                                    style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
+                                    style={{ '--focus-color': MODALS.ASSIGNMENT.PRIMARY_BG } as React.CSSProperties}
                                 />
                             </div>
                         </div>
@@ -186,7 +186,7 @@ export const AddAssignmentModal: React.FC<ModalProps> = ({ onClose }) => {
                                 value={formData.description}
                                 onChange={e => setFormData({ ...formData, description: e.target.value })}
                                 className="modal-textarea"
-                                style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
+                                style={{ '--focus-color': MODALS.ASSIGNMENT.PRIMARY_BG } as React.CSSProperties}
                             ></textarea>
                         </div>
                     </div>
@@ -200,7 +200,7 @@ export const AddAssignmentModal: React.FC<ModalProps> = ({ onClose }) => {
                                     value={formData.priority}
                                     onChange={e => setFormData({ ...formData, priority: e.target.value as Priority })}
                                     className="modal-select"
-                                    style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
+                                    style={{ '--focus-color': MODALS.ASSIGNMENT.PRIMARY_BG } as React.CSSProperties}
                                 >
                                     <option value="Low">Low</option>
                                     <option value="Medium">Medium</option>
@@ -214,7 +214,7 @@ export const AddAssignmentModal: React.FC<ModalProps> = ({ onClose }) => {
                                     value={formData.status}
                                     onChange={e => setFormData({ ...formData, status: e.target.value as Status })}
                                     className="modal-select"
-                                    style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
+                                    style={{ '--focus-color': MODALS.ASSIGNMENT.PRIMARY_BG } as React.CSSProperties}
                                 >
                                     <option value="To Do">To Do</option>
                                     <option value="In Progress">In Progress</option>
@@ -229,7 +229,7 @@ export const AddAssignmentModal: React.FC<ModalProps> = ({ onClose }) => {
                                 className="modal-select"
                                 value={formData.type}
                                 onChange={e => setFormData({ ...formData, type: e.target.value as AssignmentType })}
-                                style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
+                                style={{ '--focus-color': MODALS.ASSIGNMENT.PRIMARY_BG } as React.CSSProperties}
                             >
                                 {currentTypes.map(type => (
                                     <option key={type} value={type}>{type}</option>
@@ -245,10 +245,10 @@ export const AddAssignmentModal: React.FC<ModalProps> = ({ onClose }) => {
                         onClick={onClose}
                         className="modal-btn modal-btn-cancel modal-btn-inline"
                         style={{
-                            '--modal-btn-bg': GLOBAL.CANCEL_BUTTON_BG,
-                            '--modal-btn-bg-hover': GLOBAL.CANCEL_BUTTON_BG_HOVER,
-                            '--modal-btn-text': GLOBAL.CANCEL_BUTTON_TEXT,
-                            '--modal-btn-border': GLOBAL.CANCEL_BUTTON_BORDER
+                            '--modal-btn-bg': MODALS.BASE.CANCEL_BG,
+                            '--modal-btn-bg-hover': MODALS.BASE.CANCEL_BG_HOVER,
+                            '--modal-btn-text': MODALS.BASE.CANCEL_TEXT,
+                            '--modal-btn-border': MODALS.BASE.CANCEL_BORDER
                         } as React.CSSProperties}
                     >
                         Cancel
@@ -257,9 +257,9 @@ export const AddAssignmentModal: React.FC<ModalProps> = ({ onClose }) => {
                         type="submit"
                         className="modal-btn modal-btn-inline"
                         style={{
-                            '--modal-btn-bg': GLOBAL.ASSIGNMENT_BUTTON_BG,
-                            '--modal-btn-bg-hover': GLOBAL.ASSIGNMENT_BUTTON_BG_HOVER,
-                            '--modal-btn-text': '#ffffff'
+                            '--modal-btn-bg': MODALS.ASSIGNMENT.PRIMARY_BG,
+                            '--modal-btn-bg-hover': MODALS.ASSIGNMENT.PRIMARY_BG_HOVER,
+                            '--modal-btn-text': MODALS.ASSIGNMENT.PRIMARY_TEXT
                         } as React.CSSProperties}
                     >
                         Add Assignment
@@ -337,8 +337,8 @@ export const EditAssignmentModal: React.FC<EditModalProps> = ({ onClose, assignm
     };
 
     return (
-        <div className="modal-container" style={{ backgroundColor: GLOBAL.MODAL_BG }}>
-            <h2 className="text-xl font-bold mb-4" style={{ color: GLOBAL.ASSIGNMENT_HEADING_TEXT }}>Edit Assignment</h2>
+        <div className="modal-container" style={{ backgroundColor: MODALS.BASE.BG }}>
+            <h2 className="text-xl font-bold mb-4" style={{ color: MODALS.ASSIGNMENT.HEADING }}>Edit Assignment</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="modal-tabs" role="tablist" aria-label="Assignment form sections">
                     <button
@@ -368,7 +368,7 @@ export const EditAssignmentModal: React.FC<EditModalProps> = ({ onClose, assignm
                                 value={formData.title}
                                 onChange={e => setFormData({ ...formData, title: e.target.value })}
                                 className="modal-input"
-                                style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
+                                style={{ '--focus-color': MODALS.ASSIGNMENT.PRIMARY_BG } as React.CSSProperties}
                             />
                         </div>
                         <div>
@@ -378,7 +378,7 @@ export const EditAssignmentModal: React.FC<EditModalProps> = ({ onClose, assignm
                                 onChange={e => setFormData({ ...formData, classId: e.target.value })}
                                 required
                                 className="modal-select"
-                                style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
+                                style={{ '--focus-color': MODALS.ASSIGNMENT.PRIMARY_BG } as React.CSSProperties}
                             >
                                 {classes.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                             </select>
@@ -392,7 +392,7 @@ export const EditAssignmentModal: React.FC<EditModalProps> = ({ onClose, assignm
                                     onChange={e => setFormData({ ...formData, dueDate: e.target.value })}
                                     required
                                     className="modal-date-input"
-                                    style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
+                                    style={{ '--focus-color': MODALS.ASSIGNMENT.PRIMARY_BG } as React.CSSProperties}
                                 />
                             </div>
                             <div>
@@ -403,7 +403,7 @@ export const EditAssignmentModal: React.FC<EditModalProps> = ({ onClose, assignm
                                     onChange={e => setFormData({ ...formData, dueTime: e.target.value || '23:59' })}
                                     required
                                     className="modal-date-input"
-                                    style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
+                                    style={{ '--focus-color': MODALS.ASSIGNMENT.PRIMARY_BG } as React.CSSProperties}
                                 />
                             </div>
                         </div>
@@ -414,7 +414,7 @@ export const EditAssignmentModal: React.FC<EditModalProps> = ({ onClose, assignm
                                 onChange={e => setFormData({ ...formData, description: e.target.value })}
                                 rows={2}
                                 className="modal-textarea"
-                                style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
+                                style={{ '--focus-color': MODALS.ASSIGNMENT.PRIMARY_BG } as React.CSSProperties}
                             />
                         </div>
                     </div>
@@ -427,7 +427,7 @@ export const EditAssignmentModal: React.FC<EditModalProps> = ({ onClose, assignm
                                     value={formData.priority}
                                     onChange={e => setFormData({ ...formData, priority: e.target.value as Priority })}
                                     className="modal-select"
-                                    style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
+                                    style={{ '--focus-color': MODALS.ASSIGNMENT.PRIMARY_BG } as React.CSSProperties}
                                 >
                                     <option value="Low">Low</option>
                                     <option value="Medium">Medium</option>
@@ -440,7 +440,7 @@ export const EditAssignmentModal: React.FC<EditModalProps> = ({ onClose, assignm
                                     value={formData.status}
                                     onChange={e => setFormData({ ...formData, status: e.target.value as Status })}
                                     className="modal-select"
-                                    style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
+                                    style={{ '--focus-color': MODALS.ASSIGNMENT.PRIMARY_BG } as React.CSSProperties}
                                 >
                                     <option value="To Do">To Do</option>
                                     <option value="In Progress">In Progress</option>
@@ -455,7 +455,7 @@ export const EditAssignmentModal: React.FC<EditModalProps> = ({ onClose, assignm
                                 className="modal-select"
                                 value={formData.type || currentTypes[0] || ''}
                                 onChange={e => setFormData({ ...formData, type: e.target.value as AssignmentType })}
-                                style={{ '--focus-color': GLOBAL.ASSIGNMENT_BUTTON_BG } as React.CSSProperties}
+                                style={{ '--focus-color': MODALS.ASSIGNMENT.PRIMARY_BG } as React.CSSProperties}
                             >
                                 {currentTypes.map(type => (
                                     <option key={type} value={type}>{type}</option>
@@ -471,9 +471,9 @@ export const EditAssignmentModal: React.FC<EditModalProps> = ({ onClose, assignm
                         onClick={() => { onClose(); openModal('delete-assignment', assignmentId); }}
                         className="modal-btn modal-btn-inline"
                         style={{
-                            '--modal-btn-bg': GLOBAL.DELETE_BUTTON_BG,
-                            '--modal-btn-bg-hover': GLOBAL.DELETE_BUTTON_BG_HOVER,
-                            '--modal-btn-text': GLOBAL.DELETE_BUTTON_TEXT
+                            '--modal-btn-bg': MODALS.BASE.DELETE_BG,
+                            '--modal-btn-bg-hover': MODALS.BASE.DELETE_BG_HOVER,
+                            '--modal-btn-text': MODALS.BASE.DELETE_TEXT
                         } as React.CSSProperties}
                     >
                         Delete
@@ -484,10 +484,10 @@ export const EditAssignmentModal: React.FC<EditModalProps> = ({ onClose, assignm
                             onClick={onClose}
                             className="modal-btn modal-btn-cancel modal-btn-inline"
                             style={{
-                                '--modal-btn-bg': GLOBAL.CANCEL_BUTTON_BG,
-                                '--modal-btn-bg-hover': GLOBAL.CANCEL_BUTTON_BG_HOVER,
-                                '--modal-btn-text': GLOBAL.CANCEL_BUTTON_TEXT,
-                                '--modal-btn-border': GLOBAL.CANCEL_BUTTON_BORDER
+                                '--modal-btn-bg': MODALS.BASE.CANCEL_BG,
+                                '--modal-btn-bg-hover': MODALS.BASE.CANCEL_BG_HOVER,
+                                '--modal-btn-text': MODALS.BASE.CANCEL_TEXT,
+                                '--modal-btn-border': MODALS.BASE.CANCEL_BORDER
                             } as React.CSSProperties}
                         >
                             Cancel
@@ -496,9 +496,9 @@ export const EditAssignmentModal: React.FC<EditModalProps> = ({ onClose, assignm
                             type="submit"
                             className="modal-btn modal-btn-inline"
                             style={{
-                                '--modal-btn-bg': GLOBAL.ASSIGNMENT_BUTTON_BG,
-                                '--modal-btn-bg-hover': GLOBAL.ASSIGNMENT_BUTTON_BG_HOVER,
-                                '--modal-btn-text': '#ffffff'
+                                '--modal-btn-bg': MODALS.ASSIGNMENT.PRIMARY_BG,
+                                '--modal-btn-bg-hover': MODALS.ASSIGNMENT.PRIMARY_BG_HOVER,
+                                '--modal-btn-text': MODALS.ASSIGNMENT.PRIMARY_TEXT
                             } as React.CSSProperties}
                         >
                             Save Changes
@@ -521,9 +521,9 @@ export const DeleteAssignmentModal: React.FC<EditModalProps> = ({ onClose, assig
     };
 
     return (
-        <div className="modal-container" style={{ backgroundColor: GLOBAL.MODAL_BG }}>
-            <h2 className="text-xl font-bold mb-4 text-red-400">Delete Assignment?</h2>
-            <p className="text-gray-300 mb-4" style={{ color: GLOBAL.MODAL_DELETE_BODY }}>
+        <div className="modal-container" style={{ backgroundColor: MODALS.BASE.BG }}>
+            <h2 className="text-xl font-bold mb-4" style={{ color: MODALS.BASE.DELETE_HEADING }}>Delete Assignment?</h2>
+            <p className="text-gray-300 mb-4" style={{ color: MODALS.BASE.DELETE_BODY }}>
                 Are you sure you want to delete <strong>{assignmentToDelete.title}</strong>?
             </p>
             <div className="flex justify-end space-x-3">
@@ -531,10 +531,10 @@ export const DeleteAssignmentModal: React.FC<EditModalProps> = ({ onClose, assig
                     onClick={onClose}
                     className="modal-btn modal-btn-cancel modal-btn-inline"
                     style={{
-                        '--modal-btn-bg': GLOBAL.CANCEL_BUTTON_BG,
-                        '--modal-btn-bg-hover': GLOBAL.CANCEL_BUTTON_BG_HOVER,
-                        '--modal-btn-text': GLOBAL.CANCEL_BUTTON_TEXT,
-                        '--modal-btn-border': GLOBAL.CANCEL_BUTTON_BORDER
+                        '--modal-btn-bg': MODALS.BASE.CANCEL_BG,
+                        '--modal-btn-bg-hover': MODALS.BASE.CANCEL_BG_HOVER,
+                        '--modal-btn-text': MODALS.BASE.CANCEL_TEXT,
+                        '--modal-btn-border': MODALS.BASE.CANCEL_BORDER
                     } as React.CSSProperties}
                 >
                     Cancel
@@ -543,9 +543,9 @@ export const DeleteAssignmentModal: React.FC<EditModalProps> = ({ onClose, assig
                     onClick={handleDelete}
                     className="modal-btn modal-btn-inline"
                     style={{
-                        '--modal-btn-bg': GLOBAL.DELETE_BUTTON_BG,
-                        '--modal-btn-bg-hover': GLOBAL.DELETE_BUTTON_BG_HOVER,
-                        '--modal-btn-text': GLOBAL.DELETE_BUTTON_TEXT
+                        '--modal-btn-bg': MODALS.BASE.DELETE_BG,
+                        '--modal-btn-bg-hover': MODALS.BASE.DELETE_BG_HOVER,
+                        '--modal-btn-text': MODALS.BASE.DELETE_TEXT
                     } as React.CSSProperties}
                 >
                     Delete Assignment

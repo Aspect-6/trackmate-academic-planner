@@ -1,5 +1,3 @@
-
-
 // Global Colors
 export const GLOBAL = {
     // General
@@ -143,8 +141,7 @@ export const CALENDAR = {
     HEADER_ICON: 'var(--calendar-header-icon)',
     HEADER_BUTTON_HOVER: 'var(--calendar-header-button-hover)',
 
-    // Headings - Inherited/Aliased from Global in original, but we can override if needed. 
-    // They are already in GLOBAL, so no need to re-declare unless the value is different.
+    // Headings
     ASSIGNMENT_HEADING: GLOBAL.ASSIGNMENT_HEADING_TEXT,
     EVENT_HEADING: GLOBAL.EVENT_HEADING_TEXT,
     CLASS_HEADING: GLOBAL.CLASS_HEADING_TEXT,
@@ -271,6 +268,54 @@ export const MY_CLASSES = {
         'var(--class-color-9)', 'var(--class-color-10)', 'var(--class-color-11)', 'var(--class-color-12)',
         'var(--class-color-13)',
     ]
+}
+
+// Modal-specific colors (shared across modal components)
+export const MODALS = {
+    BASE: {
+        BG: GLOBAL.MODAL_BG,
+        BACKDROP: GLOBAL.MODAL_BACKDROP,
+        BORDER: GLOBAL.BORDER_PRIMARY,
+        TEXT: GLOBAL.TEXT_PRIMARY,
+        DELETE_BODY: GLOBAL.MODAL_DELETE_BODY,
+        DELETE_HEADING: GLOBAL.DELETE_BUTTON_BG,
+        CANCEL_BG: GLOBAL.CANCEL_BUTTON_BG,
+        CANCEL_BG_HOVER: GLOBAL.CANCEL_BUTTON_BG_HOVER,
+        CANCEL_TEXT: GLOBAL.CANCEL_BUTTON_TEXT,
+        CANCEL_BORDER: GLOBAL.CANCEL_BUTTON_BORDER,
+        DELETE_BG: GLOBAL.DELETE_BUTTON_BG,
+        DELETE_BG_HOVER: GLOBAL.DELETE_BUTTON_BG_HOVER,
+        DELETE_TEXT: GLOBAL.DELETE_BUTTON_TEXT
+    },
+    ASSIGNMENT: {
+        HEADING: GLOBAL.ASSIGNMENT_HEADING_TEXT,
+        PRIMARY_BG: GLOBAL.ASSIGNMENT_BUTTON_BG,
+        PRIMARY_BG_HOVER: GLOBAL.ASSIGNMENT_BUTTON_BG_HOVER,
+        PRIMARY_TEXT: '#ffffff'
+    },
+    EVENT: {
+        HEADING: GLOBAL.EVENT_HEADING_TEXT,
+        PRIMARY_BG: GLOBAL.EVENT_BUTTON_BG,
+        PRIMARY_BG_HOVER: GLOBAL.EVENT_BUTTON_BG_HOVER,
+        PRIMARY_TEXT: GLOBAL.EVENT_BUTTON_TEXT,
+        COLORS: [
+            'var(--event-color-1)', 'var(--event-color-2)', 'var(--event-color-3)',
+            'var(--event-color-4)', 'var(--event-color-5)', 'var(--event-color-6)'
+        ]
+    },
+    CLASS: {
+        HEADING: MY_CLASSES.CLASS_TEXT_THEME,
+        PRIMARY_BG: MY_CLASSES.CLASS_MODAL_BUTTON_BG,
+        PRIMARY_BG_HOVER: MY_CLASSES.CLASS_MODAL_BUTTON_BG_HOVER,
+        PRIMARY_TEXT: '#ffffff',
+        COLORS: MY_CLASSES.CLASS_COLORS,
+    },
+    NOSCHOOL: {
+        HEADING: GLOBAL.NOSCHOOL_HEADING_TEXT,
+        PRIMARY_BG: GLOBAL.NOSCHOOL_BUTTON_BG,
+        PRIMARY_BG_HOVER: GLOBAL.NOSCHOOL_BUTTON_BG_HOVER,
+        PRIMARY_TEXT: '#ffffff'
+    }
 }
 
 // My Schedule page

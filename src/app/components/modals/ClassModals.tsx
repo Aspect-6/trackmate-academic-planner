@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useApp } from '@/app/context/AppContext';
 import { Class } from '@/app/types';
-import {
-    GLOBAL,
-    MY_CLASSES
-} from '@/app/styles/colors';
+import { MODALS } from '@/app/styles/colors';
 
 interface ModalProps {
     onClose: () => void;
@@ -16,7 +13,7 @@ interface ClassModalProps extends ModalProps {
 
 export const AddClassModal: React.FC<ModalProps> = ({ onClose }) => {
     const { addClass } = useApp();
-    const [selectedColor, setSelectedColor] = useState<string>(MY_CLASSES.CLASS_COLORS[0]!);
+    const [selectedColor, setSelectedColor] = useState<string>(MODALS.CLASS.COLORS[0]!);
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -33,8 +30,8 @@ export const AddClassModal: React.FC<ModalProps> = ({ onClose }) => {
     };
 
     return (
-        <div className="modal-container" style={{ backgroundColor: GLOBAL.MODAL_BG }}>
-            <h2 className="text-xl font-bold mb-4" style={{ color: MY_CLASSES.CLASS_TEXT_THEME }}>Add New Class</h2>
+        <div className="modal-container" style={{ backgroundColor: MODALS.BASE.BG }}>
+            <h2 className="text-xl font-bold mb-4" style={{ color: MODALS.CLASS.HEADING }}>Add New Class</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
                 {/* Row 1: Class Name */}
                 <div>
@@ -44,7 +41,7 @@ export const AddClassModal: React.FC<ModalProps> = ({ onClose }) => {
                         name="name"
                         required
                         className="modal-input"
-                        style={{ '--focus-color': MY_CLASSES.CLASS_MODAL_BUTTON_BG } as React.CSSProperties}
+                        style={{ '--focus-color': MODALS.CLASS.PRIMARY_BG } as React.CSSProperties}
                         placeholder="e.g., AP History"
                     />
                 </div>
@@ -57,7 +54,7 @@ export const AddClassModal: React.FC<ModalProps> = ({ onClose }) => {
                             type="text"
                             name="teacherName"
                             className="modal-input"
-                            style={{ '--focus-color': MY_CLASSES.CLASS_MODAL_BUTTON_BG } as React.CSSProperties}
+                            style={{ '--focus-color': MODALS.CLASS.PRIMARY_BG } as React.CSSProperties}
                             placeholder="e.g., Ms. Johnson"
                         />
                     </div>
@@ -67,7 +64,7 @@ export const AddClassModal: React.FC<ModalProps> = ({ onClose }) => {
                             type="text"
                             name="roomNumber"
                             className="modal-input"
-                            style={{ '--focus-color': MY_CLASSES.CLASS_MODAL_BUTTON_BG } as React.CSSProperties}
+                            style={{ '--focus-color': MODALS.CLASS.PRIMARY_BG } as React.CSSProperties}
                             placeholder="e.g., B105"
                         />
                     </div>
@@ -77,7 +74,7 @@ export const AddClassModal: React.FC<ModalProps> = ({ onClose }) => {
                 <div>
                     <label className="block text-sm font-medium text-gray-400 mb-2">Color Code</label>
                     <div className="color-tile-grid">
-                        {MY_CLASSES.CLASS_COLORS.map(color => (
+                        {MODALS.CLASS.COLORS.map(color => (
                             <div
                                 key={color}
                                 onClick={() => setSelectedColor(color)}
@@ -95,10 +92,10 @@ export const AddClassModal: React.FC<ModalProps> = ({ onClose }) => {
                         onClick={onClose}
                         className="modal-btn modal-btn-cancel modal-btn-inline"
                         style={{
-                            '--modal-btn-bg': GLOBAL.CANCEL_BUTTON_BG,
-                            '--modal-btn-bg-hover': GLOBAL.CANCEL_BUTTON_BG_HOVER,
-                            '--modal-btn-text': GLOBAL.CANCEL_BUTTON_TEXT,
-                            '--modal-btn-border': GLOBAL.CANCEL_BUTTON_BORDER
+                            '--modal-btn-bg': MODALS.BASE.CANCEL_BG,
+                            '--modal-btn-bg-hover': MODALS.BASE.CANCEL_BG_HOVER,
+                            '--modal-btn-text': MODALS.BASE.CANCEL_TEXT,
+                            '--modal-btn-border': MODALS.BASE.CANCEL_BORDER
                         } as React.CSSProperties}
                     >
                         Cancel
@@ -107,9 +104,9 @@ export const AddClassModal: React.FC<ModalProps> = ({ onClose }) => {
                         type="submit"
                         className="modal-btn modal-btn-inline"
                         style={{
-                            '--modal-btn-bg': MY_CLASSES.CLASS_MODAL_BUTTON_BG,
-                            '--modal-btn-bg-hover': MY_CLASSES.CLASS_MODAL_BUTTON_BG_HOVER,
-                            '--modal-btn-text': '#ffffff'
+                            '--modal-btn-bg': MODALS.CLASS.PRIMARY_BG,
+                            '--modal-btn-bg-hover': MODALS.CLASS.PRIMARY_BG_HOVER,
+                            '--modal-btn-text': MODALS.CLASS.PRIMARY_TEXT
                         } as React.CSSProperties}
                     >
                         Create Class
@@ -138,8 +135,8 @@ export const EditClassModal: React.FC<ClassModalProps> = ({ onClose, classId }) 
     };
 
     return (
-        <div className="modal-container" style={{ backgroundColor: GLOBAL.MODAL_BG }}>
-            <h2 className="text-xl font-bold mb-4" style={{ color: MY_CLASSES.CLASS_TEXT_THEME }}>Edit Class Details</h2>
+        <div className="modal-container" style={{ backgroundColor: MODALS.BASE.BG }}>
+            <h2 className="text-xl font-bold mb-4" style={{ color: MODALS.CLASS.HEADING }}>Edit Class Details</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
                 {/* Row 1: Class Name */}
                 <div>
@@ -150,7 +147,7 @@ export const EditClassModal: React.FC<ClassModalProps> = ({ onClose, classId }) 
                         onChange={e => setFormData({ ...formData, name: e.target.value })}
                         required
                         className="modal-input"
-                        style={{ '--focus-color': MY_CLASSES.CLASS_MODAL_BUTTON_BG } as React.CSSProperties}
+                        style={{ '--focus-color': MODALS.CLASS.PRIMARY_BG } as React.CSSProperties}
                     />
                 </div>
 
@@ -163,7 +160,7 @@ export const EditClassModal: React.FC<ClassModalProps> = ({ onClose, classId }) 
                             value={formData.teacherName}
                             onChange={e => setFormData({ ...formData, teacherName: e.target.value })}
                             className="modal-input"
-                            style={{ '--focus-color': MY_CLASSES.CLASS_MODAL_BUTTON_BG } as React.CSSProperties}
+                            style={{ '--focus-color': MODALS.CLASS.PRIMARY_BG } as React.CSSProperties}
                             placeholder="e.g., Ms. Johnson"
                         />
                     </div>
@@ -174,7 +171,7 @@ export const EditClassModal: React.FC<ClassModalProps> = ({ onClose, classId }) 
                             value={formData.roomNumber}
                             onChange={e => setFormData({ ...formData, roomNumber: e.target.value })}
                             className="modal-input"
-                            style={{ '--focus-color': MY_CLASSES.CLASS_MODAL_BUTTON_BG } as React.CSSProperties}
+                            style={{ '--focus-color': MODALS.CLASS.PRIMARY_BG } as React.CSSProperties}
                             placeholder="e.g., B105"
                         />
                     </div>
@@ -184,7 +181,7 @@ export const EditClassModal: React.FC<ClassModalProps> = ({ onClose, classId }) 
                 <div>
                     <label className="block text-sm font-medium text-gray-400 mb-2">Color Code</label>
                     <div className="color-tile-grid">
-                        {MY_CLASSES.CLASS_COLORS.map(color => (
+                        {MODALS.CLASS.COLORS.map(color => (
                             <div
                                 key={color}
                                 onClick={() => setFormData({ ...formData, color })}
@@ -200,9 +197,9 @@ export const EditClassModal: React.FC<ClassModalProps> = ({ onClose, classId }) 
                         onClick={() => { onClose(); openModal('delete-class', classId); }}
                         className="modal-btn modal-btn-inline"
                         style={{
-                            '--modal-btn-bg': GLOBAL.DELETE_BUTTON_BG,
-                            '--modal-btn-bg-hover': GLOBAL.DELETE_BUTTON_BG_HOVER,
-                            '--modal-btn-text': GLOBAL.DELETE_BUTTON_TEXT
+                            '--modal-btn-bg': MODALS.BASE.DELETE_BG,
+                            '--modal-btn-bg-hover': MODALS.BASE.DELETE_BG_HOVER,
+                            '--modal-btn-text': MODALS.BASE.DELETE_TEXT
                         } as React.CSSProperties}
                     >
                         Delete
@@ -213,10 +210,10 @@ export const EditClassModal: React.FC<ClassModalProps> = ({ onClose, classId }) 
                             onClick={onClose}
                             className="modal-btn modal-btn-cancel modal-btn-inline"
                             style={{
-                                '--modal-btn-bg': GLOBAL.CANCEL_BUTTON_BG,
-                                '--modal-btn-bg-hover': GLOBAL.CANCEL_BUTTON_BG_HOVER,
-                                '--modal-btn-text': GLOBAL.CANCEL_BUTTON_TEXT,
-                                '--modal-btn-border': GLOBAL.CANCEL_BUTTON_BORDER
+                                '--modal-btn-bg': MODALS.BASE.CANCEL_BG,
+                                '--modal-btn-bg-hover': MODALS.BASE.CANCEL_BG_HOVER,
+                                '--modal-btn-text': MODALS.BASE.CANCEL_TEXT,
+                                '--modal-btn-border': MODALS.BASE.CANCEL_BORDER
                             } as React.CSSProperties}
                         >
                             Cancel
@@ -225,9 +222,9 @@ export const EditClassModal: React.FC<ClassModalProps> = ({ onClose, classId }) 
                             type="submit"
                             className="modal-btn modal-btn-inline"
                             style={{
-                                '--modal-btn-bg': MY_CLASSES.CLASS_MODAL_BUTTON_BG,
-                                '--modal-btn-bg-hover': MY_CLASSES.CLASS_MODAL_BUTTON_BG_HOVER,
-                                '--modal-btn-text': '#ffffff'
+                                '--modal-btn-bg': MODALS.CLASS.PRIMARY_BG,
+                                '--modal-btn-bg-hover': MODALS.CLASS.PRIMARY_BG_HOVER,
+                                '--modal-btn-text': MODALS.CLASS.PRIMARY_TEXT
                             } as React.CSSProperties}
                         >
                             Save Changes
@@ -251,9 +248,9 @@ export const DeleteClassModal: React.FC<ClassModalProps> = ({ onClose, classId }
     };
 
     return (
-        <div className="modal-container" style={{ backgroundColor: GLOBAL.MODAL_BG }}>
-            <h2 className="text-xl font-bold mb-4 text-red-400">Delete Class?</h2>
-            <p className="text-gray-300 mb-4" style={{ color: GLOBAL.MODAL_DELETE_BODY }}>
+        <div className="modal-container" style={{ backgroundColor: MODALS.BASE.BG }}>
+            <h2 className="text-xl font-bold mb-4" style={{ color: MODALS.BASE.DELETE_HEADING }}>Delete Class?</h2>
+            <p className="text-gray-300 mb-4" style={{ color: MODALS.BASE.DELETE_BODY }}>
                 Are you sure you want to delete <strong>{classToDelete.name}</strong>? This will delete all assignments from this class.
             </p>
             <div className="flex justify-end space-x-3">
@@ -261,10 +258,10 @@ export const DeleteClassModal: React.FC<ClassModalProps> = ({ onClose, classId }
                     onClick={onClose}
                     className="modal-btn modal-btn-cancel modal-btn-inline"
                     style={{
-                        '--modal-btn-bg': GLOBAL.CANCEL_BUTTON_BG,
-                        '--modal-btn-bg-hover': GLOBAL.CANCEL_BUTTON_BG_HOVER,
-                        '--modal-btn-text': GLOBAL.CANCEL_BUTTON_TEXT,
-                        '--modal-btn-border': GLOBAL.CANCEL_BUTTON_BORDER
+                        '--modal-btn-bg': MODALS.BASE.CANCEL_BG,
+                        '--modal-btn-bg-hover': MODALS.BASE.CANCEL_BG_HOVER,
+                        '--modal-btn-text': MODALS.BASE.CANCEL_TEXT,
+                        '--modal-btn-border': MODALS.BASE.CANCEL_BORDER
                     } as React.CSSProperties}
                 >
                     Cancel
@@ -273,9 +270,9 @@ export const DeleteClassModal: React.FC<ClassModalProps> = ({ onClose, classId }
                     onClick={handleDelete}
                     className="modal-btn modal-btn-inline"
                     style={{
-                        '--modal-btn-bg': GLOBAL.DELETE_BUTTON_BG,
-                        '--modal-btn-bg-hover': GLOBAL.DELETE_BUTTON_BG_HOVER,
-                        '--modal-btn-text': GLOBAL.DELETE_BUTTON_TEXT
+                        '--modal-btn-bg': MODALS.BASE.DELETE_BG,
+                        '--modal-btn-bg-hover': MODALS.BASE.DELETE_BG_HOVER,
+                        '--modal-btn-text': MODALS.BASE.DELETE_TEXT
                     } as React.CSSProperties}
                 >
                     Delete Class
