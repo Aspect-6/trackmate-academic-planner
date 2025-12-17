@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { useApp } from '@/app/context/AppContext';
-import { todayString, dateToLocalISOString, parseDateLocal } from '@/app/lib/utils';
-import CalendarSidePanel from '@/pages/Calendar/components/CalendarSidePanel';
-import CalendarHeader from '@/pages/Calendar/components/CalendarHeader';
-import CalendarGrid from '@/pages/Calendar/components/CalendarGrid';
 import { Assignment, Event, NoSchoolPeriod } from '@/app/types';
 import { CALENDAR } from '@/app/styles/colors';
-
+import { todayString, dateToLocalISOString, parseDateLocal } from '@/app/lib/utils';
+import CalendarGrid from './components/CalendarGrid';
+import CalendarSidePanel from './components/CalendarSidePanel';
+import CalendarHeader, { PrevButton, NextButton, MonthTitle } from './components/CalendarHeader';
 import './index.css';
 
 const Calendar: React.FC = () => {
@@ -68,11 +67,11 @@ const Calendar: React.FC = () => {
                     boxShadow: CALENDAR.CONTAINER_SHADOW,
                 }}
             >
-                <CalendarHeader
-                    monthName={monthName}
-                    onPrevMonth={() => changeMonth(-1)}
-                    onNextMonth={() => changeMonth(1)}
-                />
+                <CalendarHeader>
+                    <PrevButton onClick={() => changeMonth(-1)} />
+                    <MonthTitle monthName={monthName} />
+                    <NextButton onClick={() => changeMonth(1)} />
+                </CalendarHeader>
 
                 <div className="calendar-main-container flex flex-grow overflow-hidden relative">
                     <CalendarGrid

@@ -1,6 +1,15 @@
 import { Assignment, Event, NoSchoolPeriod, Class } from '@/app/types';
 
-// Types related to the Calendar UI (grid + per-day components)
+// Props/types for the CalendarHeader component subtree
+export interface CalendarHeaderButtonProps {
+    onClick: () => void;
+}
+
+export interface MonthTitleProps {
+    monthName: string;
+}
+
+// Types related to the Calendar UI
 export interface CalendarHeaderProps {
     monthName: string;
     onPrevMonth: () => void;
