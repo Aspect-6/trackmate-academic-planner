@@ -3,10 +3,10 @@ import { useApp } from '@/app/context/AppContext';
 import { X } from 'lucide-react';
 import { dateToLocalISOString } from '@/app/lib/utils';
 import { CalendarSidePanelProps } from '@/pages/Calendar/types';
-import SidePanelDayInfo from '@/pages/Calendar/components/CalendarSidePanel/SidePanelDayInfo';
-import SidePanelClasses from '@/pages/Calendar/components/CalendarSidePanel/SidePanelClasses';
-import SidePanelAssignments from '@/pages/Calendar/components/CalendarSidePanel/SidePanelAssignments';
-import SidePanelEvents from '@/pages/Calendar/components/CalendarSidePanel/SidePanelEvents';
+import SidePanelDayInfo from './SidePanelDayInfo';
+import SidePanelClasses from './SidePanelClasses';
+import SidePanelAssignments from './SidePanelAssignments';
+import SidePanelEvents from './SidePanelEvents';
 import { CALENDAR } from '@/app/styles/colors';
 
 const CalendarSidePanel = ({ date, onClose }: CalendarSidePanelProps) => {
