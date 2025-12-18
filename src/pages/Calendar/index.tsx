@@ -1,61 +1,31 @@
-import React, { useState } from 'react';
+import React, { useCallback } from 'react';
+import { X } from 'lucide-react';
 import { useApp } from '@/app/context/AppContext';
-import { Assignment, Event, NoSchoolPeriod } from '@/app/types';
+import { useCalendar } from './hooks/useCalendar';
 import { CALENDAR } from '@/app/styles/colors';
-import { todayString, dateToLocalISOString, parseDateLocal } from '@/app/lib/utils';
-import CalendarGrid from './components/CalendarGrid';
-import CalendarSidePanel from './components/CalendarSidePanel';
 import CalendarHeader, { PrevButton, NextButton, MonthTitle } from './components/CalendarHeader';
+import CalendarBody from './components/CalendarBody';
+import CalendarGrid, { CalendarGridDayHeader, CalendarDay, CalendarGridEmptyDay } from './components/CalendarBody/CalendarGrid';
+import CalendarSidePanel, { DayType, ClassList, AssignmentList, EventList, NoSchoolInfo, DayTypeDisplay, CalendarSidePanelHeader, CalendarSidePanelBody, DateDisplay, CloseButton } from './components/CalendarBody/CalendarSidePanel';
+
 import './index.css';
 
 const Calendar: React.FC = () => {
-    const { assignments, events, noSchool, getClassById, openModal } = useApp();
-    const [currentDate, setCurrentDate] = useState(new Date());
-    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+    const { getClassById, openModal } = useApp();
+    const {
+        setSelectedDate,
+        changeMonth,
+        sidePanelData,
+        calendarCells,
+        monthName,
+        month,
+        year
+    } = useCalendar();
 
-    const changeMonth = (offset: number) => {
-        const newDate = new Date(currentDate);
-        newDate.setMonth(newDate.getMonth() + offset);
-        setCurrentDate(newDate);
-        setSelectedDate(null); // Close side panel
-    };
-
-    const month = currentDate.getMonth();
-    const year = currentDate.getFullYear();
-    const monthName = currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-    const todayStr = todayString();
-
-    // Prepare data maps
-    const assignmentsByDate = assignments.reduce<Record<string, Assignment[]>>((acc, a) => {
-        if (a.dueDate) {
-            if (!acc[a.dueDate]) acc[a.dueDate] = [];
-            acc[a.dueDate]!.push(a);
-        }
-        return acc;
-    }, {});
-
-    const eventsByDate = events.reduce<Record<string, Event[]>>((acc, e) => {
-        if (e.date) {
-            if (!acc[e.date]) acc[e.date] = [];
-            acc[e.date]!.push(e);
-        }
-        return acc;
-    }, {});
-
-    const noSchoolByDate: Record<string, NoSchoolPeriod> = {};
-    noSchool.forEach(ns => {
-        const start = parseDateLocal(ns.startDate);
-        const end = parseDateLocal(ns.endDate);
-        for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
-            const dateStr = dateToLocalISOString(d);
-            noSchoolByDate[dateStr] = ns;
-        }
-    });
-
-    const getClassColor = (classId: string) => {
+    const getClassColor = useCallback((classId: string) => {
         const linkedClass = getClassById(classId);
         return linkedClass ? linkedClass.color : CALENDAR.DEFAULT_CLASS_COLOR;
-    };
+    }, [getClassById]);
 
     return (
         <div className="calendar-page flex-1 min-h-0 flex flex-col">
@@ -63,7 +33,7 @@ const Calendar: React.FC = () => {
                 className="p-4 md:p-6 rounded-xl overflow-hidden flex flex-col h-full"
                 style={{
                     backgroundColor: CALENDAR.BG_COLOR,
-                    border: `1px solid ${CALENDAR.BORDER_COLOR}`,
+                    border: `1px solid ${CALENDAR.BORDER_COLOR} `,
                     boxShadow: CALENDAR.CONTAINER_SHADOW,
                 }}
             >
@@ -73,24 +43,52 @@ const Calendar: React.FC = () => {
                     <NextButton onClick={() => changeMonth(1)} />
                 </CalendarHeader>
 
-                <div className="calendar-main-container flex flex-grow overflow-hidden relative">
-                    <CalendarGrid
-                        year={year}
-                        month={month}
-                        todayStr={todayStr}
-                        assignmentsByDate={assignmentsByDate}
-                        eventsByDate={eventsByDate}
-                        noSchoolByDate={noSchoolByDate}
-                        onSelectDate={setSelectedDate}
-                        onAssignmentClick={(id) => openModal('edit-assignment', id)}
-                        onEventClick={(id) => openModal('edit-event', id)}
-                        getClassColor={getClassColor}
-                    />
+                <CalendarBody>
+                    <CalendarGrid>
+                        <CalendarGridDayHeader backgroundColor={CALENDAR.DAY_HEADER_BG} textColor={CALENDAR.DAY_HEADER_TEXT} />
 
-                    {selectedDate && (
-                        <CalendarSidePanel date={selectedDate} onClose={() => setSelectedDate(null)} />
-                    )}
-                </div>
+                        {calendarCells.map((cell) => {
+                            if (cell.type === 'empty') {
+                                return <CalendarGridEmptyDay key={cell.key} />;
+                            }
+                            return (
+                                <CalendarDay
+                                    key={cell.key}
+                                    day={cell.day}
+                                    month={month}
+                                    year={year}
+                                    isToday={cell.isToday}
+                                    noSchool={cell.noSchool}
+                                    assignments={cell.assignments}
+                                    events={cell.events}
+                                    onSelectDate={setSelectedDate}
+                                    onAssignmentClick={(id) => openModal('edit-assignment', id)}
+                                    onEventClick={(id) => openModal('edit-event', id)}
+                                    getClassColor={getClassColor}
+                                />
+                            );
+                        })}
+                    </CalendarGrid>
+
+                    <CalendarSidePanel date={sidePanelData?.date || null} onClose={() => setSelectedDate(null)}>
+                        <CalendarSidePanelHeader>
+                            <DateDisplay>{sidePanelData?.formattedDate}</DateDisplay>
+                            <CloseButton onClick={() => setSelectedDate(null)}>
+                                <X className="w-6 h-6" />
+                            </CloseButton>
+                        </CalendarSidePanelHeader>
+
+                        <CalendarSidePanelBody>
+                            <DayType noSchoolDay={sidePanelData?.noSchoolDay || undefined} dayType={sidePanelData?.dayType || null} onNoSchoolClick={(id) => openModal('edit-no-school', id)}>
+                                <NoSchoolInfo noSchoolDay={sidePanelData?.noSchoolDay || undefined} />
+                                <DayTypeDisplay dayType={sidePanelData?.dayType || null} />
+                            </DayType>
+                            <ClassList classes={sidePanelData?.classes || []} noSchoolDay={sidePanelData?.noSchoolDay || undefined} getClassById={getClassById} />
+                            <AssignmentList assignments={sidePanelData?.dueAssignments || []} getClassById={getClassById} onAssignmentClick={(id) => openModal('edit-assignment', id)} />
+                            <EventList events={sidePanelData?.dayEvents || []} onEventClick={(id) => openModal('edit-event', id)} />
+                        </CalendarSidePanelBody>
+                    </CalendarSidePanel>
+                </CalendarBody>
             </div>
         </div>
     );

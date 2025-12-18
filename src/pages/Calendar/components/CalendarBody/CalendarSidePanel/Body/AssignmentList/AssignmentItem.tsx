@@ -1,8 +1,15 @@
 import React, { useState } from 'react';
+import { Assignment } from '@/app/types';
 import { SidePanelAssignmentsProps } from '@/pages/Calendar/types';
 import { CALENDAR } from '@/app/styles/colors';
 
-const AssignmentItem = ({ assignment, getClassById, onAssignmentClick }: { assignment: any, getClassById: any, onAssignmentClick: any }) => {
+interface AssignmentItemProps {
+    assignment: Assignment;
+    getClassById: SidePanelAssignmentsProps['getClassById'];
+    onAssignmentClick: SidePanelAssignmentsProps['onAssignmentClick'];
+}
+
+const AssignmentItem: React.FC<AssignmentItemProps> = ({ assignment, getClassById, onAssignmentClick }) => {
     const [isHovered, setIsHovered] = useState(false);
     const linkedClass = getClassById(assignment.classId);
     const classColor = linkedClass ? linkedClass.color : CALENDAR.DEFAULT_CLASS_COLOR;
@@ -63,26 +70,4 @@ const AssignmentItem = ({ assignment, getClassById, onAssignmentClick }: { assig
     );
 };
 
-const SidePanelAssignments: React.FC<SidePanelAssignmentsProps> = ({ assignments, getClassById, onAssignmentClick }) => {
-    return (
-        <div>
-            <h4 className="text-md font-semibold mb-2" style={{ color: CALENDAR.ASSIGNMENT_HEADING }}>Assignments Due</h4>
-            <div className="space-y-2">
-                {assignments.length > 0 ? (
-                    assignments.map(assignment => (
-                        <AssignmentItem 
-                            key={assignment.id} 
-                            assignment={assignment} 
-                            getClassById={getClassById} 
-                            onAssignmentClick={onAssignmentClick} 
-                        />
-                    ))
-                ) : (
-                    <p className="text-sm italic" style={{ color: CALENDAR.SIDE_PANEL_DIM_TEXT }}>No assignments due</p>
-                )}
-            </div>
-        </div>
-    );
-};
-
-export default SidePanelAssignments;
+export default React.memo(AssignmentItem);

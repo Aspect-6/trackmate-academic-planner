@@ -56,9 +56,8 @@ export interface EventItemProps {
 
 // Props/types for the CalendarGrid component subtree
 export interface CalendarGridDayHeaderProps {
-    day: string;
-    backgroundColor: string;
-    textColor: string;
+    backgroundColor?: string;
+    textColor?: string;
 }
 
 export interface CalendarDayContainerProps {
@@ -100,13 +99,13 @@ export interface CalendarSidePanelProps {
     onClose: () => void;
 }
 
-export interface SidePanelDayInfoProps {
+export interface DayTypeProps {
     noSchoolDay?: NoSchoolPeriod;
     dayType: 'A' | 'B' | null;
     onNoSchoolClick?: (id: string) => void;
 }
 
-export interface SidePanelClassesProps {
+export interface ClassListProps {
     classes: (string | null)[];
     noSchoolDay?: NoSchoolPeriod;
     getClassById: (id: string) => Class | undefined;
@@ -118,7 +117,28 @@ export interface SidePanelAssignmentsProps {
     onAssignmentClick: (id: string) => void;
 }
 
-export interface SidePanelEventsProps {
+export interface CalendarSidePanelEventsProps {
     events: Event[];
     onEventClick: (id: string) => void;
 }
+
+// Calendar Hooks Types
+interface BaseCalendarCell {
+    key: string;
+}
+
+export interface EmptyCalendarCell extends BaseCalendarCell {
+    type: 'empty';
+}
+
+export interface DayCalendarCell extends BaseCalendarCell {
+    type: 'day';
+    day: number;
+    dateString: string;
+    isToday: boolean;
+    noSchool: NoSchoolPeriod | undefined;
+    assignments: Assignment[];
+    events: Event[];
+}
+
+export type CalendarCell = EmptyCalendarCell | DayCalendarCell;

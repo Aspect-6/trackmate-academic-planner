@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
-import { SidePanelEventsProps } from '@/pages/Calendar/types';
+import { Event } from '@/app/types';
+import { CalendarSidePanelEventsProps } from '@/pages/Calendar/types';
 import { CALENDAR } from '@/app/styles/colors';
 
-const EventItem = ({ event, onEventClick }: { event: any, onEventClick: any }) => {
+interface EventItemProps {
+    event: Event;
+    onEventClick: CalendarSidePanelEventsProps['onEventClick'];
+}
+
+const EventItem: React.FC<EventItemProps> = ({ event, onEventClick }) => {
     const [isHovered, setIsHovered] = useState(false);
-    
+
     const formatEventTime = (start: string | null, end: string | null) => {
         if (!start && !end) return 'All day';
         if (start && !end) {
@@ -36,21 +42,4 @@ const EventItem = ({ event, onEventClick }: { event: any, onEventClick: any }) =
     );
 };
 
-const SidePanelEvents: React.FC<SidePanelEventsProps> = ({ events, onEventClick }) => {
-    return (
-        <div>
-            <h4 className="text-md font-semibold mb-2" style={{ color: CALENDAR.EVENT_HEADING }}>Events</h4>
-            <div className="space-y-2">
-                {events.length > 0 ? (
-                    events.map(event => (
-                        <EventItem key={event.id} event={event} onEventClick={onEventClick} />
-                    ))
-                ) : (
-                    <p className="text-sm italic" style={{ color: CALENDAR.SIDE_PANEL_DIM_TEXT }}>No events scheduled</p>
-                )}
-            </div>
-        </div>
-    );
-};
-
-export default SidePanelEvents;
+export default React.memo(EventItem);

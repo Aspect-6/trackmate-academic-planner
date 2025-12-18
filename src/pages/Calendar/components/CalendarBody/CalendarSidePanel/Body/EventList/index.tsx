@@ -1,0 +1,23 @@
+import React from 'react';
+import { CalendarSidePanelEventsProps } from '@/pages/Calendar/types';
+import EventItem from './EventItem';
+import { CALENDAR } from '@/app/styles/colors';
+
+const EventList: React.FC<CalendarSidePanelEventsProps> = ({ events, onEventClick }) => {
+    return (
+        <div>
+            <h4 className="text-md font-semibold mb-2" style={{ color: CALENDAR.EVENT_HEADING }}>Events</h4>
+            <div className="space-y-2">
+                {events.length > 0 ? (
+                    events.map(event => (
+                        <EventItem key={event.id} event={event} onEventClick={onEventClick} />
+                    ))
+                ) : (
+                    <p className="text-sm italic" style={{ color: CALENDAR.SIDE_PANEL_DIM_TEXT }}>No events scheduled</p>
+                )}
+            </div>
+        </div>
+    );
+};
+
+export default EventList;
