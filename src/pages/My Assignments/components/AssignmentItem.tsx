@@ -2,9 +2,10 @@ import React from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { GripVertical } from 'lucide-react';
-import { formatDate, cn } from '@/app/lib/utils';
+import { formatDate } from '@/app/lib/utils';
 import { AssignmentItemProps } from '@/pages/My Assignments/types';
 import { MY_ASSIGNMENTS } from '@/app/styles/colors';
+import PriorityBadge from '@/app/components/PriorityBadge';
 
 const AssignmentItem: React.FC<AssignmentItemProps> = ({
     assignment,
@@ -38,32 +39,6 @@ const AssignmentItem: React.FC<AssignmentItemProps> = ({
         willChange: 'transform',
     };
 
-    const getPriorityStyles = (p: string) => {
-        switch (p) {
-            case 'High': return {
-                backgroundColor: MY_ASSIGNMENTS.PRIORITY_HIGH_BG,
-                borderColor: MY_ASSIGNMENTS.PRIORITY_HIGH_BORDER,
-                color: MY_ASSIGNMENTS.PRIORITY_HIGH_TEXT
-            };
-            case 'Medium': return {
-                backgroundColor: MY_ASSIGNMENTS.PRIORITY_MEDIUM_BG,
-                borderColor: MY_ASSIGNMENTS.PRIORITY_MEDIUM_BORDER,
-                color: MY_ASSIGNMENTS.PRIORITY_MEDIUM_TEXT
-            };
-            case 'Low': return {
-                backgroundColor: MY_ASSIGNMENTS.PRIORITY_LOW_BG,
-                borderColor: MY_ASSIGNMENTS.PRIORITY_LOW_BORDER,
-                color: MY_ASSIGNMENTS.PRIORITY_LOW_TEXT
-            };
-            default: return {
-                backgroundColor: MY_ASSIGNMENTS.ITEM_BG,
-                borderColor: MY_ASSIGNMENTS.BORDER_SECONDARY,
-                color: MY_ASSIGNMENTS.TEXT_MUTED
-            };
-        }
-    };
-
-    const priorityStyle = getPriorityStyles(priority);
 
     const cardStyle: React.CSSProperties = {
         ...dragStyle,
@@ -99,12 +74,10 @@ const AssignmentItem: React.FC<AssignmentItemProps> = ({
                 <p className="text-xs mb-2" style={{ color: classColor, fontWeight: 600 }}>{className}</p>
                 <div className="flex justify-between items-center">
                     <span className="text-xs font-medium" style={{ color: MY_ASSIGNMENTS.ITEM_SUBTEXT }}>Due: {formatDate(dueDate)}</span>
-                    <span
-                        className={cn("inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border")}
-                        style={priorityStyle}
-                    >
-                        {priority}
-                    </span>
+                    <PriorityBadge
+                        priority={priority}
+                        className="px-2 py-0.5"
+                    />
                 </div>
             </div>
         </div>

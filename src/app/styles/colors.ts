@@ -74,6 +74,22 @@ export const GLOBAL = {
     DELETE_BUTTON_BG: 'var(--delete-button-bg)',
     DELETE_BUTTON_BG_HOVER: 'var(--delete-button-bg-hover)',
     DELETE_BUTTON_TEXT: 'var(--delete-text-white)',
+
+    // Global Priority Colors
+    PRIORITY_HIGH_BG: 'var(--priority-high-bg)',
+    PRIORITY_HIGH_BORDER: 'var(--priority-high-border)',
+    PRIORITY_HIGH_TEXT: 'var(--priority-high-text)',
+    PRIORITY_MEDIUM_BG: 'var(--priority-medium-bg)',
+    PRIORITY_MEDIUM_BORDER: 'var(--priority-medium-border)',
+    PRIORITY_MEDIUM_TEXT: 'var(--priority-medium-text)',
+    PRIORITY_LOW_BG: 'var(--priority-low-bg)',
+    PRIORITY_LOW_BORDER: 'var(--priority-low-border)',
+    PRIORITY_LOW_TEXT: 'var(--priority-low-text)',
+
+    // Global Status Colors
+    STATUS_DONE_TAG_BG: 'var(--status-done-bg)',
+    STATUS_DONE_TAG_BORDER: 'var(--status-done-border)',
+    STATUS_DONE_TAG_TEXT: 'var(--status-done-text)',
 }
 
 // Dashboard page
@@ -100,17 +116,17 @@ export const DASHBOARD = {
     PRIORITY_LOW: 'var(--dashboard-priority-low)',
 
     // Priority Badge Styles
-    PRIORITY_HIGH_BG: 'var(--dashboard-priority-high-bg)',
-    PRIORITY_HIGH_BORDER: 'var(--dashboard-priority-high-border)',
-    PRIORITY_HIGH_TEXT: 'var(--dashboard-priority-high-text)',
+    PRIORITY_HIGH_BG: GLOBAL.PRIORITY_HIGH_BG,
+    PRIORITY_HIGH_BORDER: GLOBAL.PRIORITY_HIGH_BORDER,
+    PRIORITY_HIGH_TEXT: GLOBAL.PRIORITY_HIGH_TEXT,
 
-    PRIORITY_MEDIUM_BG: 'var(--dashboard-priority-medium-bg)',
-    PRIORITY_MEDIUM_BORDER: 'var(--dashboard-priority-medium-border)',
-    PRIORITY_MEDIUM_TEXT: 'var(--dashboard-priority-medium-text)',
+    PRIORITY_MEDIUM_BG: GLOBAL.PRIORITY_MEDIUM_BG,
+    PRIORITY_MEDIUM_BORDER: GLOBAL.PRIORITY_MEDIUM_BORDER,
+    PRIORITY_MEDIUM_TEXT: GLOBAL.PRIORITY_MEDIUM_TEXT,
 
-    PRIORITY_LOW_BG: 'var(--dashboard-priority-low-bg)',
-    PRIORITY_LOW_BORDER: 'var(--dashboard-priority-low-border)',
-    PRIORITY_LOW_TEXT: 'var(--dashboard-priority-low-text)',
+    PRIORITY_LOW_BG: GLOBAL.PRIORITY_LOW_BG,
+    PRIORITY_LOW_BORDER: GLOBAL.PRIORITY_LOW_BORDER,
+    PRIORITY_LOW_TEXT: GLOBAL.PRIORITY_LOW_TEXT,
 
     // Icon Colors
     ICON_PLAY_DEFAULT: 'var(--dashboard-icon-play-default)',
@@ -186,20 +202,20 @@ export const CALENDAR = {
     B_DAY_TEXT: 'var(--calendar-b-day-text)',
 
     // Priorities & Status
-    PRIORITY_HIGH_BG: 'var(--calendar-priority-high-bg)',
-    PRIORITY_HIGH_BORDER: 'var(--calendar-priority-high-border)',
-    PRIORITY_HIGH_TEXT: 'var(--calendar-priority-high-text)',
-    PRIORITY_MEDIUM_BG: 'var(--calendar-priority-medium-bg)',
-    PRIORITY_MEDIUM_BORDER: 'var(--calendar-priority-medium-border)',
-    PRIORITY_MEDIUM_TEXT: 'var(--calendar-priority-medium-text)',
-    PRIORITY_LOW_BG: 'var(--calendar-priority-low-bg)',
-    PRIORITY_LOW_BORDER: 'var(--calendar-priority-low-border)',
-    PRIORITY_LOW_TEXT: 'var(--calendar-priority-low-text)',
+    PRIORITY_HIGH_BG: GLOBAL.PRIORITY_HIGH_BG,
+    PRIORITY_HIGH_BORDER: GLOBAL.PRIORITY_HIGH_BORDER,
+    PRIORITY_HIGH_TEXT: GLOBAL.PRIORITY_HIGH_TEXT,
+    PRIORITY_MEDIUM_BG: GLOBAL.PRIORITY_MEDIUM_BG,
+    PRIORITY_MEDIUM_BORDER: GLOBAL.PRIORITY_MEDIUM_BORDER,
+    PRIORITY_MEDIUM_TEXT: GLOBAL.PRIORITY_MEDIUM_TEXT,
+    PRIORITY_LOW_BG: GLOBAL.PRIORITY_LOW_BG,
+    PRIORITY_LOW_BORDER: GLOBAL.PRIORITY_LOW_BORDER,
+    PRIORITY_LOW_TEXT: GLOBAL.PRIORITY_LOW_TEXT,
 
     STATUS_DONE_TEXT: 'var(--calendar-status-done-text)',
-    STATUS_DONE_TAG_BG: 'var(--calendar-status-done-tag-bg)',
-    STATUS_DONE_TAG_TEXT: 'var(--calendar-status-done-tag-text)',
-    STATUS_DONE_TAG_BORDER: 'var(--calendar-status-done-tag-border)',
+    STATUS_DONE_TAG_BG: GLOBAL.STATUS_DONE_TAG_BG,
+    STATUS_DONE_TAG_TEXT: GLOBAL.STATUS_DONE_TAG_TEXT,
+    STATUS_DONE_TAG_BORDER: GLOBAL.STATUS_DONE_TAG_BORDER,
 
     // Default Class Color
     DEFAULT_CLASS_COLOR: 'var(--calendar-default-class-color)',
@@ -225,17 +241,17 @@ export const MY_ASSIGNMENTS = {
     ITEM_SUBTEXT: 'var(--my-assignments-item-subtext)',
     ITEM_SHADOW: 'var(--my-assignments-item-shadow)',
 
-    PRIORITY_HIGH_BG: 'var(--my-assignments-priority-high-bg)',
-    PRIORITY_HIGH_BORDER: 'var(--my-assignments-priority-high-border)',
-    PRIORITY_HIGH_TEXT: 'var(--my-assignments-priority-high-text)',
+    PRIORITY_HIGH_BG: GLOBAL.PRIORITY_HIGH_BG,
+    PRIORITY_HIGH_BORDER: GLOBAL.PRIORITY_HIGH_BORDER,
+    PRIORITY_HIGH_TEXT: GLOBAL.PRIORITY_HIGH_TEXT,
 
-    PRIORITY_MEDIUM_BG: 'var(--my-assignments-priority-medium-bg)',
-    PRIORITY_MEDIUM_BORDER: 'var(--my-assignments-priority-medium-border)',
-    PRIORITY_MEDIUM_TEXT: 'var(--my-assignments-priority-medium-text)',
+    PRIORITY_MEDIUM_BG: GLOBAL.PRIORITY_MEDIUM_BG,
+    PRIORITY_MEDIUM_BORDER: GLOBAL.PRIORITY_MEDIUM_BORDER,
+    PRIORITY_MEDIUM_TEXT: GLOBAL.PRIORITY_MEDIUM_TEXT,
 
-    PRIORITY_LOW_BG: 'var(--my-assignments-priority-low-bg)',
-    PRIORITY_LOW_BORDER: 'var(--my-assignments-priority-low-border)',
-    PRIORITY_LOW_TEXT: 'var(--my-assignments-priority-low-text)',
+    PRIORITY_LOW_BG: GLOBAL.PRIORITY_LOW_BG,
+    PRIORITY_LOW_BORDER: GLOBAL.PRIORITY_LOW_BORDER,
+    PRIORITY_LOW_TEXT: GLOBAL.PRIORITY_LOW_TEXT,
 }
 
 // My Classes page

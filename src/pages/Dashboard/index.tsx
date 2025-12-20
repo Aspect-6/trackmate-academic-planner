@@ -3,7 +3,7 @@ import { useApp } from '@/app/context/AppContext';
 import { todayString } from '@/app/lib/utils';
 import AssignmentCard from '@/pages/Dashboard/components/AssignmentCard';
 import TodaysEvents from '@/pages/Dashboard/components/TodaysEvents';
-import TodaysClasses from '@/pages/Dashboard/components/TodaysClasses';
+import TodaysClasses from '@/pages/Dashboard/components/TodaysClasses/';
 import { DASHBOARD } from '@/app/styles/colors';
 import '@/pages/Dashboard/index.css';
 

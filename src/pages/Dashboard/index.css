@@ -20,23 +20,6 @@
     --dashboard-text-white: hsl(215, 0%, 90%);
     --dashboard-no-school-text: #f87171;
 
-    /* Priority Colors */
-    --dashboard-priority-high: #f87171;
-    --dashboard-priority-medium: #facc15;
-    --dashboard-priority-low: #60a5fa;
-
-    /* Priority Badge Styles */
-    --dashboard-priority-high-bg: rgba(248, 113, 113, 0.15);
-    --dashboard-priority-high-border: rgba(248, 113, 113, 0.4);
-    --dashboard-priority-high-text: #fca5a5;
-
-    --dashboard-priority-medium-bg: rgba(250, 204, 21, 0.15);
-    --dashboard-priority-medium-border: rgba(250, 204, 21, 0.4);
-    --dashboard-priority-medium-text: #fde047;
-
-    --dashboard-priority-low-bg: rgba(96, 165, 250, 0.15);
-    --dashboard-priority-low-border: rgba(96, 165, 250, 0.4);
-    --dashboard-priority-low-text: #93c5fd;
 
     /* Icon Colors */
     --dashboard-icon-play-default: #6b7280;
@@ -72,23 +55,6 @@
     --dashboard-text-white: hsl(215, 25%, 15%);
     --dashboard-no-school-text: hsl(0, 70%, 55%);
 
-    /* Priority Colors */
-    --dashboard-priority-high: hsl(0, 70%, 50%);
-    --dashboard-priority-medium: hsl(45, 90%, 50%);
-    --dashboard-priority-low: hsl(215, 80%, 60%);
-
-    /* Priority Badge Styles */
-    --dashboard-priority-high-bg: hsl(0, 70%, 95%);
-    --dashboard-priority-high-border: hsl(0, 70%, 75%);
-    --dashboard-priority-high-text: hsl(0, 70%, 40%);
-
-    --dashboard-priority-medium-bg: hsl(45, 90%, 95%);
-    --dashboard-priority-medium-border: hsl(45, 90%, 75%);
-    --dashboard-priority-medium-text: hsl(45, 90%, 35%);
-
-    --dashboard-priority-low-bg: hsl(215, 80%, 95%);
-    --dashboard-priority-low-border: hsl(215, 80%, 70%);
-    --dashboard-priority-low-text: hsl(215, 80%, 45%);
 
     /* Icon Colors */
     --dashboard-icon-play-default: hsl(215, 15%, 40%);
@@ -151,9 +117,7 @@
     overflow: hidden;
 }
 
-.dashboard-collapse-inner {
-    /* Removed transitions for smooth height animation */
-}
+/* .dashboard-collapse-inner {} */
 
 @media (max-width: 640px) {
     .assignment-card {

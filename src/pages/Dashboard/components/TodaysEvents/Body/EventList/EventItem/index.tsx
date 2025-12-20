@@ -1,8 +1,8 @@
 import React from 'react';
-import { EventItemProps } from '@/pages/Dashboard/types';
+import type { TodaysEvents } from '@/pages/Dashboard/types';
 import { DASHBOARD } from '@/app/styles/colors';
 
-const EventItem: React.FC<EventItemProps> = ({ event, onClick }) => {
+const EventItem: React.FC<TodaysEvents.Body.EventList.EventItemProps> = ({ event, onClick }) => {
     const formatEventTime = (start: string | null, end: string | null): string => {
         if (!start && !end) return 'All Day';
         if (start && !end) {

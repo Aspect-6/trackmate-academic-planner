@@ -7,8 +7,8 @@
 |        Page       |  Status  |
 | ----------------- | -------- |
 | Calendar          | Done     |
-| Dashboard         | Current  |
-| My Assignments    | To-Do    |
+| Dashboard         | Done     |
+| My Assignments    | Current  |
 | My Classes        | To-Do    |
 | My Schedule       | To-Do    |
 | Settings          | To-Do    |

@@ -18,18 +18,6 @@
     --my-assignments-item-subtext: #9ca3af;
     --my-assignments-item-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 
-    /* Priorities */
-    --my-assignments-priority-high-bg: rgba(248, 113, 113, 0.15);
-    --my-assignments-priority-high-border: rgba(248, 113, 113, 0.4);
-    --my-assignments-priority-high-text: #fca5a5;
-
-    --my-assignments-priority-medium-bg: rgba(250, 204, 21, 0.15);
-    --my-assignments-priority-medium-border: rgba(250, 204, 21, 0.4);
-    --my-assignments-priority-medium-text: #fde047;
-
-    --my-assignments-priority-low-bg: rgba(96, 165, 250, 0.15);
-    --my-assignments-priority-low-border: rgba(96, 165, 250, 0.4);
-    --my-assignments-priority-low-text: #93c5fd;
 
 }
 
@@ -51,18 +39,6 @@
     --my-assignments-item-subtext: hsl(215, 15%, 40%);
     --my-assignments-item-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 
-    /* Priorities */
-    --my-assignments-priority-high-bg: hsl(0, 70%, 95%);
-    --my-assignments-priority-high-border: hsl(0, 70%, 60%);
-    --my-assignments-priority-high-text: hsl(0, 70%, 40%);
-
-    --my-assignments-priority-medium-bg: hsl(40, 80%, 95%);
-    --my-assignments-priority-medium-border: hsl(40, 80%, 60%);
-    --my-assignments-priority-medium-text: hsl(40, 80%, 40%);
-
-    --my-assignments-priority-low-bg: hsl(215, 80%, 95%);
-    --my-assignments-priority-low-border: hsl(215, 80%, 70%);
-    --my-assignments-priority-low-text: hsl(215, 80%, 45%);
 }
 
 /* Assignment Items */
@@ -152,7 +128,7 @@
         width: 100%;
     }
 
-    .my-assignments-page .assignments-col + .assignments-col {
+    .my-assignments-page .assignments-col+.assignments-col {
         margin-top: 0.5rem;
     }
 
@@ -176,7 +152,5 @@
         transition: max-height 0.25s ease;
     }
 
-    .my-assignments-page .assignment-list {
-        /* Removed opacity transition for smooth height animation */
-    }
+    /* .my-assignments-page .assignment-list {} */
 }

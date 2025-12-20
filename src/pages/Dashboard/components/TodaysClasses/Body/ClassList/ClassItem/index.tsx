@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { ClassItemProps } from '@/pages/Dashboard/types';
+import type { TodaysClasses } from '@/pages/Dashboard/types';
 import { DASHBOARD } from '@/app/styles/colors';
 
-const ClassItem: React.FC<ClassItemProps> = ({ classInfo, period, openModal }) => {
+const ClassItem: React.FC<TodaysClasses.Body.ClassList.ClassItemProps> = ({ classInfo, period, openModal }) => {
     const [isHovered, setIsHovered] = useState(false);
 
     return (
@@ -21,11 +21,11 @@ const ClassItem: React.FC<ClassItemProps> = ({ classInfo, period, openModal }) =
             onClick={() => openModal('edit-class', classInfo.id)}
         >
             <div className="flex-1">
-                <p className="font-semibold" style={{ color: DASHBOARD.TEXT_WHITE }}>{classInfo.name}</p>
-                <p className="text-xs" style={{ color: DASHBOARD.TEXT_GRAY_400 }}>Period {period} • {classInfo.teacherName || 'N/A'}</p>
+                <p className="font-semibold text-sm sm:text-base" style={{ color: DASHBOARD.TEXT_WHITE }}>{classInfo.name}</p>
+                <p className="text-xs mt-1" style={{ color: DASHBOARD.TEXT_GRAY_400 }}>Period {period} • {classInfo.teacherName}</p>
             </div>
             <div className="text-right">
-                <p className="text-xs" style={{ color: DASHBOARD.TEXT_GRAY_400 }}>Room: {classInfo.roomNumber || 'N/A'}</p>
+                <p className="text-xs ml-2" style={{ color: DASHBOARD.TEXT_GRAY_400 }}>Room: {classInfo.roomNumber}</p>
             </div>
         </div>
     );
