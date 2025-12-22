@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react'
 import { generateId, todayString, parseDateLocal } from '@/app/lib/utils'
-import { useToast } from '@/app/context/ToastContext'
+import { useToast } from '@/app/contexts/ToastContext'
 import type {
     Assignment,
     AssignmentType,

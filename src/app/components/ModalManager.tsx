@@ -1,5 +1,5 @@
 import React from 'react'
-import { useApp } from '@/app/context/AppContext'
+import { useApp } from '@/app/contexts/AppContext'
 import { AddAssignmentModal, EditAssignmentModal, DeleteAssignmentModal } from '@/app/components/modals/AssignmentModals'
 import { AddClassModal, EditClassModal, DeleteClassModal } from '@/app/components/modals/ClassModals'
 import { AddEventModal, EditEventModal, DeleteEventModal } from '@/app/components/modals/EventModals'

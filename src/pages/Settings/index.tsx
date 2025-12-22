@@ -1,5 +1,5 @@
 import React from 'react'
-import { useApp } from '@/app/context/AppContext'
+import { useApp } from '@/app/contexts/AppContext'
 import { todayString } from '@/app/lib/utils'
 import ScheduleSettings from '@/pages/Settings/components/ScheduleSettings'
 import DangerZone from '@/pages/Settings/components/DangerZone'

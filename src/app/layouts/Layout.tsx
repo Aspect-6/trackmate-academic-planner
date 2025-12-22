@@ -3,7 +3,7 @@ import { Outlet, useLocation } from 'react-router-dom'
 import { Plus, Menu } from 'lucide-react'
 import Sidebar from '@/app/components/Sidebar'
 import MobileSidebar from '@/app/components/MobileSidebar'
-import { useApp } from '@/app/context/AppContext'
+import { useApp } from '@/app/contexts/AppContext'
 import { cn } from '@/app/lib/utils'
 import { GLOBAL, MY_CLASSES } from '@/app/styles/colors'
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useApp } from '@/app/context/AppContext'
+import { useApp } from '@/app/contexts/AppContext'
 import ClassBoard from './components/ClassBoard'
 import './index.css'
 

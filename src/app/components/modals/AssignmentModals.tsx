@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { DEFAULT_ASSIGNMENT_TYPES, useApp } from '@/app/context/AppContext'
-import { useToast } from '@/app/context/ToastContext'
+import { DEFAULT_ASSIGNMENT_TYPES, useApp } from '@/app/contexts/AppContext'
+import { useToast } from '@/app/contexts/ToastContext'
 import { todayString } from '@/app/lib/utils'
 import { Assignment, AssignmentType, Priority, Status } from '@/app/types'
 import { MODALS } from '@/app/styles/colors'

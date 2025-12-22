@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useApp } from '@/app/context/AppContext'
+import { useApp } from '@/app/contexts/AppContext'
 import { Class } from '@/app/types'
 import { MODALS } from '@/app/styles/colors'
 

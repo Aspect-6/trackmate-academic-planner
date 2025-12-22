@@ -1,5 +1,5 @@
 import React from 'react'
-import { useApp } from '@/app/context/AppContext'
+import { useApp } from '@/app/contexts/AppContext'
 import { DayType } from '@/app/types'
 import { MY_SCHEDULE } from '@/app/styles/colors'
 import DaySchedule from '@/pages/My Schedule/components/DaySchedule'

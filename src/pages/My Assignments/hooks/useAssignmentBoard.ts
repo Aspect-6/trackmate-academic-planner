@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo, useCallback } from "react"
-import { useApp } from "@/app/context/AppContext"
+import { useApp } from "@/app/contexts/AppContext"
 import { Status } from "@/app/types"
 import {
   closestCenter,

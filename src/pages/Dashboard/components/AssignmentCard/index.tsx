@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import type { AssignmentCard } from '@/pages/Dashboard/types'
-import { useApp } from '@/app/context/AppContext'
+import { useApp } from '@/app/contexts/AppContext'
 import { DASHBOARD } from '@/app/styles/colors'
 import PriorityBadge from '@/app/components/PriorityBadge'
 import StatusButton from './StatusButton'

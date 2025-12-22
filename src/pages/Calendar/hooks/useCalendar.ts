@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import { useApp } from '@/app/context/AppContext'
+import { useApp } from '@/app/contexts/AppContext'
 import { Assignment, Event, NoSchoolPeriod } from '@/app/types'
 import { todayString, dateToLocalISOString, parseDateLocal } from '@/app/lib/utils'
 import type { UseCalendar } from '@/pages/Calendar/types'

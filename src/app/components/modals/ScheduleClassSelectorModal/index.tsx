@@ -1,5 +1,5 @@
 import React from 'react'
-import { useApp } from '@/app/context/AppContext'
+import { useApp } from '@/app/contexts/AppContext'
 import { ClassSelectionItem } from './ClassSelectionItem'
 import { EmptyClassList } from './EmptyClassList'
 import { MODALS } from '@/app/styles/colors'

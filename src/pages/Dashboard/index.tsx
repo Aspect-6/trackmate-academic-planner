@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useApp } from '@/app/context/AppContext'
+import { useApp } from '@/app/contexts/AppContext'
 import { todayString } from '@/app/lib/utils'
 import AssignmentCard from '@/pages/Dashboard/components/AssignmentCard'
 import TodaysEvents from '@/pages/Dashboard/components/TodaysEvents'

@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import { X } from 'lucide-react'
-import { useApp } from '@/app/context/AppContext'
+import { useApp } from '@/app/contexts/AppContext'
 import { useCalendar } from './hooks/useCalendar'
 import { CALENDAR } from '@/app/styles/colors'
 import CalendarHeader, { PrevButton, NextButton, MonthTitle } from './components/CalendarHeader'
