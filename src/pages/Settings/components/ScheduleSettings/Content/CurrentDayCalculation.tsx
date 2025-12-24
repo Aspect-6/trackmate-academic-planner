@@ -9,7 +9,7 @@ const CurrentDayCalculation: React.FC<ScheduleSettings.Content.CurrentDayCalcula
             style={{ backgroundColor: SETTINGS.CARD_BG, borderColor: SETTINGS.CARD_BORDER }}
         >
             <span style={{ color: GLOBAL.TEXT_SECONDARY }}>Current Calculation for Today:</span>
-            <span className={`font-bold ${currentDayType === 'A' ? 'text-day-a' : currentDayType === 'B' ? 'text-day-b' : 'text-gray-500'}`}>
+            <span style={{ color: currentDayType === 'A' ? SETTINGS.TEXT_A : currentDayType === 'B' ? SETTINGS.TEXT_B : GLOBAL.TEXT_TERTIARY }}>
                 {currentDayType ? `${currentDayType}-Day` : 'No School / Weekend'}
             </span>
         </div>
