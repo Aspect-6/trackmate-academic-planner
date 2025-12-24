@@ -8,10 +8,13 @@ const AddTypeButton: React.FC<AssignmentTypeSettings.Content.AddTypeForm.AddType
         <button
             type="button"
             onClick={onClick}
-            className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-medium text-white transition-colors hover:brightness-95"
+            className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-medium text-white text-sm transition-all"
             style={{
-                backgroundColor: GLOBAL.ADDITEM_BUTTON_BG
-            }}
+                backgroundColor: GLOBAL.ADDITEM_BUTTON_BG,
+                '--hover-bg': GLOBAL.ADDITEM_BUTTON_BG_HOVER
+            } as React.CSSProperties}
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = GLOBAL.ADDITEM_BUTTON_BG_HOVER}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = GLOBAL.ADDITEM_BUTTON_BG}
         >
             <Plus className="w-4 h-4" />
             {children}

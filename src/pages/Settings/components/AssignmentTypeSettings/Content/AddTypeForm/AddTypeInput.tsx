@@ -9,7 +9,7 @@ const AddTypeInput: React.FC<AssignmentTypeSettings.Content.AddTypeForm.AddTypeI
             value={value}
             onChange={e => onChange(e.target.value)}
             placeholder={placeholder}
-            className="flex-1 rounded-lg border px-3 py-2"
+            className="flex-1 rounded-lg border px-3 py-1"
             style={{ backgroundColor: SETTINGS.CARD_BG, borderColor: SETTINGS.CARD_BORDER, color: SETTINGS.BODY_TEXT }}
         />
     )
