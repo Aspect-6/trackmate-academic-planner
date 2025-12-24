@@ -19,7 +19,7 @@ const AssignmentTypeListRow: React.FC<AssignmentTypeSettings.Content.AssignmentT
         transform: CSS.Translate.toString(transform),
         transition,
         opacity: isDragging ? 0.8 : 1,
-        backgroundColor: SETTINGS.CARD_BG,
+        backgroundColor: SETTINGS.MODAL_BG,
         borderColor: SETTINGS.CARD_BORDER
     } as React.CSSProperties
 
