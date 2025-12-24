@@ -12,8 +12,12 @@ interface ClassModalProps extends ModalProps {
 }
 
 export const AddClassModal: React.FC<ModalProps> = ({ onClose }) => {
-    const { addClass } = useApp()
+    const { addClass, academicTerms } = useApp()
     const [selectedColor, setSelectedColor] = useState<string>(MODALS.CLASS.COLORS[0]!)
+    const [selectedTermId, setSelectedTermId] = useState<string>('')
+    const [selectedSemesterId, setSelectedSemesterId] = useState<string>('')
+
+    const selectedTerm = academicTerms.find(t => t.id === selectedTermId)
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -23,7 +27,9 @@ export const AddClassModal: React.FC<ModalProps> = ({ onClose }) => {
             name: formData.get('name') as string,
             color: selectedColor,
             teacherName: formData.get('teacherName') as string,
-            roomNumber: formData.get('roomNumber') as string
+            roomNumber: formData.get('roomNumber') as string,
+            termId: selectedTermId || undefined,
+            semesterId: selectedSemesterId || undefined
         }
         const success = addClass(newClass)
         if (success) onClose()
@@ -70,7 +76,44 @@ export const AddClassModal: React.FC<ModalProps> = ({ onClose }) => {
                     </div>
                 </div>
 
-                {/* Row 3: Color Code */}
+                {/* Row 3: Term Selection */}
+                <div className="flex space-x-4">
+                    <div className="flex-1">
+                        <label className="modal-label">Academic Term (Optional)</label>
+                        <select
+                            value={selectedTermId}
+                            onChange={e => {
+                                setSelectedTermId(e.target.value)
+                                setSelectedSemesterId('')
+                            }}
+                            className="modal-select"
+                            style={{ '--focus-color': MODALS.CLASS.PRIMARY_BG } as React.CSSProperties}
+                        >
+                            <option value="">No Term Assigned</option>
+                            {academicTerms.map(term => (
+                                <option key={term.id} value={term.id}>{term.name}</option>
+                            ))}
+                        </select>
+                    </div>
+                    {selectedTerm && selectedTerm.semesters.length > 0 && (
+                        <div className="flex-1">
+                            <label className="modal-label">Semester (Optional)</label>
+                            <select
+                                value={selectedSemesterId}
+                                onChange={e => setSelectedSemesterId(e.target.value)}
+                                className="modal-select"
+                                style={{ '--focus-color': MODALS.CLASS.PRIMARY_BG } as React.CSSProperties}
+                            >
+                                <option value="">Year-long (All Semesters)</option>
+                                {selectedTerm.semesters.map(sem => (
+                                    <option key={sem.id} value={sem.id}>{sem.name}</option>
+                                ))}
+                            </select>
+                        </div>
+                    )}
+                </div>
+
+                {/* Row 4: Color Code */}
                 <div>
                     <label className="block text-sm font-medium text-gray-400 mb-2">Color Code</label>
                     <div className="color-tile-grid">
@@ -118,8 +161,10 @@ export const AddClassModal: React.FC<ModalProps> = ({ onClose }) => {
 }
 
 export const EditClassModal: React.FC<ClassModalProps> = ({ onClose, classId }) => {
-    const { classes, updateClass, openModal } = useApp()
+    const { classes, updateClass, openModal, academicTerms } = useApp()
     const [formData, setFormData] = useState<Class | null>(null)
+
+    const selectedTerm = formData?.termId ? academicTerms.find(t => t.id === formData.termId) : undefined
 
     useEffect(() => {
         const classInfo = classes.find(c => c.id === classId)
@@ -177,7 +222,41 @@ export const EditClassModal: React.FC<ClassModalProps> = ({ onClose, classId }) 
                     </div>
                 </div>
 
-                {/* Row 3: Color Code */}
+                {/* Row 3: Term Selection */}
+                <div className="flex space-x-4">
+                    <div className="flex-1">
+                        <label className="modal-label">Academic Term (Optional)</label>
+                        <select
+                            value={formData.termId || ''}
+                            onChange={e => setFormData({ ...formData, termId: e.target.value || undefined, semesterId: undefined })}
+                            className="modal-select"
+                            style={{ '--focus-color': MODALS.CLASS.PRIMARY_BG } as React.CSSProperties}
+                        >
+                            <option value="">No Term Assigned</option>
+                            {academicTerms.map(term => (
+                                <option key={term.id} value={term.id}>{term.name}</option>
+                            ))}
+                        </select>
+                    </div>
+                    {selectedTerm && selectedTerm.semesters.length > 0 && (
+                        <div className="flex-1">
+                            <label className="modal-label">Semester (Optional)</label>
+                            <select
+                                value={formData.semesterId || ''}
+                                onChange={e => setFormData({ ...formData, semesterId: e.target.value || undefined })}
+                                className="modal-select"
+                                style={{ '--focus-color': MODALS.CLASS.PRIMARY_BG } as React.CSSProperties}
+                            >
+                                <option value="">Year-long (All Semesters)</option>
+                                {selectedTerm.semesters.map(sem => (
+                                    <option key={sem.id} value={sem.id}>{sem.name}</option>
+                                ))}
+                            </select>
+                        </div>
+                    )}
+                </div>
+
+                {/* Row 4: Color Code */}
                 <div>
                     <label className="block text-sm font-medium text-gray-400 mb-2">Color Code</label>
                     <div className="color-tile-grid">

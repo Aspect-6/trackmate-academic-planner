@@ -57,6 +57,10 @@ export namespace ClassBoard {
             export interface ColorProps {
                 color?: string | null
             }
+            export interface TermProps {
+                termId?: string
+                semesterId?: string
+            }
         }
     }
 }

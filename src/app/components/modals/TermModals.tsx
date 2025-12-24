@@ -410,7 +410,7 @@ export const DeleteTermModal: React.FC<DeleteTermModalProps> = ({ onClose, termI
         <div className="modal-container" style={{ backgroundColor: MODALS.BASE.BG }}>
             <h2 className="text-xl font-bold mb-4" style={{ color: MODALS.BASE.DELETE_HEADING }}>Delete Academic Term?</h2>
             <p className="text-gray-300 mb-4" style={{ color: MODALS.BASE.DELETE_BODY }}>
-                Are you sure you want to delete <strong>{term.name}</strong>? If any classes are still in this term, there may be unexpected consequences. Please remove all classes from this term before deleting. This action cannot be undone.
+                Are you sure you want to delete <strong>{term.name}</strong>? If any classes are still in this term, they will be unassigned from it, removing the ability to integrate them across the webpage. This action cannot be undone.
             </p>
             <div className="flex justify-end space-x-3">
                 <button

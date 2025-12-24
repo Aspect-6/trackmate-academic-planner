@@ -69,6 +69,10 @@ export interface Class {
     teacherName: string
     /** The room number where the class meets */
     roomNumber: string
+    /** Reference to the academic term this class belongs to */
+    termId?: string
+    /** Reference to a specific semester within the term (if not year-long) */
+    semesterId?: string
 }
 
 /**

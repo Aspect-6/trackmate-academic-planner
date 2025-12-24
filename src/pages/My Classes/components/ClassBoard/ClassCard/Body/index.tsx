@@ -14,3 +14,5 @@ export default ClassCardBody
 export { default as ClassCardInstructor } from './Instructor'
 export { default as ClassCardRoom } from './Room'
 export { default as ClassCardColor } from './Color'
+export { default as ClassCardTerm } from './Term'
+

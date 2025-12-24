@@ -20,7 +20,7 @@ import ClassCard from './ClassCard'
 import ClassCardColorStrip from './ClassCard/ClassCardColorStrip'
 import ClassCardContainer from './ClassCard/ClassCardContainer'
 import ClassCardHeader, { ClassCardTitle, ClassCardButtons } from './ClassCard/Header'
-import ClassCardBody, { ClassCardInstructor, ClassCardRoom, ClassCardColor } from './ClassCard/Body'
+import ClassCardBody, { ClassCardInstructor, ClassCardRoom, ClassCardColor, ClassCardTerm } from './ClassCard/Body'
 
 const ClassBoard: React.FC<ClassBoard.Props> = ({ classes, onReorder, onAddClass, openModal }) => {
     const sensors = useSensors(
@@ -72,6 +72,7 @@ const ClassBoard: React.FC<ClassBoard.Props> = ({ classes, onReorder, onAddClass
                                     <ClassCardBody>
                                         <ClassCardInstructor teacherName={classInfo.teacherName} />
                                         <ClassCardRoom roomNumber={classInfo.roomNumber} />
+                                        <ClassCardTerm termId={classInfo.termId} semesterId={classInfo.semesterId} />
                                         <ClassCardColor color={classInfo.color} />
                                     </ClassCardBody>
                                 </ClassCardContainer>

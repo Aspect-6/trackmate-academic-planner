@@ -179,7 +179,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         setEvents(loadedEvents as Event[])
 
         setNoSchool(loadFromLocalStorage<NoSchoolPeriod[]>(NO_SCHOOL_KEY, []))
-        
+
         let loadedTerms = loadFromLocalStorage<AcademicTerm[]>(TERMS_KEY, [])
         loadedTerms = loadedTerms.map(t => ({
             ...t,
@@ -308,6 +308,12 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     }
 
     const deleteAcademicTerm = (id: string): void => {
+        // Clear term assignment from any classes that reference this term
+        setClasses(prev => prev.map(c =>
+            c.termId === id
+                ? { ...c, termId: undefined, semesterId: undefined }
+                : c
+        ))
         setAcademicTerms(prev => prev.filter(t => t.id !== id))
     }
 

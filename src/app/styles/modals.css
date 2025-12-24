@@ -152,9 +152,11 @@
         font-size: 0.95rem;
         gap: 0.6rem;
     }
+
     .modal-btn-inline {
         width: auto;
     }
+
     .modal-date-input {
         padding: 0.5rem 0.7rem;
         font-size: 0.95rem;
@@ -230,13 +232,14 @@
 }
 
 .modal-select {
-    padding: 0.5rem 0.75rem;
+    padding: 0.5rem 2.25rem 0.5rem 0.75rem;
     appearance: none;
     background-image: var(--modal-select-arrow);
     background-repeat: no-repeat;
     background-position: right 0.5rem center;
     background-size: 1.5em 1.5em;
     cursor: pointer;
+    text-overflow: ellipsis;
 }
 
 
