@@ -83,7 +83,8 @@ const Calendar: React.FC = () => {
                                 <NoSchoolInfo noSchoolDay={sidePanelData?.noSchoolDay || undefined} />
                                 <DayTypeDisplay dayType={sidePanelData?.dayType || null} />
                             </DayType>
-                            <ClassList classes={sidePanelData?.classes || []} noSchoolDay={sidePanelData?.noSchoolDay || undefined} getClassById={getClassById} />
+                            {/* Temporarily disabled: ClassList will be re-enabled with new Schedule viewer */}
+                            {/* <ClassList classes={sidePanelData?.classes || []} noSchoolDay={sidePanelData?.noSchoolDay || undefined} getClassById={getClassById} /> */}
                             <AssignmentList assignments={sidePanelData?.dueAssignments || []} getClassById={getClassById} onAssignmentClick={(id) => openModal('edit-assignment', id)} />
                             <EventList events={sidePanelData?.dayEvents || []} onEventClick={(id) => openModal('edit-event', id)} />
                         </CalendarSidePanelBody>
