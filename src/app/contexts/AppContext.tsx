@@ -18,7 +18,7 @@ const AppContext = createContext<AppContextType | undefined>(undefined)
 
 const ASSIGNMENTS_KEY = 'studentTrackerAssignments'
 const CLASSES_KEY = 'studentTrackerClasses'
-const SCHEDULE_KEY = 'studentTrackerSchedule'
+const SCHEDULE_KEY = 'trackmateSchedule'
 const EVENTS_KEY = 'studentTrackerEvents'
 const NO_SCHOOL_KEY = 'studentTrackerNoSchool'
 const TERMS_KEY = 'studentTrackerTerms'
