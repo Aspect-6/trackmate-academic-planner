@@ -5,6 +5,9 @@
     --modal-underlay-dark: hsla(0, 0%, 0%, 0.75);
     --page-header-green: hsl(var(--global-accent-hue), 50%, 48%);
     --focus-color: hsl(var(--global-accent-hue), 70%, 42%);
+
+    --text-a-day: hsl(260, 60%, 50%);
+    --text-b-day: hsl(215, 90%, 50%);
 }
 
 :root.dark {

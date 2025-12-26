@@ -1,4 +1,28 @@
-import { Class, DayType } from '@/app/types'
+import { Class, DayType, Schedule, Semester } from '@/app/types'
+
+// ========================================
+// Shared Type Aliases
+// ========================================
+
+/** Semester name type - reuses existing Semester interface */
+export type SemesterName = Semester['name']
+
+/** Non-nullable day type for A/B days */
+export type ScheduleDayType = NonNullable<DayType>
+
+/** Schedule data for a single semester (subset of Schedule without rotation info) */
+export type SemesterScheduleData = Pick<Schedule, 'aDay' | 'bDay'>
+
+/** Draft schedule containing term ID and both Fall and Spring semesters */
+export interface DraftSchedule {
+    termId: string | null
+    Fall: SemesterScheduleData
+    Spring: SemesterScheduleData
+}
+
+// ========================================
+// DaySchedule Component Types (Old Schedule Page)
+// ========================================
 
 export namespace DaySchedule {
     export interface Props {
@@ -17,12 +41,12 @@ export namespace DaySchedule {
         // ======================
 
         export interface ScheduleSlotProps {
-            dayType: NonNullable<DayType>
+            dayType: ScheduleDayType
             index: number
             classId: string | null
             getClassById: (id: string) => Class
-            onRemove: (dayType: NonNullable<DayType>, index: number) => void
-            onSelect: (dayType: NonNullable<DayType>, index: number) => void
+            onRemove: (dayType: ScheduleDayType, index: number) => void
+            onSelect: (dayType: ScheduleDayType, index: number) => void
         }
 
         export interface EmptySlotProps {
@@ -44,6 +68,53 @@ export namespace DaySchedule {
             export interface FilledSlotFooterProps {
                 roomNumber: string | number | null
                 onRemove: () => void
+            }
+        }
+    }
+}
+
+// ========================================
+// SemesterSchedule Component Types (New Schedule Page)
+// ========================================
+
+export namespace SemesterSchedule {
+    export interface Props {
+        title: string
+        children: React.ReactNode
+    }
+
+    export namespace ScheduleTable {
+        export interface Props {
+            children: React.ReactNode
+        }
+
+        export namespace Row {
+            export interface Props {
+                dayType: ScheduleDayType
+                children: React.ReactNode
+            }
+
+            export interface EmptyCellProps {
+                onClick: () => void
+            }
+
+            export namespace FilledCell {
+                export interface Props {
+                    classData: Class
+                    onRemove: () => void
+                }
+
+                export interface ClassNameProps {
+                    name: string
+                }
+
+                export interface RoomNumberProps {
+                    roomNumber: string
+                }
+
+                export interface RemoveButtonProps {
+                    onClick: () => void
+                }
             }
         }
     }

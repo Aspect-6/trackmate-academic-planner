@@ -13,6 +13,8 @@ export const GLOBAL = {
     TEXT_SECONDARY: 'var(--text-secondary)',
     TEXT_TERTIARY: 'var(--text-tertiary)',
     TEXT_MUTED: 'var(--text-muted)',
+    TEXT_A_DAY: 'var(--text-a-day)',
+    TEXT_B_DAY: 'var(--text-b-day)',
     MODAL_DELETE_BODY: 'var(--modal-delete-body-text)',
 
     // Global Border Colors
@@ -378,8 +380,8 @@ export const SETTINGS = {
     BUTTON_A_HOVER: 'var(--settings-button-a-hover)',
     BUTTON_B_BG: 'var(--settings-button-b-bg)',
     BUTTON_B_HOVER: 'var(--settings-button-b-hover)',
-    TEXT_A: 'var(--settings-text-a)',
-    TEXT_B: 'var(--settings-text-b)',
+    TEXT_A: GLOBAL.TEXT_A_DAY,
+    TEXT_B: GLOBAL.TEXT_B_DAY,
 
     SEMESTER_BG: 'var(--settings-semester-bg)',
 }

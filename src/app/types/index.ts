@@ -124,7 +124,7 @@ export interface Schedule {
     /** A reference date used to calculate the A/B rotation for any given date */
     referenceDate: string
     /** The day type ('A' or 'B') of the reference date */
-    referenceType: 'A' | 'B'
+    referenceType: NonNullable<DayType>
 }
 
 /**

@@ -35,7 +35,7 @@
 
     /* Empty Slot */
     --my-schedule-empty-bg: hsl(215, 20%, 95%);
-    --my-schedule-empty-border: hsl(215, 20%, 84%);
+    --my-schedule-empty-border: hsl(215, 20%, 70%);
     --my-schedule-empty-border-hover: hsl(215, 20%, 70%);
     --my-schedule-empty-text: hsl(215, 15%, 60%);
     --my-schedule-empty-subtext: hsl(215, 15%, 80%);
@@ -59,4 +59,59 @@
 
 .empty-slot-subtext {
     color: var(--my-schedule-empty-subtext);
+}
+
+/* Term Selector Dropdown */
+.schedule-select {
+    width: 100%;
+    max-width: 20rem;
+    border-radius: 0.5rem;
+    background-color: var(--modal-surface-bg);
+    border: 1px solid var(--my-schedule-module-border);
+    color: var(--my-schedule-text-primary);
+    padding: 0.5rem 2.25rem 0.5rem 0.75rem;
+    appearance: none;
+    background-image: var(--modal-select-arrow);
+    background-repeat: no-repeat;
+    background-position: right 0.5rem center;
+    background-size: 1.5em 1.5em;
+    cursor: pointer;
+    text-overflow: ellipsis;
+}
+
+.schedule-select:focus {
+    outline: none;
+    border-color: var(--focus-color, var(--sidebar-active-tab-background));
+}
+
+/* Inline Title Dropdown */
+.schedule-inline-select {
+    font-size: inherit;
+    font-weight: inherit;
+    background: transparent;
+    border: none;
+    border-bottom: 2px dashed var(--border-primary);
+    color: var(--sidebar-active-tab-background);
+    padding: 0 1.25rem 0.125rem 0;
+    appearance: none;
+    background-repeat: no-repeat;
+    background-position: right 0 center;
+    background-size: 1em 1em;
+    cursor: pointer;
+    vertical-align: baseline;
+}
+
+.schedule-inline-select:hover {
+    border-bottom-style: solid;
+}
+
+.schedule-inline-select:focus {
+    outline: none;
+    border-bottom-color: var(--sidebar-active-tab-background);
+    border-bottom-style: solid;
+}
+
+/* Vertical dividers between schedule cells */
+.schedule-cell:not(:last-child) {
+    border-right: 1px solid var(--border-primary);
 }

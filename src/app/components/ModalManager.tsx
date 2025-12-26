@@ -7,6 +7,7 @@ import { AddNoSchoolModal, EditNoSchoolModal, DeleteNoSchoolModal } from '@/app/
 import { ClearAllDataModal, ClearAllAssignmentsModal, ClearAllEventsModal } from '@/app/components/modals/ClearAllDataModal'
 import { AddTermModal, EditTermModal, DeleteTermModal } from '@/app/components/modals/TermModals'
 import { ScheduleClassSelectorModal } from '@/app/components/modals/ScheduleClassSelectorModal/index'
+import { SemesterClassSelectorModal } from '@/app/components/modals/SemesterClassSelectorModal'
 import { TypeSelectorModal } from '@/app/components/modals/TypeSelectorModal'
 import { GLOBAL } from '@/app/styles/colors'
 
@@ -15,19 +16,15 @@ const ModalManager: React.FC = () => {
 
     useEffect(() => {
         if (activeModal) {
-            // Prevent background scrolling on all devices including iOS
+            // Prevent background scrolling on all devices including mobile
             document.body.style.overflow = 'hidden'
-            document.body.style.position = 'fixed'
-            document.body.style.top = `-${window.scrollY}px`
+            // document.body.style.position = 'fixed'
+            // document.body.style.top = `-${window.scrollY}px`
         } else {
-            const scrollY = document.body.style.top
+            // const scrollY = document.body.style.top
             document.body.style.overflow = ''
-            document.body.style.position = ''
-            document.body.style.top = ''
-            // Restore scroll position
-            if (scrollY) {
-                window.scrollTo(0, parseInt(scrollY || '0', 10) * -1)
-            }
+            // document.body.style.position = ''
+            // document.body.style.top = ''
         }
 
         return () => {
@@ -85,6 +82,8 @@ const ModalManager: React.FC = () => {
                 return <EditTermModal onClose={closeModal} termId={modalData} />
             case 'delete-term':
                 return <DeleteTermModal onClose={closeModal} termId={modalData} />
+            case 'semester-class-selector':
+                return <SemesterClassSelectorModal onClose={closeModal} data={modalData} />
             default:
                 return null
         }
