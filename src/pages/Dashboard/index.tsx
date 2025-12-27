@@ -109,8 +109,8 @@ const Dashboard: React.FC = () => {
                 <h2 className="text-xl font-bold mb-4" style={{ color: DASHBOARD.ASSIGNMENT_HEADING_TEXT }}>Upcoming Assignments</h2>
                 <div className="space-y-3 upcoming-assignments-list">
                     {assignmentsToShow.length === 0 ? (
-                        <div className="text-center py-8">
-                            <p style={{ color: DASHBOARD.TEXT_GRAY_500 }}>All tracked assignments are marked as done! Great job.</p>
+                        <div className="text-center py-z8">
+                            <p style={{ color: DASHBOARD.TEXT_TERTIARY }}>No upcoming assignments to display.</p>
                         </div>
                     ) : (
                         assignmentsToShow.map(assignment => (

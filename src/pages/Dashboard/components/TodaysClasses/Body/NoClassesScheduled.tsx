@@ -4,7 +4,7 @@ import { DASHBOARD } from '@/app/styles/colors'
 
 const NoClassesScheduled: React.FC<TodaysClasses.Body.NoClassesScheduledProps> = () => {
     return (
-        <p className="text-center py-4" style={{ color: DASHBOARD.TEXT_GRAY_500 }}>
+        <p className="text-center py-4" style={{ color: DASHBOARD.TEXT_TERTIARY }}>
             No classes scheduled for today.
         </p>
     )
