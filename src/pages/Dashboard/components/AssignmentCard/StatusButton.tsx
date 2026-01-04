@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import type { AssignmentCard } from '@/pages/Dashboard/types'
+import { cn } from '@/app/lib/utils'
 import { CheckCircle, Circle, PlayCircle } from 'lucide-react'
 import { DASHBOARD } from '@/app/styles/colors'
-import { cn } from '@/app/lib/utils'
 
 const StatusButton: React.FC<AssignmentCard.StatusButtonProps> = ({ status, isCompleting, onClick }) => {
     const [isHovered, setIsHovered] = useState(false)
