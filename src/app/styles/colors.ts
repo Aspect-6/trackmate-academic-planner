@@ -152,13 +152,6 @@ export const MY_CLASSES = {
 // My Schedule page
 export const MY_SCHEDULE = {
     ...GLOBAL,
-
-    // ================== To be removed ==================
-    TEXT_HEADER: 'var(--my-schedule-text-header)',
-    REMOVE_BUTTON_BG: GLOBAL.DELETE_BUTTON_BG,
-    REMOVE_BUTTON_BG_HOVER: GLOBAL.DELETE_BUTTON_BG_HOVER,
-    REMOVE_BUTTON_TEXT: GLOBAL.DELETE_BUTTON_TEXT,
-    // ===================================================
 }
 
 // Settings page
