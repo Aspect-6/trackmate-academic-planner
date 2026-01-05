@@ -1,20 +1,11 @@
 import React from 'react'
+import { useHover } from '@/app/hooks/useHover'
+import { formatEventTimeRange } from '@/app/lib/utils'
 import type { TodaysEvents } from '@/pages/Dashboard/types'
 import { DASHBOARD } from '@/app/styles/colors'
 
 const EventItem: React.FC<TodaysEvents.Body.EventList.EventItemProps> = ({ event, onClick }) => {
-    const formatEventTime = (start: string | null, end: string | null): string => {
-        if (!start && !end) return 'All Day'
-        if (start && !end) {
-            return new Date(`2000-01-01T${start}`).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })
-        }
-        if (!start && end) {
-            return `Until ${new Date(`2000-01-01T${end}`).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })}`
-        }
-        const s = new Date(`2000-01-01T${start}`).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })
-        const e = new Date(`2000-01-01T${end}`).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })
-        return `${s} - ${e}`
-    }
+    const { isHovered, hoverProps } = useHover()
 
     return (
         <div
@@ -23,15 +14,14 @@ const EventItem: React.FC<TodaysEvents.Body.EventList.EventItemProps> = ({ event
             style={{
                 border: `1px solid ${DASHBOARD.BORDER_PRIMARY}`,
                 borderLeft: `4px solid ${event.color}`,
-                backgroundColor: DASHBOARD.BACKGROUND_PRIMARY,
+                backgroundColor: isHovered ? DASHBOARD.BACKGROUND_TERTIARY : DASHBOARD.BACKGROUND_PRIMARY,
             }}
-            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = DASHBOARD.BACKGROUND_TERTIARY}
-            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = DASHBOARD.BACKGROUND_PRIMARY}
+            {...hoverProps}
         >
             <div className="flex-grow">
                 <p className="text-sm font-semibold" style={{ color: DASHBOARD.TEXT_PRIMARY }}>{event.title}</p>
                 <p className="text-xs" style={{ color: DASHBOARD.TEXT_SECONDARY }}>
-                    {formatEventTime(event.startTime, event.endTime)}
+                    {formatEventTimeRange(event.startTime, event.endTime)}
                 </p>
             </div>
         </div>

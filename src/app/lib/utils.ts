@@ -149,3 +149,18 @@ export const addDaysToDateString = (dateString: string, days: number): string =>
     return dateToLocalISOString(date)
 }
 
+/**
+ * Formats an event time range for display.
+ * @param start - Start time in 24-hour format (HH:MM) or null.
+ * @param end - End time in 24-hour format (HH:MM) or null.
+ * @returns Formatted time string (e.g., "2:30 PM - 4:00 PM", "All Day").
+ */
+export const formatEventTimeRange = (start: string | null, end: string | null): string => {
+    const formatTime = (time: string) =>
+        new Date(`2000-01-01T${time}`).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })
+
+    if (!start && !end) return 'All Day'
+    if (start && !end) return formatTime(start)
+    if (!start && end) return `Until ${formatTime(end)}`
+    return `${formatTime(start!)} - ${formatTime(end!)}`
+}
