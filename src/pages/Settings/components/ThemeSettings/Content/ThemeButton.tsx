@@ -1,4 +1,5 @@
 import React from 'react'
+import { useHover } from '@/app/hooks/useHover'
 import type { ThemeSettings } from '@/pages/Settings/types'
 import { SETTINGS } from '@/app/styles/colors'
 
@@ -9,26 +10,23 @@ const ThemeButton: React.FC<ThemeSettings.Content.ThemeButtonProps> = ({
     active,
     onClick
 }) => {
+    const { isHovered, hoverProps } = useHover()
+
     return (
         <button
             type="button"
             className="flex items-center py-3.5 px-4 rounded-xl transition-all duration-300"
             style={{
                 color: active ? SETTINGS.TEXT_WHITE : SETTINGS.TEXT_PRIMARY,
-                border: `1px solid ${active ? SETTINGS.SIDEBAR_ACTIVE_TAB_GREEN_BG : SETTINGS.BORDER_PRIMARY}`,
-                backgroundColor: active ? SETTINGS.SIDEBAR_ACTIVE_TAB_GREEN_BG : SETTINGS.BACKGROUND_SECONDARY
+                border: `1px solid ${(isHovered || active) ? SETTINGS.SIDEBAR_ACTIVE_TAB_GREEN_BG : SETTINGS.BORDER_PRIMARY}`,
+                backgroundColor: active 
+                    ? SETTINGS.SIDEBAR_ACTIVE_TAB_GREEN_BG
+                    : isHovered 
+                        ? SETTINGS.BACKGROUND_QUATERNARY 
+                        : SETTINGS.BACKGROUND_SECONDARY
             }}
-            onMouseEnter={(e) => {
-                !active && (e.currentTarget.style.borderColor = SETTINGS.SIDEBAR_ACTIVE_TAB_GREEN_BG)
-                !active && (e.currentTarget.style.backgroundColor = SETTINGS.BACKGROUND_QUATERNARY)
-            }}
-            onMouseLeave={(e) => {
-                !active && (e.currentTarget.style.borderColor = SETTINGS.BORDER_PRIMARY)
-                !active && (e.currentTarget.style.backgroundColor = SETTINGS.BACKGROUND_SECONDARY)
-            }}
-            // data-active={active}
-            // aria-pressed={active}
             onClick={onClick}
+            {...hoverProps}
         >
             <Icon 
                 className="w-5 h-5 mr-3 transition-colors duration-300"

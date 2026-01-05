@@ -1,9 +1,12 @@
 import React from 'react'
+import { useHover } from '@/app/hooks/useHover'
 import type { SemesterSchedule } from '@/pages/My Schedule/types'
 import { Plus } from 'lucide-react'
 import { MY_SCHEDULE } from '@/app/styles/colors'
 
 const EmptyCell: React.FC<SemesterSchedule.ScheduleTable.Row.EmptyCellProps> = ({ isLastRow, onClick }) => {
+    const { isHovered, hoverProps } = useHover()
+
     return (
         <td
             className="p-3 text-center schedule-cell"
@@ -14,14 +17,9 @@ const EmptyCell: React.FC<SemesterSchedule.ScheduleTable.Row.EmptyCellProps> = (
                 className="w-full h-full min-h-[72px] flex flex-col items-center justify-center gap-1 rounded-lg transition-colors cursor-pointer"
                 style={{
                     backgroundColor: 'transparent',
-                    border: `1px dashed ${MY_SCHEDULE.HOVER_ZONE_BUTTON_BORDER}`
+                    border: `1px dashed ${isHovered ? MY_SCHEDULE.HOVER_ZONE_BUTTON_BORDER_HOVER : MY_SCHEDULE.HOVER_ZONE_BUTTON_BORDER}`
                 }}
-                onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = MY_SCHEDULE.HOVER_ZONE_BUTTON_BORDER_HOVER
-                }}
-                onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = MY_SCHEDULE.HOVER_ZONE_BUTTON_BORDER
-                }}
+                {...hoverProps}
             >
                 <Plus className="w-5 h-5" style={{ color: MY_SCHEDULE.TEXT_TERTIARY }} />
                 <span className="text-xs hidden sm:inline" style={{ color: MY_SCHEDULE.TEXT_TERTIARY }}>

@@ -1,14 +1,16 @@
 import React, { useState } from 'react'
-import { MY_SCHEDULE } from '@/app/styles/colors'
+import { useHover } from '@/app/hooks/useHover'
 import { useScheduleData } from './hooks/useScheduleData'
-import type { SemesterName } from './types'
+import type { DayType } from '@/app/types'
+import type { SemesterName } from '@/pages/My Schedule/types'
 import SemesterSchedule from './components/SemesterSchedule'
 import ScheduleTable from './components/SemesterSchedule/ScheduleTable'
 import ScheduleTableRow from './components/SemesterSchedule/ScheduleTable/Row'
 import EmptyCell from './components/SemesterSchedule/ScheduleTable/Row/EmptyCell'
 import FilledCell from './components/SemesterSchedule/ScheduleTable/Row/FilledCell'
+import { MY_SCHEDULE } from '@/app/styles/colors'
+
 import './index.css'
-import { DayType } from '@/app/types'
 
 const MySchedule: React.FC = () => {
     const {
@@ -22,7 +24,7 @@ const MySchedule: React.FC = () => {
         getClassById
     } = useScheduleData()
 
-    const [isHovered, setIsHovered] = useState<boolean>(false)
+    const { isHovered, hoverProps } = useHover()
     const [isFocused, setIsFocused] = useState<boolean>(false)
 
     const renderScheduleTable = (semester: SemesterName) => {
@@ -90,10 +92,9 @@ const MySchedule: React.FC = () => {
                                 backgroundSize: '1em 1em',
                                 padding: '0 1.25rem 0.125rem 0',
                             }}
-                            onMouseEnter={() => setIsHovered(true)}
-                            onMouseLeave={() => setIsHovered(false)}
                             onFocus={() => setIsFocused(true)}
                             onBlur={() => setIsFocused(false)}
+                            {...hoverProps}
                         >
                             <option value="">select term</option>
                             {academicTerms.map(term => (
