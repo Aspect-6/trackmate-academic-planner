@@ -17,3 +17,8 @@ const SemesterSchedule: React.FC<SemesterSchedule.Props> = ({ title, children })
 }
 
 export default SemesterSchedule
+
+export { default as ScheduleTable } from './ScheduleTable'
+export { default as ScheduleTableRow } from './ScheduleTable/Row'
+export { default as EmptyCell } from './ScheduleTable/Row/EmptyCell'
+export { default as FilledCell } from './ScheduleTable/Row/FilledCell'
