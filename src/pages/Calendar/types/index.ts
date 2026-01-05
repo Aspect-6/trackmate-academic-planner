@@ -11,7 +11,7 @@ export namespace CalendarHeader {
         onClick: () => void;
     }
     export interface MonthTitleProps {
-        monthName: string;
+        period: string;
     }
 }
 

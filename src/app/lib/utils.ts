@@ -18,46 +18,29 @@ export function cn(...inputs: ClassValue[]): string {
  */
 export const generateId = (): string => Math.random().toString(36).substring(2, 9) + Date.now().toString(36)
 
+type DateFormat = 'short' | 'medium' | 'long' | 'full' | 'period'
+
 /**
- * Formats a date string into a short format (e.g., "Jan 1").
- * @param dateString - The date string to format.
+ * Formats a date string into the specified format.
+ * @param dateString - The date string in 'YYYY-MM-DD' format.
+ * @param format - 'short' (Jan 1), 'medium' (Jan 1, 2026), or 'long' (January 1, 2026)
  * @returns The formatted date string, or an empty string if input is invalid.
  */
-export const formatDate = (dateString: string): string => {
+export const formatDate = (format: DateFormat, dateString: string): string => {
     if (!dateString) return ''
-    // Append T00:00:00 to force local time interpretation for YYYY-MM-DD strings
     const dateToParse = dateString.includes('T') ? dateString : `${dateString}T00:00:00`
     const date = new Date(dateToParse)
     if (isNaN(date.getTime())) return ''
-    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
-}
 
-/**
- * Formats a date string into a medium date format (e.g., "Jan 1, 2023").
- * @param dateString - The date string to format.
- * @returns The formatted date string.
- */
-export const formatMediumDate = (dateString: string): string => {
-    try {
-        const date = parseDateLocal(dateString)
-        return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-    } catch {
-        return dateString
+    const options: Record<DateFormat, Intl.DateTimeFormatOptions> = {
+        short: { month: 'short', day: 'numeric' },
+        medium: { month: 'short', day: 'numeric', year: 'numeric' },
+        long: { month: 'long', day: 'numeric', year: 'numeric' },
+        full: { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' },
+        period: { year: 'numeric', month: 'long' },
     }
-}
 
-/**
- * Formats a date string into a full date format (e.g., "January 1, 2023").
- * @param dateString - The date string to format.
- * @returns The formatted full date string.
- */
-export const formatFullDate = (dateString: string): string => {
-    if (!dateString) return ''
-    // Append T00:00:00 to force local time interpretation for YYYY-MM-DD strings
-    const dateToParse = dateString.includes('T') ? dateString : `${dateString}T00:00:00`
-    const date = new Date(dateToParse)
-    if (isNaN(date.getTime())) return ''
-    return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+    return date.toLocaleDateString('en-US', options[format])
 }
 
 /**

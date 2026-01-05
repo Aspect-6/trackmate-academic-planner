@@ -17,7 +17,7 @@ const Calendar: React.FC = () => {
         changeMonth,
         sidePanelData,
         calendarCells,
-        monthName,
+        period,
         month,
         year
     } = useCalendar()
@@ -37,7 +37,7 @@ const Calendar: React.FC = () => {
             >
                 <CalendarHeader>
                     <PrevButton onClick={() => changeMonth(-1)} />
-                    <MonthTitle monthName={monthName} />
+                    <MonthTitle period={period} />
                     <NextButton onClick={() => changeMonth(1)} />
                 </CalendarHeader>
 

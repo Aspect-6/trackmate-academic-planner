@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react'
 import { useApp } from '@/app/contexts/AppContext'
 import { Assignment, Event, NoSchoolPeriod } from '@/app/types'
-import { todayString, dateToLocalISOString, parseDateLocal } from '@/app/lib/utils'
+import { todayString, dateToLocalISOString, parseDateLocal, formatDate } from '@/app/lib/utils'
 import type { UseCalendar } from '@/pages/Calendar/types'
 
 export const useCalendar = () => {
@@ -18,7 +18,7 @@ export const useCalendar = () => {
 
     const month = currentDate.getMonth()
     const year = currentDate.getFullYear()
-    const monthName = currentDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
+    const period = formatDate('period', dateToLocalISOString(currentDate))
 
     const assignmentsByDate = useMemo(() => assignments.reduce<Record<string, Assignment[]>>((acc, a) => {
         if (a.dueDate) {
@@ -109,7 +109,7 @@ export const useCalendar = () => {
             return 0
         })
 
-        const formattedDate = selectedDate.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+        const formattedDate = formatDate('full', dateString)
 
         return {
             date: selectedDate,
@@ -130,7 +130,7 @@ export const useCalendar = () => {
         changeMonth,
         sidePanelData,
         calendarCells,
-        monthName,
+        period,
         month,
         year
     }

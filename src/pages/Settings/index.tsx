@@ -57,7 +57,7 @@ import DangerZoneSettings, {
 import AppInfoFooter from '@/pages/Settings/components/AppInfoFooter'
 // Other imports
 import { Sun, Moon } from 'lucide-react'
-import { todayString, formatMediumDate } from '@/app/lib/utils'
+import { todayString, formatDate } from '@/app/lib/utils'
 import { SETTINGS } from '@/app/styles/colors'
 import './index.css'
 
@@ -205,7 +205,7 @@ const Settings: React.FC = () => {
                                     <TermItemHeader>
                                         <div className="flex flex-col gap-1">
                                             <TermItemHeaderName>{term.name}</TermItemHeaderName>
-                                            <TermItemHeaderDates>{formatMediumDate(term.startDate)} — {formatMediumDate(term.endDate)}</TermItemHeaderDates>
+                                            <TermItemHeaderDates>{formatDate('medium', term.startDate)} — {formatDate('medium', term.endDate)}</TermItemHeaderDates>
                                         </div>
                                         <div className="flex items-center gap-1 -mr-2 -mt-2">
                                             <TermItemHeaderEditButton term={term} />

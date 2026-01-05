@@ -7,7 +7,7 @@ const AssignmentDetailsDue: React.FC<AssignmentCard.Details.Body.AssignmentDetai
     return (
         <div className="hidden sm:flex items-center text-sm">
             <Clock className="w-3 h-3 mr-1" />
-            {formatDate(assignment.dueDate)}
+            {formatDate('short', assignment.dueDate)}
         </div>
     )
 }
