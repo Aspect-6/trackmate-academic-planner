@@ -1,16 +1,18 @@
 import React, { useState } from 'react'
-import type { AssignmentCard } from '@/pages/Dashboard/types'
 import { useApp } from '@/app/contexts/AppContext'
-import { DASHBOARD } from '@/app/styles/colors'
+import { useHover } from '@/app/hooks/useHover'
+import type { AssignmentCard } from '@/pages/Dashboard/types'
 import PriorityBadge from '@/app/components/PriorityBadge'
 import StatusButton from './StatusButton'
 import AssignmentDetails, { AssignmentDetailsBody, AssignmentDetailsClass, AssignmentDetailsDue, AssignmentDetailsTitle } from './AssignmentDetails'
 import AssignmentCardMobileFooter from './AssignmentCardMobileFooter'
+import { DASHBOARD } from '@/app/styles/colors'
 
 const AssignmentCard: React.FC<AssignmentCard.Props> = ({ assignment }) => {
     const { getClassById, updateAssignment, openModal } = useApp()
-    const classInfo = getClassById(assignment.classId)!
+    const { isHovered, hoverProps } = useHover()
     const [isCompleting, setIsCompleting] = useState(false)
+    const classInfo = getClassById(assignment.classId)!
 
     const handleStatusUpdate = (e: React.MouseEvent) => {
         e.stopPropagation()
@@ -36,12 +38,11 @@ const AssignmentCard: React.FC<AssignmentCard.Props> = ({ assignment }) => {
             onClick={() => openModal('edit-assignment', assignment.id)}
             className="flex flex-col gap-3 p-3 sm:p-4 rounded-xl shadow-md cursor-pointer transition-colors"
             style={{
-                backgroundColor: DASHBOARD.BACKGROUND_PRIMARY,
+                backgroundColor: isHovered ? DASHBOARD.BACKGROUND_TERTIARY : DASHBOARD.BACKGROUND_PRIMARY,
                 border: `1px solid ${DASHBOARD.BORDER_PRIMARY}`,
                 borderLeft: `4px solid ${classInfo.color}`,
             }}
-            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = DASHBOARD.BACKGROUND_TERTIARY}
-            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = DASHBOARD.BACKGROUND_PRIMARY}
+            {...hoverProps}
         >
             <div className="flex items-start sm:items-center gap-3 sm:gap-4">
                 <StatusButton

@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { useHover } from '@/app/hooks/useHover'
 import type { CalendarBody } from '@/pages/Calendar/types'
 import { CALENDAR } from '@/app/styles/colors'
 
 const ClassItem: React.FC<CalendarBody.SidePanel.Body.ClassList.ClassItemProps> = ({ classId, index, getClassById }) => {
-    const [isHovered, setIsHovered] = useState(false)
+    const { isHovered, hoverProps } = useHover()
+    
     if (!classId) return null
     const classInfo = getClassById(classId)
     if (!classInfo) return null
@@ -16,8 +18,7 @@ const ClassItem: React.FC<CalendarBody.SidePanel.Body.ClassList.ClassItemProps> 
                 borderLeft: `4px solid ${classInfo.color}`,
                 backgroundColor: isHovered ? CALENDAR.ITEM_BG_HOVER : CALENDAR.ITEM_BG
             }}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
+            {...hoverProps}
         >
             <div className="flex-1">
                 <div className="font-semibold" style={{ color: CALENDAR.TEXT_PRIMARY }}>{classInfo.name}</div>

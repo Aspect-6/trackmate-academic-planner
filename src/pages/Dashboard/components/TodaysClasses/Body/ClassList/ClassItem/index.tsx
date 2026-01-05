@@ -1,19 +1,22 @@
 import React from 'react'
+import { useHover } from '@/app/hooks/useHover'
 import type { TodaysClasses } from '@/pages/Dashboard/types'
 import { DASHBOARD } from '@/app/styles/colors'
 
 const ClassItem: React.FC<TodaysClasses.Body.ClassList.ClassItemProps> = ({ classInfo, period, openModal }) => {
+    const { isHovered, hoverProps } = useHover()
+
+
     return (
         <div
             className="flex items-center justify-between p-3 rounded-lg transition-colors shadow-md cursor-pointer"
             style={{
                 border: `1px solid ${DASHBOARD.BORDER_PRIMARY}`,
                 borderLeft: `4px solid ${classInfo.color}`,
-                backgroundColor: DASHBOARD.BACKGROUND_PRIMARY
+                backgroundColor: isHovered ? DASHBOARD.BACKGROUND_TERTIARY : DASHBOARD.BACKGROUND_PRIMARY
             }}
             onClick={() => openModal('edit-class', classInfo.id)}
-            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = DASHBOARD.BACKGROUND_TERTIARY}
-            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = DASHBOARD.BACKGROUND_PRIMARY}
+            {...hoverProps}
         >
             <div className="flex-1">
                 <p className="font-semibold text-sm sm:text-base" style={{ color: DASHBOARD.TEXT_PRIMARY }}>{classInfo.name}</p>

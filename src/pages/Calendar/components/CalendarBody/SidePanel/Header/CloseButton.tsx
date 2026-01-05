@@ -1,16 +1,16 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { useHover } from '@/app/hooks/useHover'
 import type { CalendarBody } from '@/pages/Calendar/types'
 import { CALENDAR } from '@/app/styles/colors'
 
 const CloseButton: React.FC<CalendarBody.SidePanel.Header.CloseButtonProps> = ({ onClick, children }) => {
-    const [hovered, setHovered] = useState(false)
+    const { isHovered, hoverProps } = useHover()
     return (
         <button
             onClick={onClick}
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
             className="calendar-side-panel-close transition-colors"
-            style={{ color: hovered ? CALENDAR.TEXT_PRIMARY : CALENDAR.TEXT_TERTIARY }}
+            style={{ color: isHovered ? CALENDAR.TEXT_PRIMARY : CALENDAR.TEXT_TERTIARY }}
+            {...hoverProps}
         >
             {children}
         </button>
