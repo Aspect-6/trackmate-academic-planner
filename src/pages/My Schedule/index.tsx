@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useHover } from '@/app/hooks/useHover'
+import { useFocus } from '@/app/hooks/useFocus'
 import { useScheduleData } from './hooks/useScheduleData'
 import type { DayType } from '@/app/types'
 import type { SemesterName } from '@/pages/My Schedule/types'
@@ -25,7 +26,7 @@ const MySchedule: React.FC = () => {
     } = useScheduleData()
 
     const { isHovered, hoverProps } = useHover()
-    const [isFocused, setIsFocused] = useState<boolean>(false)
+    const { isFocused, focusProps } = useFocus()
 
     const renderScheduleTable = (semester: SemesterName) => {
         const scheduleData = getScheduleForSemester(semester)
@@ -84,7 +85,7 @@ const MySchedule: React.FC = () => {
                         <select
                             value={selectedTermId || ''}
                             onChange={(e) => setTermId(e.target.value || null)}
-                            className="bg-right max-w-full text-ellipsis appearance-none bg-no-repeat cursor-pointer"
+                            className="bg-right max-w-full text-ellipsis appearance-none outline-none bg-no-repeat cursor-pointer"
                             style={{
                                 ...arrowStyle,
                                 color: MY_SCHEDULE.SIDEBAR_ACTIVE_TAB_GREEN_BG,
@@ -92,9 +93,8 @@ const MySchedule: React.FC = () => {
                                 backgroundSize: '1em 1em',
                                 padding: '0 1.25rem 0.125rem 0',
                             }}
-                            onFocus={() => setIsFocused(true)}
-                            onBlur={() => setIsFocused(false)}
                             {...hoverProps}
+                            {...focusProps}
                         >
                             <option value="">select term</option>
                             {academicTerms.map(term => (
