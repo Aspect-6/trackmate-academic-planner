@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useApp } from '@/app/contexts/AppContext'
+import { useAssignments } from '@/app/hooks/useAssignments'
 import { useHover } from '@/app/hooks/useHover'
 import type { AssignmentCard } from '@/pages/Dashboard/types'
 import PriorityBadge from '@/app/components/PriorityBadge'
@@ -9,7 +10,8 @@ import AssignmentCardMobileFooter from './AssignmentCardMobileFooter'
 import { DASHBOARD } from '@/app/styles/colors'
 
 const AssignmentCard: React.FC<AssignmentCard.Props> = ({ assignment }) => {
-    const { getClassById, updateAssignment, openModal } = useApp()
+    const { getClassById } = useApp()
+    const { updateAssignment, openEditAssignment } = useAssignments()
     const { isHovered, hoverProps } = useHover()
     const [isCompleting, setIsCompleting] = useState(false)
     const classInfo = getClassById(assignment.classId)!
@@ -35,7 +37,7 @@ const AssignmentCard: React.FC<AssignmentCard.Props> = ({ assignment }) => {
 
     return (
         <div
-            onClick={() => openModal('edit-assignment', assignment.id)}
+            onClick={() => openEditAssignment(assignment.id)}
             className="flex flex-col gap-3 p-3 sm:p-4 rounded-xl shadow-md cursor-pointer transition-colors"
             style={{
                 backgroundColor: isHovered ? DASHBOARD.BACKGROUND_TERTIARY : DASHBOARD.BACKGROUND_PRIMARY,
