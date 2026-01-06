@@ -1,14 +1,14 @@
 import React from "react"
-import { useApp } from "@/app/contexts/AppContext"
+import { useAssignments } from "@/app/hooks/useAssignments"
 import type { AssignmentDragOverlayProps } from "@/pages/My Assignments/types"
-import { MY_ASSIGNMENTS } from "@/app/styles/colors"
 import AssignmentCardContent from "./AssignmentCardContent"
+import { MY_ASSIGNMENTS } from "@/app/styles/colors"
 
 export const AssignmentDragOverlay: React.FC<AssignmentDragOverlayProps> = ({
 	assignmentId,
 	getClassById,
 }) => {
-	const assignment = useApp().assignments.find((a) => a.id === assignmentId)!
+	const assignment = useAssignments().getAssignmentById(assignmentId)!
 
 	const linkedClass = getClassById(assignment.classId)
 	const classColor = linkedClass.color

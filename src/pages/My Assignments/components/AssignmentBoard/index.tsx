@@ -1,6 +1,7 @@
 import React, { useMemo } from "react"
 import { useDroppable } from "@dnd-kit/core"
 import { useApp } from "@/app/contexts/AppContext"
+import { useAssignments } from "@/app/hooks/useAssignments"
 import type { AssignmentBoard as AssignmentBoardTypes } from "@/pages/My Assignments/types"
 import { MY_ASSIGNMENTS } from "@/app/styles/colors"
 import AssignmentBoardHeader from "./Header"
@@ -20,22 +21,22 @@ const AssignmentBoard: React.FC<AssignmentBoardTypes.Props> = ({
 	dragEnabled,
 }) => {
 	// Get global data
-	const { assignments, getClassById, openModal } = useApp()
+	const { getClassById } = useApp()
+	const { getAssignmentsByStatus, openEditAssignment } = useAssignments()
 
 	// Derive local state from props
 	const isCollapsed = isMobile ? !openColumns[status] : false
 	const activeId = activeAssignmentId
 
 	const itemsInView = useMemo(() => {
-		const filtered = assignments.filter((a) => a.status === status)
-		filtered.sort((a, b) => {
+		const filtered = getAssignmentsByStatus(status)
+		return filtered.toSorted((a, b) => {
 			if (status === "To Do" || status === "In Progress") {
 				return a.dueDate.localeCompare(b.dueDate)
 			}
 			return b.dueDate.localeCompare(a.dueDate)
 		})
-		return filtered
-	}, [assignments, status])
+	}, [getAssignmentsByStatus, status])
 
 	const { setNodeRef: setDroppableRef, isOver } = useDroppable({ id: status })
 
@@ -49,7 +50,7 @@ const AssignmentBoard: React.FC<AssignmentBoardTypes.Props> = ({
 		: -1
 	const showPlaceholder = dragEnabled && !!activeId && isOverColumn
 
-	const handleAssignmentClick = (id: string) => openModal("edit-assignment", id)
+	const handleAssignmentClick = (id: string) => openEditAssignment(id)
 
 	return (
 		<div

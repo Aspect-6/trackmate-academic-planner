@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo, useCallback } from "react"
-import { useApp } from "@/app/contexts/AppContext"
+import { useAssignments } from "@/app/hooks/useAssignments"
 import { Status } from "@/app/types"
 import {
 	closestCenter,
@@ -30,7 +30,7 @@ const createDesktopColumnState = (): Record<Status, boolean> => ({
 })
 
 export const useAssignmentBoard = () => {
-	const { assignments, updateAssignment } = useApp()
+	const { getAssignmentById, updateAssignment } = useAssignments()
 
 	// Mobile state
 	const [isMobile, setIsMobile] = useState(false)
@@ -98,10 +98,10 @@ export const useAssignmentBoard = () => {
 
 			if (activeId === currentOverId) return
 
-			const activeAssignment = assignments.find((a) => a.id === activeId)
+			const activeAssignment = getAssignmentById(activeId)
 			if (!activeAssignment) return
 
-			const overAssignment = assignments.find((a) => a.id === currentOverId)
+			const overAssignment = getAssignmentById(currentOverId)
 			const overStatus = overAssignment
 				? overAssignment.status
 				: columnIds.includes(currentOverId as Status)
@@ -114,7 +114,7 @@ export const useAssignmentBoard = () => {
 				updateAssignment(activeId, { status: overStatus })
 			}
 		},
-		[dragEnabled, assignments, columnIds, updateAssignment],
+		[dragEnabled, getAssignmentById, columnIds, updateAssignment],
 	)
 
 	const handleDragCancel = useCallback(

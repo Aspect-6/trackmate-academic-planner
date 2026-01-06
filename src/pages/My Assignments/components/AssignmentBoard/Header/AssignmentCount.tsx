@@ -1,17 +1,12 @@
 import React, { useMemo } from "react"
-import { useApp } from "@/app/contexts/AppContext"
+import { useAssignments } from "@/app/hooks/useAssignments"
 import type { AssignmentBoard as AssignmentBoardTypes } from "@/pages/My Assignments/types"
 import { MY_ASSIGNMENTS } from "@/app/styles/colors"
 
-const AssignmentBoardAssignmentCount: React.FC<
-	AssignmentBoardTypes.Header.AssignmentCountProps
-> = ({ status }) => {
-	const { assignments } = useApp()
+const AssignmentBoardAssignmentCount: React.FC<AssignmentBoardTypes.Header.AssignmentCountProps> = ({ status }) => {
+	const { getAssignmentsByStatus } = useAssignments()
 
-	const count = useMemo(
-		() => assignments.filter((a) => a.status === status).length,
-		[assignments, status],
-	)
+	const count = useMemo(() => getAssignmentsByStatus(status).length, [getAssignmentsByStatus, status])
 
 	const getColor = () => {
 		if (status === "To Do") return MY_ASSIGNMENTS.BOARD_HEADER_TEXT_UPCOMING
