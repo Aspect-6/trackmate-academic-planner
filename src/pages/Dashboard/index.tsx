@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useApp } from '@/app/contexts/AppContext'
+import { useAssignments } from '@/app/hooks/useAssignments'
 import { todayString } from '@/app/lib/utils'
 import AssignmentCard from '@/pages/Dashboard/components/AssignmentCard'
 import TodaysEvents from '@/pages/Dashboard/components/TodaysEvents'
@@ -10,7 +11,8 @@ import '@/pages/Dashboard/index.css'
 const MOBILE_BREAKPOINT = '(max-width: 767px)'
 
 const Dashboard: React.FC = () => {
-    const { assignments, events, getClassById, openModal, noSchool } = useApp()
+    const { events, getClassById, openModal, noSchool } = useApp()
+    const { activeAssignments } = useAssignments()
 
     const [isMobile, setIsMobile] = useState<boolean>(() => {
         if (typeof window === 'undefined') return false
@@ -57,13 +59,8 @@ const Dashboard: React.FC = () => {
         return () => mediaQuery.removeListener(handleChange as (this: MediaQueryList, ev: MediaQueryListEvent) => void)
     }, [])
 
-    // Filter Assignments
-    const activeAssignments = assignments
-        .filter(a => a.status === 'To Do' || a.status === 'In Progress')
-        .sort((a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime())
-
     // Filter Events
-    const todaysEvents = events.filter(event => event.date === today).sort((a, b) => {
+    const todaysEvents = events.filter(event => event.date === today).toSorted((a, b) => {
         if (a.startTime && b.startTime) return a.startTime.localeCompare(b.startTime)
         if (a.startTime) return -1
         if (b.startTime) return 1
@@ -73,6 +70,7 @@ const Dashboard: React.FC = () => {
     // TODO: Classes now stored per-term - need to determine active term to show today's classes
     const todaysClasses: (string | null)[] = []
 
+    // Get first 3 active assignments
     const assignmentsToShow = activeAssignments.slice(0, 3)
 
     return (

@@ -12,9 +12,11 @@ export const useAssignments = () => {
     // Counts
     const totalNum = assignments.length
 
-    // Filtered views
-    const activeAssignments = useMemo(() => assignments.filter(assignment =>
-        assignment.status === 'To Do' || assignment.status === 'In Progress'
+    // Filtered views (sorted by due date)
+    const activeAssignments = useMemo(() => assignments.filter(
+        assignment => assignment.status === 'To Do' || assignment.status === 'In Progress'
+    ).toSorted((a, b) => 
+        new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime()
     ), [assignments])
 
     const completedAssignments = useMemo(() => assignments.filter(assignment =>
