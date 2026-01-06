@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react'
 import { X } from 'lucide-react'
 import { useApp } from '@/app/contexts/AppContext'
+import { useEvents } from '@/app/hooks/useEvents'
 import { useCalendar } from './hooks/useCalendar'
 import { CALENDAR } from '@/app/styles/colors'
 import CalendarHeader, { PrevButton, NextButton, MonthTitle } from './components/CalendarHeader'
@@ -12,6 +13,7 @@ import './index.css'
 
 const Calendar: React.FC = () => {
     const { getClassById, openModal } = useApp()
+    const { openEditEvent } = useEvents()
     const {
         setSelectedDate,
         changeMonth,
@@ -61,7 +63,7 @@ const Calendar: React.FC = () => {
                                     events={cell.events}
                                     onSelectDate={setSelectedDate}
                                     onAssignmentClick={(id) => openModal('edit-assignment', id)}
-                                    onEventClick={(id) => openModal('edit-event', id)}
+                                    onEventClick={openEditEvent}
                                     getClassColor={getClassColor}
                                 />
                             )
@@ -84,7 +86,7 @@ const Calendar: React.FC = () => {
                             {/* Temporarily disabled: ClassList will be re-enabled with new Schedule viewer */}
                             {/* <ClassList classes={sidePanelData?.classes || []} noSchoolDay={sidePanelData?.noSchoolDay || undefined} getClassById={getClassById} /> */}
                             <AssignmentList assignments={sidePanelData?.dueAssignments || []} getClassById={getClassById} onAssignmentClick={(id) => openModal('edit-assignment', id)} />
-                            <EventList events={sidePanelData?.dayEvents || []} onEventClick={(id) => openModal('edit-event', id)} />
+                            <EventList events={sidePanelData?.dayEvents || []} onEventClick={openEditEvent} />
                         </CalendarSidePanelBody>
                     </CalendarSidePanel>
                 </CalendarBody>

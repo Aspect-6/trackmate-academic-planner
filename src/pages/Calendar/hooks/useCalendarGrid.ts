@@ -42,12 +42,7 @@ export const useCalendarGrid = ({
             const noSchool = noSchoolByDate[dateString]
 
             const dayAssignments = assignmentsByDate[dateString] || []
-            const dayEvents = (eventsByDate[dateString] ?? []).toSorted((eventA, eventB) => {
-                if (eventA.startTime && eventB.startTime) return eventA.startTime.localeCompare(eventB.startTime)
-                if (eventA.startTime) return -1
-                if (eventB.startTime) return 1
-                return 0
-            })
+            const dayEvents = eventsByDate[dateString] ?? []
 
             cells.push({
                 type: 'day',

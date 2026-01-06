@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useApp } from '@/app/contexts/AppContext'
 import { useAssignments } from '@/app/hooks/useAssignments'
+import { useEvents } from '@/app/hooks/useEvents'
 import { todayString } from '@/app/lib/utils'
 import AssignmentCard from '@/pages/Dashboard/components/AssignmentCard'
 import TodaysEvents from '@/pages/Dashboard/components/TodaysEvents'
@@ -11,8 +12,9 @@ import '@/pages/Dashboard/index.css'
 const MOBILE_BREAKPOINT = '(max-width: 767px)'
 
 const Dashboard: React.FC = () => {
-    const { events, getClassById, openModal, noSchool } = useApp()
+    const { getClassById, openModal, noSchool } = useApp()
     const { activeAssignments } = useAssignments()
+    const { todaysEvents, openEditEvent } = useEvents()
 
     const [isMobile, setIsMobile] = useState<boolean>(() => {
         if (typeof window === 'undefined') return false
@@ -59,13 +61,7 @@ const Dashboard: React.FC = () => {
         return () => mediaQuery.removeListener(handleChange as (this: MediaQueryList, ev: MediaQueryListEvent) => void)
     }, [])
 
-    // Filter Events
-    const todaysEvents = events.filter(event => event.date === today).toSorted((a, b) => {
-        if (a.startTime && b.startTime) return a.startTime.localeCompare(b.startTime)
-        if (a.startTime) return -1
-        if (b.startTime) return 1
-        return 0
-    })
+
 
     // TODO: Classes now stored per-term - need to determine active term to show today's classes
     const todaysClasses: (string | null)[] = []
@@ -78,7 +74,7 @@ const Dashboard: React.FC = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 flex-shrink-0 w-full">
                 <TodaysEvents
                     events={todaysEvents}
-                    onEventClick={(id) => openModal('edit-event', id)}
+                    onEventClick={openEditEvent}
                     isMobile={isMobile}
                     isCollapsed={isEventsCollapsed}
                     onToggleCollapse={() => setIsEventsCollapsed((prev) => !prev)}
