@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useApp } from '@/app/contexts/AppContext'
 import { useAssignments } from '@/app/hooks/useAssignments'
 import { useEvents } from '@/app/hooks/useEvents'
+import { useNoSchool } from '@/app/hooks/useNoSchool'
 import { todayString } from '@/app/lib/utils'
 import AssignmentCard from '@/pages/Dashboard/components/AssignmentCard'
 import TodaysEvents from '@/pages/Dashboard/components/TodaysEvents'
@@ -12,9 +13,10 @@ import '@/pages/Dashboard/index.css'
 const MOBILE_BREAKPOINT = '(max-width: 767px)'
 
 const Dashboard: React.FC = () => {
-    const { getClassById, openModal, noSchool } = useApp()
+    const { getClassById, openModal } = useApp()
     const { activeAssignments } = useAssignments()
     const { todaysEvents, openEditEvent } = useEvents()
+    const { getNoSchoolStatusForDate } = useNoSchool()
 
     const [isMobile, setIsMobile] = useState<boolean>(() => {
         if (typeof window === 'undefined') return false
@@ -32,7 +34,7 @@ const Dashboard: React.FC = () => {
     const today = todayString()
 
     // Check for No School
-    const currentNoSchool = noSchool.find(ns => today >= ns.startDate && today <= ns.endDate)
+    const currentNoSchool = getNoSchoolStatusForDate(today)
 
     useEffect(() => {
         if (typeof window === 'undefined') return
@@ -82,7 +84,7 @@ const Dashboard: React.FC = () => {
 
                 <TodaysClasses
                     classIds={todaysClasses}
-                    noSchool={currentNoSchool}
+                    noSchool={currentNoSchool ?? undefined}
                     getClassById={getClassById}
                     openModal={openModal}
                     isMobile={isMobile}

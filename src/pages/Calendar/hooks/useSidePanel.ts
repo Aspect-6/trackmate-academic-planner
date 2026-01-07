@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import { useApp } from '@/app/contexts/AppContext'
 import { useAssignments } from '@/app/hooks/useAssignments'
 import { useEvents } from '@/app/hooks/useEvents'
-import { useCalendarData } from './useCalendarData'
+import { useNoSchool } from '@/app/hooks/useNoSchool'
 import { dateToLocalISOString, formatDate } from '@/app/lib/utils'
 
 interface UseSidePanelProps {
@@ -17,13 +17,13 @@ export const useSidePanel = ({ selectedDate }: UseSidePanelProps) => {
     const { getDayTypeForDate } = useApp()
     const { getAssignmentsForDate } = useAssignments()
     const { getEventsForDate } = useEvents()
-    const { noSchool } = useCalendarData()
+    const { getNoSchoolStatusForDate } = useNoSchool()
 
     const sidePanelData = useMemo(() => {
         if (!selectedDate) return null
 
         const dateString = dateToLocalISOString(selectedDate)
-        const noSchoolDay = noSchool.find(ns => dateString >= ns.startDate && dateString <= ns.endDate) || null
+        const noSchoolDay = getNoSchoolStatusForDate(dateString)
         const dayType = getDayTypeForDate ? getDayTypeForDate(dateString) : null
         // TODO: Classes now stored per-term - need to determine active term to show classes
         const dayClasses: (string | null)[] = []
@@ -42,7 +42,7 @@ export const useSidePanel = ({ selectedDate }: UseSidePanelProps) => {
             dueAssignments,
             dayEvents
         }
-    }, [selectedDate, getAssignmentsForDate, getEventsForDate, noSchool, getDayTypeForDate])
+    }, [selectedDate, getAssignmentsForDate, getEventsForDate, getNoSchoolStatusForDate, getDayTypeForDate])
 
     return sidePanelData
 }

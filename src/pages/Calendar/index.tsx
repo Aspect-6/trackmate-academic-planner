@@ -2,6 +2,7 @@ import React, { useCallback } from 'react'
 import { X } from 'lucide-react'
 import { useApp } from '@/app/contexts/AppContext'
 import { useEvents } from '@/app/hooks/useEvents'
+import { useNoSchool } from '@/app/hooks/useNoSchool'
 import { useCalendar } from './hooks/useCalendar'
 import { CALENDAR } from '@/app/styles/colors'
 import CalendarHeader, { PrevButton, NextButton, MonthTitle } from './components/CalendarHeader'
@@ -14,6 +15,7 @@ import './index.css'
 const Calendar: React.FC = () => {
     const { getClassById, openModal } = useApp()
     const { openEditEvent } = useEvents()
+    const { openEditNoSchool } = useNoSchool()
     const {
         setSelectedDate,
         changeMonth,
@@ -79,7 +81,7 @@ const Calendar: React.FC = () => {
                         </CalendarSidePanelHeader>
 
                         <CalendarSidePanelBody>
-                            <DayType noSchoolDay={sidePanelData?.noSchoolDay || undefined} dayType={sidePanelData?.dayType || null} onNoSchoolClick={(id) => openModal('edit-no-school', id)}>
+                            <DayType noSchoolDay={sidePanelData?.noSchoolDay || undefined} dayType={sidePanelData?.dayType || null} onNoSchoolClick={openEditNoSchool}>
                                 <NoSchoolInfo noSchoolDay={sidePanelData?.noSchoolDay || undefined} />
                                 <DayTypeDisplay dayType={sidePanelData?.dayType || null} />
                             </DayType>
