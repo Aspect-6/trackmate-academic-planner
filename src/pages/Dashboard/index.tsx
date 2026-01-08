@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { useApp } from '@/app/contexts/AppContext'
 import { useAssignments } from '@/app/hooks/useAssignments'
 import { useEvents } from '@/app/hooks/useEvents'
-import { useNoSchool } from '@/app/hooks/useNoSchool'
-import { todayString } from '@/app/lib/utils'
 import AssignmentCard from '@/pages/Dashboard/components/AssignmentCard'
 import TodaysEvents from '@/pages/Dashboard/components/TodaysEvents'
 import TodaysClasses from '@/pages/Dashboard/components/TodaysClasses/'
@@ -13,10 +10,8 @@ import '@/pages/Dashboard/index.css'
 const MOBILE_BREAKPOINT = '(max-width: 767px)'
 
 const Dashboard: React.FC = () => {
-    const { getClassById, openModal } = useApp()
     const { activeAssignments } = useAssignments()
     const { todaysEvents, openEditEvent } = useEvents()
-    const { getNoSchoolStatusForDate } = useNoSchool()
 
     const [isMobile, setIsMobile] = useState<boolean>(() => {
         if (typeof window === 'undefined') return false
@@ -30,11 +25,6 @@ const Dashboard: React.FC = () => {
         if (typeof window === 'undefined') return false
         return window.matchMedia(MOBILE_BREAKPOINT).matches
     })
-
-    const today = todayString()
-
-    // Check for No School
-    const currentNoSchool = getNoSchoolStatusForDate(today)
 
     useEffect(() => {
         if (typeof window === 'undefined') return
@@ -63,11 +53,6 @@ const Dashboard: React.FC = () => {
         return () => mediaQuery.removeListener(handleChange as (this: MediaQueryList, ev: MediaQueryListEvent) => void)
     }, [])
 
-
-
-    // TODO: Classes now stored per-term - need to determine active term to show today's classes
-    const todaysClasses: (string | null)[] = []
-
     // Get first 3 active assignments
     const assignmentsToShow = activeAssignments.slice(0, 3)
 
@@ -83,10 +68,6 @@ const Dashboard: React.FC = () => {
                 />
 
                 <TodaysClasses
-                    classIds={todaysClasses}
-                    noSchool={currentNoSchool ?? undefined}
-                    getClassById={getClassById}
-                    openModal={openModal}
                     isMobile={isMobile}
                     isCollapsed={isClassesCollapsed}
                     onToggleCollapse={() => setIsClassesCollapsed((prev) => !prev)}

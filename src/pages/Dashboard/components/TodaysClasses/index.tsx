@@ -1,20 +1,26 @@
 import React from 'react'
+import { useApp } from '@/app/contexts/AppContext'
+import { useNoSchool } from '@/app/hooks/useNoSchool'
+import { todayString } from '@/app/lib/utils'
+import { CLASS_LIST_RENDERERS } from '@/app/components/ClassListRenderers'
 import type { TodaysClasses } from '@/pages/Dashboard/types'
 import { DASHBOARD } from '@/app/styles/colors'
 import TodaysClassesHeader from './TodaysClassesHeader'
-import TodaysClassesBody, { ClassList, NoClassesScheduled, NoSchool } from './Body'
+import TodaysClassesBody from './Body'
 
 const TodaysClasses: React.FC<TodaysClasses.Props> = ({
-    classIds,
-    noSchool,
-    getClassById,
-    openModal,
     isMobile,
     isCollapsed,
     onToggleCollapse
 }) => {
-    const hasClasses = classIds.length > 0 && classIds.some(id => id !== null)
-    const showEmptyState = noSchool || !hasClasses
+    const { schedules, getClassById, openModal } = useApp()
+    const { getNoSchoolStatusForDate } = useNoSchool()
+
+    const today = todayString()
+    const noSchool = getNoSchoolStatusForDate(today)
+
+    // Get the renderer for the current schedule type
+    const ClassListRenderer = CLASS_LIST_RENDERERS[schedules.type]
 
     return (
         <div
@@ -32,18 +38,18 @@ const TodaysClasses: React.FC<TodaysClasses.Props> = ({
             />
 
             <TodaysClassesBody isMobile={isMobile} isCollapsed={isCollapsed}>
-                {showEmptyState ? (
-                    noSchool ? (
-                        <NoSchool noSchool={noSchool} />
-                    ) : (
-                        <NoClassesScheduled />
-                    )
-                ) : (
-                    <ClassList
-                        classIds={classIds}
+                {ClassListRenderer ? (
+                    <ClassListRenderer
+                        date={today}
+                        noSchoolDay={noSchool ?? undefined}
                         getClassById={getClassById}
                         openModal={openModal}
+                        variant="dashboard"
                     />
+                ) : (
+                    <p className="text-center" style={{ color: DASHBOARD.TEXT_TERTIARY }}>
+                        No schedule configured.
+                    </p>
                 )}
             </TodaysClassesBody>
         </div>

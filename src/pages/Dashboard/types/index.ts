@@ -40,10 +40,6 @@ export namespace AssignmentCard {
 
 export namespace TodaysClasses {
     export interface Props {
-        classIds: (string | null)[]
-        noSchool?: NoSchoolPeriod
-        getClassById: (id: string) => Class
-        openModal: (modalType: string, id?: string) => void
         isMobile?: boolean
         isCollapsed?: boolean
         onToggleCollapse?: () => void
@@ -104,7 +100,7 @@ export namespace TodaysEvents {
             children: React.ReactNode
         }
         // ======================
-        export interface NoEventsScheduledProps {}
+        export interface NoEventsScheduledProps { }
         export namespace EventList {
             export interface Props {
                 events: Event[]

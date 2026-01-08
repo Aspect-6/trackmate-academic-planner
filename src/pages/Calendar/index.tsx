@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react'
 import { X } from 'lucide-react'
 import { useApp } from '@/app/contexts/AppContext'
+import { CLASS_LIST_RENDERERS } from '@/app/components/ClassListRenderers'
 import { useEvents } from '@/app/hooks/useEvents'
 import { useNoSchool } from '@/app/hooks/useNoSchool'
 import { useSelectedDate } from './hooks/useSelectedDate'
@@ -16,7 +17,7 @@ import CalendarSidePanel, { DayType, /* ClassList, */ AssignmentList, EventList,
 import './index.css'
 
 const Calendar: React.FC = () => {
-    const { getClassById, openModal } = useApp()
+    const { getClassById, openModal, schedules } = useApp()
     const { openEditEvent } = useEvents()
     const { openEditNoSchool } = useNoSchool()
     const { selectedDate, setSelectedDate, clearSelection } = useSelectedDate()
@@ -83,8 +84,18 @@ const Calendar: React.FC = () => {
                                 <NoSchoolInfo noSchoolDay={sidePanelData?.noSchoolDay || undefined} />
                                 <DayTypeDisplay dayType={sidePanelData?.dayType || null} />
                             </DayType>
-                            {/* Temporarily disabled: ClassList will be re-enabled with new Schedule viewer */}
-                            {/* <ClassList classes={sidePanelData?.classes || []} noSchoolDay={sidePanelData?.noSchoolDay || undefined} getClassById={getClassById} /> */}
+                            {/* ClassList using schedule-type-specific renderer */}
+                            {sidePanelData?.dateString && (() => {
+                                const ClassListRenderer = CLASS_LIST_RENDERERS[schedules.type]
+                                return ClassListRenderer ? (
+                                    <ClassListRenderer
+                                        date={sidePanelData.dateString}
+                                        noSchoolDay={sidePanelData.noSchoolDay ?? undefined}
+                                        getClassById={getClassById}
+                                        variant="calendar"
+                                    />
+                                ) : null
+                            })()}
                             <AssignmentList assignments={sidePanelData?.dueAssignments || []} getClassById={getClassById} onAssignmentClick={(id) => openModal('edit-assignment', id)} />
                             <EventList events={sidePanelData?.dayEvents || []} onEventClick={openEditEvent} />
                         </CalendarSidePanelBody>
