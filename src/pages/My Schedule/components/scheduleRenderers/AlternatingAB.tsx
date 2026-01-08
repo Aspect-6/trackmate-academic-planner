@@ -2,7 +2,7 @@ import React from 'react'
 import { useAlternatingABSchedule } from '@/pages/My Schedule/hooks/useAlternatingABSchedule'
 import type { DayType } from '@/app/types'
 import type { SemesterName } from '@/pages/My Schedule/types'
-import type { ScheduleRendererProps } from './index'
+import type { ScheduleRendererProps } from '@/app/contexts/ScheduleComponentsContext'
 import AlternatingDaysSchedule, { ScheduleTable, ScheduleTableRow, EmptyCell, FilledCell } from '../AlternatingDaysSchedule'
 
 /**

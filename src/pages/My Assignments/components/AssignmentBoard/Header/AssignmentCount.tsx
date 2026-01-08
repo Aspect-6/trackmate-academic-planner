@@ -1,5 +1,5 @@
 import React, { useMemo } from "react"
-import { useAssignments } from "@/app/hooks/useAssignments"
+import { useAssignments } from "@/app/hooks/entities/useAssignments"
 import type { AssignmentBoard as AssignmentBoardTypes } from "@/pages/My Assignments/types"
 import { MY_ASSIGNMENTS } from "@/app/styles/colors"
 

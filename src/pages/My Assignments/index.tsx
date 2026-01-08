@@ -1,5 +1,5 @@
 import React from "react"
-import { useClasses } from "@/app/hooks/useClasses"
+import { useClasses } from "@/app/hooks/entities/useClasses"
 import AssignmentBoard from "@/pages/My Assignments/components/AssignmentBoard"
 import AssignmentDragOverlay from "@/pages/My Assignments/components/AssignmentDragOverlay"
 import { useAssignmentBoard } from "@/pages/My Assignments/hooks/useAssignmentBoard"

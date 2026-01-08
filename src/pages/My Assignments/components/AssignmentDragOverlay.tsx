@@ -1,5 +1,5 @@
 import React from "react"
-import { useAssignments } from "@/app/hooks/useAssignments"
+import { useAssignments } from "@/app/hooks/entities/useAssignments"
 import type { AssignmentDragOverlayProps } from "@/pages/My Assignments/types"
 import AssignmentCardContent from "./AssignmentCardContent"
 import { MY_ASSIGNMENTS } from "@/app/styles/colors"

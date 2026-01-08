@@ -1,8 +1,8 @@
 import { useMemo } from 'react'
 import { useApp } from '@/app/contexts/AppContext'
-import { useAssignments } from '@/app/hooks/useAssignments'
-import { useEvents } from '@/app/hooks/useEvents'
-import { useNoSchool } from '@/app/hooks/useNoSchool'
+import { useAssignments } from '@/app/hooks/entities/useAssignments'
+import { useEvents } from '@/app/hooks/entities/useEvents'
+import { useNoSchool } from '@/app/hooks/entities/useNoSchool'
 import { dateToLocalISOString, formatDate } from '@/app/lib/utils'
 
 interface UseSidePanelProps {

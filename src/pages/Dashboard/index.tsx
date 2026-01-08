@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { useAssignments } from '@/app/hooks/useAssignments'
-import { useEvents } from '@/app/hooks/useEvents'
+import { useAssignments } from '@/app/hooks/entities/useAssignments'
+import { useEvents } from '@/app/hooks/entities/useEvents'
 import AssignmentCard from '@/pages/Dashboard/components/AssignmentCard'
 import TodaysEvents from '@/pages/Dashboard/components/TodaysEvents'
 import TodaysClasses from '@/pages/Dashboard/components/TodaysClasses/'

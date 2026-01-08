@@ -1,6 +1,6 @@
 import React from 'react'
 import { useAlternatingABClasses } from '@/app/hooks/useAlternatingABClasses'
-import type { ClassListRendererProps } from './index'
+import type { ClassListRendererProps } from '@/app/contexts/ScheduleComponentsContext'
 
 import DashboardClassItem from '@/pages/Dashboard/components/TodaysClasses/Body/ClassList/ClassItem'
 import CalendarClassItem from '@/pages/Calendar/components/CalendarBody/SidePanel/Body/ClassList/ClassItem'

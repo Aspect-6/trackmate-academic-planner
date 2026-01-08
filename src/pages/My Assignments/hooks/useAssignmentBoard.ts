@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo, useCallback } from "react"
-import { useAssignments } from "@/app/hooks/useAssignments"
+import { useAssignments } from "@/app/hooks/entities/useAssignments"
 import { Status } from "@/app/types"
 import {
 	closestCenter,
