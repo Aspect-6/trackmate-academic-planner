@@ -1,69 +1,26 @@
 import React from 'react'
-import { useApp } from '@/app/contexts/AppContext'
 import { useHover } from '@/app/hooks/useHover'
 import { useFocus } from '@/app/hooks/useFocus'
 import { useScheduleData } from './hooks/useScheduleData'
-import type { DayType } from '@/app/types'
-import type { SemesterName } from '@/pages/My Schedule/types'
-import SemesterSchedule, { ScheduleTable, ScheduleTableRow, EmptyCell, FilledCell } from './components/SemesterSchedule'
+import { SCHEDULE_RENDERERS } from './components/scheduleRenderers'
 import { MY_SCHEDULE } from '@/app/styles/colors'
 
 import './index.css'
 
 const MySchedule: React.FC = () => {
-    const { schedules } = useApp()
-
     const {
         selectedTermId,
         setTermId,
         academicTerms,
         arrowStyle,
-        handleCellClick,
-        handleRemove,
-        getScheduleForSemester,
-        getClassById
+        scheduleType
     } = useScheduleData()
 
     const { isHovered, hoverProps } = useHover()
     const { isFocused, focusProps } = useFocus()
 
-    const renderScheduleTable = (semester: SemesterName) => {
-        const scheduleData = getScheduleForSemester(semester)
-
-        return (
-            <ScheduleTable>
-                {scheduleData.days.map((daySchedule, dayIndex) => {
-                    const isLastRow = dayIndex === scheduleData.days.length - 1
-                    const dayType = daySchedule.dayLabel as NonNullable<DayType>
-                    return (
-                        <ScheduleTableRow
-                            key={daySchedule.dayLabel}
-                            isLastRow={isLastRow}
-                            dayType={dayType}
-                        >
-                            {daySchedule.classes.map((classId: string | null, periodIndex: number) => {
-                                const classData = classId ? getClassById(classId) : null
-                                return classData ? (
-                                    <FilledCell
-                                        key={periodIndex}
-                                        isLastRow={isLastRow}
-                                        classData={classData}
-                                        onRemove={() => handleRemove(semester, dayType, periodIndex)}
-                                    />
-                                ) : (
-                                    <EmptyCell
-                                        key={periodIndex}
-                                        isLastRow={isLastRow}
-                                        onClick={() => handleCellClick(semester, dayType, periodIndex)}
-                                    />
-                                )
-                            })}
-                        </ScheduleTableRow>
-                    )
-                })}
-            </ScheduleTable>
-        )
-    }
+    // Get the renderer for the current schedule type
+    const ScheduleRenderer = SCHEDULE_RENDERERS[scheduleType]
 
     return (
         <div className="my-schedule-page flex-1 min-h-0 flex flex-col">
@@ -106,27 +63,20 @@ const MySchedule: React.FC = () => {
                     style={{ borderBottom: `1px solid ${MY_SCHEDULE.BORDER_PRIMARY}` }}
                 />
 
-                {schedules.type === 'alternating-ab'
-                    ? selectedTermId
-                        ? (
-                            <>
-                                <SemesterSchedule title="Fall Semester">
-                                    {renderScheduleTable('Fall')}
-                                </SemesterSchedule>
-                                <SemesterSchedule title="Spring Semester">
-                                    {renderScheduleTable('Spring')}
-                                </SemesterSchedule>
-                            </>
-                        ) : (
-                            <div
-                                className="text-center py-12"
-                                style={{ color: MY_SCHEDULE.TEXT_TERTIARY }}
-                            >
-                                <p className="text-lg">Select an academic term to view and edit your schedule.</p>
-                            </div>
-                        )
-                    : null
-                }
+                {!selectedTermId ? (
+                    <div
+                        className="text-center py-12"
+                        style={{ color: MY_SCHEDULE.TEXT_TERTIARY }}
+                    >
+                        <p className="text-lg">
+                            {academicTerms.length === 0
+                                ? "Add an academic term in Settings to get started."
+                                : "Select an academic term to view and edit your schedule."}
+                        </p>
+                    </div>
+                ) : ScheduleRenderer ? (
+                    <ScheduleRenderer selectedTermId={selectedTermId} />
+                ) : null}
             </div>
         </div>
     )
