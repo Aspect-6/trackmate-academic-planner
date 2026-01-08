@@ -68,7 +68,8 @@ const Settings: React.FC = () => {
         getDayTypeForDate,
         theme,
         setTheme: setThemeMode,
-        filteredAcademicTerms
+        filteredAcademicTerms,
+        schedules
     } = useApp()
 
     const {
@@ -86,7 +87,7 @@ const Settings: React.FC = () => {
     const currentDayType = getDayTypeForDate(today)
 
     return (
-        <div className="max-w-2xl mx-auto">
+        <div className="w-full max-w-2xl mx-auto">
             <ThemeSettings>
                 <BaseModuleHeader title="Theme" className="mb-4" />
                 <BaseModuleDescription>
@@ -144,27 +145,33 @@ const Settings: React.FC = () => {
                 <BaseModuleHeader title="Schedule Settings" />
 
                 <BaseModuleDescription>
-                    Select the kind of schedule that your institution uses.
+                    Select the kind of class schedule that your institution uses.
                 </BaseModuleDescription>
                 <ScheduleTypeDropdown className='mb-10'>
                     <ScheduleTypeDropdownOption value="alternating-ab">Alternating A/B Days</ScheduleTypeDropdownOption>
                 </ScheduleTypeDropdown>
 
                 <BaseModuleDescription>
-                    Manually set the current day type to correct the A/B day rotation.
-                    Future days will alternate based on this setting.
+                    {schedules.type === 'alternating-ab' &&
+                        `Manually set the current day type to correct the A/B day rotation.
+                        Future days will alternate based on this setting.`
+                    }
                 </BaseModuleDescription>
                 <ScheduleSettingsContent>
-                    <CurrentDayCalculation currentDayType={currentDayType || ''} />
+                    {schedules.type === 'alternating-ab' && (
+                        <>
+                            <CurrentDayCalculation currentDayType={currentDayType || ''} />
 
-                    <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full">
-                        <SetDayTypeButton dayType="A" onClick={() => setReferenceDayType('A')}>
-                            Set Today as A-Day
-                        </SetDayTypeButton>
-                        <SetDayTypeButton dayType="B" onClick={() => setReferenceDayType('B')}>
-                            Set Today as B-Day
-                        </SetDayTypeButton>
-                    </div>
+                            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full">
+                                <SetDayTypeButton dayType="A" onClick={() => setReferenceDayType('A')}>
+                                    Set Today as A-Day
+                                </SetDayTypeButton>
+                                <SetDayTypeButton dayType="B" onClick={() => setReferenceDayType('B')}>
+                                    Set Today as B-Day
+                                </SetDayTypeButton>
+                            </div>
+                        </>
+                    )}
                 </ScheduleSettingsContent>
             </ScheduleSettings>
 
