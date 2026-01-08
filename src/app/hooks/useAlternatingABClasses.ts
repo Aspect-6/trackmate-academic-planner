@@ -23,8 +23,8 @@ export const useAlternatingABClasses = (date: string) => {
 
     // Determine which semester we're in
     const dateObj = new Date(date)
-    const fallSemester = activeTerm.semesters?.find(s => s.name === 'Fall')
-    const springSemester = activeTerm.semesters?.find(s => s.name === 'Spring')
+    const fallSemester = activeTerm.semesters?.find(semester => semester.name === 'Fall')
+    const springSemester = activeTerm.semesters?.find(semester => semester.name === 'Spring')
 
     let semester: 'Fall' | 'Spring' = 'Fall'
     if (fallSemester && springSemester) {
@@ -41,7 +41,7 @@ export const useAlternatingABClasses = (date: string) => {
     if (!semesterData) return { classIds: [] }
 
     // Find the day schedule matching the day type
-    const daySchedule = semesterData.days.find(d => d.dayLabel === dayType)
+    const daySchedule = semesterData.days.find(day => day.dayLabel === dayType)
     if (!daySchedule) return { classIds: [] }
 
     return { classIds: daySchedule.classes }

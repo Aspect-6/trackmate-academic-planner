@@ -2,6 +2,7 @@ import React, { useCallback } from 'react'
 import { X } from 'lucide-react'
 import { useApp } from '@/app/contexts/AppContext'
 import { CLASS_LIST_RENDERERS } from '@/app/components/ClassListRenderers'
+import { DAY_TYPE_RENDERERS } from '@/app/components/DayTypeRenderers'
 import { useEvents } from '@/app/hooks/useEvents'
 import { useNoSchool } from '@/app/hooks/useNoSchool'
 import { useSelectedDate } from './hooks/useSelectedDate'
@@ -12,7 +13,7 @@ import { CALENDAR } from '@/app/styles/colors'
 import CalendarHeader, { PrevButton, NextButton, MonthTitle } from './components/CalendarHeader'
 import CalendarBody from './components/CalendarBody'
 import CalendarGrid, { CalendarGridDayHeader, CalendarDay, CalendarGridEmptyDay } from './components/CalendarBody/CalendarGrid'
-import CalendarSidePanel, { DayType, /* ClassList, */ AssignmentList, EventList, NoSchoolInfo, DayTypeDisplay, CalendarSidePanelHeader, CalendarSidePanelBody, DateDisplay, CloseButton } from './components/CalendarBody/SidePanel'
+import CalendarSidePanel, { DayType, AssignmentList, EventList, NoSchoolInfo, CalendarSidePanelHeader, CalendarSidePanelBody, DateDisplay, CloseButton } from './components/CalendarBody/SidePanel'
 
 import './index.css'
 
@@ -82,7 +83,13 @@ const Calendar: React.FC = () => {
                         <CalendarSidePanelBody>
                             <DayType noSchoolDay={sidePanelData?.noSchoolDay || undefined} dayType={sidePanelData?.dayType || null} onNoSchoolClick={openEditNoSchool}>
                                 <NoSchoolInfo noSchoolDay={sidePanelData?.noSchoolDay || undefined} />
-                                <DayTypeDisplay dayType={sidePanelData?.dayType || null} />
+                                {/* DayType using schedule-type-specific renderer */}
+                                {(() => {
+                                    const DayTypeRenderer = DAY_TYPE_RENDERERS[schedules.type]
+                                    return DayTypeRenderer ? (
+                                        <DayTypeRenderer dayType={sidePanelData?.dayType || null} />
+                                    ) : null
+                                })()}
                             </DayType>
                             {/* ClassList using schedule-type-specific renderer */}
                             {sidePanelData?.dateString && (() => {

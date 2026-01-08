@@ -452,6 +452,32 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         const dayOfWeek = date.getDay()
         if (dayOfWeek === 0 || dayOfWeek === 6) return null
 
+        // Check if date falls within an active term
+        const activeTerm = filteredAcademicTerms.find(term => {
+            const start = parseDateLocal(term.startDate)
+            const end = parseDateLocal(term.endDate)
+            return date >= start && date <= end
+        })
+        if (!activeTerm) return null
+
+        // Check if date falls within an active semester
+        const activeSemester = activeTerm.semesters.find(sem => {
+            const start = parseDateLocal(sem.startDate)
+            const end = parseDateLocal(sem.endDate)
+            return date >= start && date <= end
+        })
+        if (!activeSemester) return null
+
+        // For Semesters With Quarters, also check if date is within an active quarter
+        if (activeTerm.termType === 'Semesters With Quarters' && activeSemester.quarters) {
+            const activeQuarter = activeSemester.quarters.find(q => {
+                const start = parseDateLocal(q.startDate)
+                const end = parseDateLocal(q.endDate)
+                return date >= start && date <= end
+            })
+            if (!activeQuarter) return null
+        }
+
         const isNoSchoolDay = noSchool.some(ns => {
             const start = parseDateLocal(ns.startDate)
             const end = parseDateLocal(ns.endDate)
