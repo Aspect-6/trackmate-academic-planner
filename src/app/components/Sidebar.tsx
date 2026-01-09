@@ -4,14 +4,15 @@ import { NavLink } from 'react-router-dom'
 import { LayoutDashboard, Calendar, FileText, BookOpen, Clock, Settings } from 'lucide-react'
 import { APP_NAME } from '@/app/config/brand'
 import { GLOBAL } from '@/app/styles/colors'
+import { PATHS } from '@/app/config/paths'
 
 const Sidebar: React.FC = () => {
     const navItems = [
-        { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-        { to: '/calendar', label: 'Calendar', icon: Calendar },
-        { to: '/assignments', label: 'My Assignments', icon: FileText },
-        { to: '/classes', label: 'My Classes', icon: BookOpen },
-        { to: '/schedule', label: 'My Schedule', icon: Clock },
+        { to: PATHS.DASHBOARD, label: 'Dashboard', icon: LayoutDashboard },
+        { to: PATHS.CALENDAR, label: 'Calendar', icon: Calendar },
+        { to: PATHS.ASSIGNMENTS, label: 'My Assignments', icon: FileText },
+        { to: PATHS.CLASSES, label: 'My Classes', icon: BookOpen },
+        { to: PATHS.SCHEDULES, label: 'My Schedule', icon: Clock },
     ]
 
     return (
@@ -44,7 +45,7 @@ const Sidebar: React.FC = () => {
             <div className="absolute bottom-0 w-full px-4 pb-4">
                 <div className="border-t mb-2" style={{ borderColor: GLOBAL.SIDEBAR_BORDER }}></div>
                 <NavLink
-                    to="/settings"
+                    to={PATHS.SETTINGS}
                     style={({ isActive }) => isActive ? { backgroundColor: GLOBAL.SIDEBAR_ACTIVE_TAB_GREEN_BG, color: GLOBAL.SIDEBAR_TEXT_ACTIVE } : { color: GLOBAL.SIDEBAR_TEXT_INACTIVE, backgroundColor: GLOBAL.SIDEBAR_INACTIVE_TAB_BLANK_BG }}
                     onMouseEnter={(e) => { if (!e.currentTarget.classList.contains('active')) e.currentTarget.style.backgroundColor = GLOBAL.SIDEBAR_INACTIVE_TAB_BLANK_BG_HOVER }}
                     onMouseLeave={(e) => { if (!e.currentTarget.classList.contains('active')) e.currentTarget.style.backgroundColor = GLOBAL.SIDEBAR_INACTIVE_TAB_BLANK_BG }}

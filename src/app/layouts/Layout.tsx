@@ -6,6 +6,7 @@ import MobileSidebar from '@/app/components/MobileSidebar'
 import { useApp } from '@/app/contexts/AppContext'
 import { cn } from '@/app/lib/utils'
 import { GLOBAL, MY_CLASSES } from '@/app/styles/colors'
+import { getRouteByPath, DEFAULT_ROUTE, PATHS } from '@/app/config/paths'
 
 const Layout: React.FC = () => {
     const location = useLocation()
@@ -36,20 +37,29 @@ const Layout: React.FC = () => {
         return () => mediaQuery.removeListener(handleChange as (this: MediaQueryList, ev: MediaQueryListEvent) => void)
     }, [])
 
-    const isCalendar = location.pathname === '/calendar'
-    const isAssignments = location.pathname === '/assignments'
+    // Get current route config for page title
+    const currentRoute = getRouteByPath(location.pathname) ?? DEFAULT_ROUTE
+
+    // Fixed viewport logic (kept in Layout since it's UI behavior)
+    const isCalendar = location.pathname === PATHS.CALENDAR
+    const isAssignments = location.pathname === PATHS.ASSIGNMENTS
     const isFixedViewportPage = isCalendar || (isAssignments && isDesktopViewport)
 
-    const getPageTitle = () => {
-        const path = location.pathname
-        if (path === '/dashboard' || path === '/') return 'Dashboard'
-        if (path === '/calendar') return 'Calendar'
-        if (path === '/assignments') return 'My Assignments'
-        if (path === '/classes') return 'My Classes'
-        if (path === '/schedule') return 'My Schedule'
-        if (path === '/settings') return 'Settings'
-        return 'Dashboard'
+    // Add button logic (kept in Layout since it's UI behavior)
+    const getAddButtonConfig = () => {
+        if (location.pathname === PATHS.CLASSES) {
+            return { modal: 'add-class' as const, label: 'Add Class', bg: MY_CLASSES.CLASS_BUTTON_BG, bgHover: MY_CLASSES.CLASS_BUTTON_BG_HOVER }
+        }
+        if (location.pathname === PATHS.ASSIGNMENTS) {
+            return { modal: 'add-assignment' as const, label: 'Add Assignment', bg: GLOBAL.ASSIGNMENT_BUTTON_BG, bgHover: GLOBAL.ASSIGNMENT_BUTTON_BG_HOVER }
+        }
+        if (location.pathname === PATHS.CALENDAR) {
+            return { modal: 'add-event' as const, label: 'Add Event', bg: GLOBAL.EVENT_BUTTON_BG, bgHover: GLOBAL.EVENT_BUTTON_BG_HOVER }
+        }
+        return { modal: 'type-selector' as const, label: 'Add Item', bg: GLOBAL.ADDITEM_BUTTON_BG, bgHover: GLOBAL.ADDITEM_BUTTON_BG_HOVER }
     }
+
+    const addButton = getAddButtonConfig()
 
     return (
         <div className={cn(
@@ -78,48 +88,17 @@ const Layout: React.FC = () => {
                         >
                             <Menu className="w-7 h-7" />
                         </button>
-                        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold truncate" style={{ color: GLOBAL.PAGE_HEADER_TEXT }}>{getPageTitle()}</h1>
+                        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold truncate" style={{ color: GLOBAL.PAGE_HEADER_TEXT }}>{currentRoute.title}</h1>
                     </div>
                     <button
-                        onClick={() => {
-                            if (location.pathname === '/classes') return openModal('add-class')
-                            if (location.pathname === '/assignments') return openModal('add-assignment')
-                            if (location.pathname === '/calendar') return openModal('add-event')
-                            return openModal('type-selector')
-                        }}
+                        onClick={() => openModal(addButton.modal)}
                         className="flex items-center py-2 px-3 sm:px-4 border border-transparent rounded-lg shadow-sm text-xs sm:text-sm font-medium text-white transition duration-150 ease-in-out whitespace-nowrap flex-shrink-0"
-                        style={{
-                            backgroundColor: location.pathname === '/classes'
-                                ? MY_CLASSES.CLASS_BUTTON_BG
-                                : location.pathname === '/assignments'
-                                    ? GLOBAL.ASSIGNMENT_BUTTON_BG
-                                    : location.pathname === '/calendar'
-                                        ? GLOBAL.EVENT_BUTTON_BG
-                                        : GLOBAL.ADDITEM_BUTTON_BG
-                        }}
-                        onMouseEnter={(e) =>
-                            e.currentTarget.style.backgroundColor = location.pathname === '/classes'
-                                ? MY_CLASSES.CLASS_BUTTON_BG_HOVER
-                                : location.pathname === '/assignments'
-                                    ? GLOBAL.ASSIGNMENT_BUTTON_BG_HOVER
-                                    : location.pathname === '/calendar'
-                                        ? GLOBAL.EVENT_BUTTON_BG_HOVER
-                                        : GLOBAL.ADDITEM_BUTTON_BG_HOVER
-                        }
-                        onMouseLeave={(e) =>
-                            e.currentTarget.style.backgroundColor = location.pathname === '/classes'
-                                ? MY_CLASSES.CLASS_BUTTON_BG
-                                : location.pathname === '/assignments'
-                                    ? GLOBAL.ASSIGNMENT_BUTTON_BG
-                                    : location.pathname === '/calendar'
-                                        ? GLOBAL.EVENT_BUTTON_BG
-                                        : GLOBAL.ADDITEM_BUTTON_BG
-                        }
+                        style={{ backgroundColor: addButton.bg }}
+                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = addButton.bgHover}
+                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = addButton.bg}
                     >
                         <Plus className="w-4 h-4 sm:w-5 sm:h-5 mr-1" />
-                        <span className="hidden sm:inline">{location.pathname === '/classes' ? 'Add Class' :
-                            location.pathname === '/assignments' ? 'Add Assignment' :
-                                location.pathname === '/calendar' ? 'Add Event' : 'Add Item'}</span>
+                        <span className="hidden sm:inline">{addButton.label}</span>
                         <span className="sm:hidden">Add</span>
                     </button>
                 </header>

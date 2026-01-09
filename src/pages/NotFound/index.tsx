@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Home } from 'lucide-react'
 import { APP_NAME } from '@/app/config/brand'
+import { PATHS } from '@/app/config/paths'
 import './index.css'
 
 const NotFound: React.FC = () => {
@@ -14,7 +15,7 @@ const NotFound: React.FC = () => {
                 <p className="not-found-message">
                     The page you're looking for doesn't exist or has been moved.
                 </p>
-                <Link to="/dashboard" className="not-found-button">
+                <Link to={PATHS.DASHBOARD} className="not-found-button">
                     <Home className="w-5 h-5" />
                     <span>Back to Dashboard</span>
                 </Link>

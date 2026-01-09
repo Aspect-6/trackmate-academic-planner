@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom'
 import { LayoutDashboard, Calendar, FileText, BookOpen, Clock, Settings, X } from 'lucide-react'
 import { APP_NAME } from '@/app/config/brand'
 import { GLOBAL } from '@/app/styles/colors'
+import { PATHS } from '@/app/config/paths'
 
 interface MobileSidebarProps {
     isOpen: boolean
@@ -12,11 +13,11 @@ interface MobileSidebarProps {
 
 const MobileSidebar: React.FC<MobileSidebarProps> = ({ isOpen, onClose }) => {
     const navItems = [
-        { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-        { to: '/calendar', label: 'Calendar', icon: Calendar },
-        { to: '/assignments', label: 'My Assignments', icon: FileText },
-        { to: '/classes', label: 'My Classes', icon: BookOpen },
-        { to: '/schedule', label: 'My Schedule', icon: Clock },
+        { to: PATHS.DASHBOARD, label: 'Dashboard', icon: LayoutDashboard },
+        { to: PATHS.CALENDAR, label: 'Calendar', icon: Calendar },
+        { to: PATHS.ASSIGNMENTS, label: 'My Assignments', icon: FileText },
+        { to: PATHS.CLASSES, label: 'My Classes', icon: BookOpen },
+        { to: PATHS.SCHEDULES, label: 'My Schedule', icon: Clock },
     ]
 
     if (!isOpen) return null
@@ -55,7 +56,7 @@ const MobileSidebar: React.FC<MobileSidebarProps> = ({ isOpen, onClose }) => {
 
             <div className="p-6" style={{ borderTopColor: GLOBAL.SIDEBAR_BORDER, borderTopWidth: '1px', borderTopStyle: 'solid' }}>
                 <NavLink
-                    to="/settings"
+                    to={PATHS.SETTINGS}
                     onClick={onClose}
                     style={({ isActive }) => isActive ? { backgroundColor: GLOBAL.SIDEBAR_ACTIVE_TAB_GREEN_BG, color: GLOBAL.SIDEBAR_TEXT_ACTIVE } : { color: GLOBAL.SIDEBAR_TEXT_INACTIVE, backgroundColor: GLOBAL.SIDEBAR_INACTIVE_TAB_BLANK_BG }}
                     onMouseEnter={(e) => { if (!e.currentTarget.classList.contains('active')) e.currentTarget.style.backgroundColor = GLOBAL.SIDEBAR_INACTIVE_TAB_BLANK_BG_HOVER }}

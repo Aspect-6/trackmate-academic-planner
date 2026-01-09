@@ -9,20 +9,21 @@ import MySchedule from '@/pages/My Schedule'
 import Calendar from '@/pages/Calendar'
 import Settings from '@/pages/Settings'
 import NotFound from '@/pages/NotFound'
+import { ROUTES, DEFAULT_ROUTE, BASE_PATH } from '@/app/config/paths'
 
 const App: React.FC = () => {
     return (
         <>
             <ModalManager />
             <Routes>
-                <Route path="/" element={<Layout />}>
-                    <Route index element={<Navigate to="/dashboard" replace />} />
-                    <Route path="dashboard" element={<Dashboard />} />
-                    <Route path="calendar" element={<Calendar />} />
-                    <Route path="assignments" element={<MyAssignments />} />
-                    <Route path="classes" element={<MyClasses />} />
-                    <Route path="schedule" element={<MySchedule />} />
-                    <Route path="settings" element={<Settings />} />
+                <Route path={BASE_PATH} element={<Layout />}>
+                    <Route index element={<Navigate to={DEFAULT_ROUTE.fullPath} replace />} />
+                    <Route path={ROUTES['dashboard'].path} element={<Dashboard />} />
+                    <Route path={ROUTES['calendar'].path} element={<Calendar />} />
+                    <Route path={ROUTES['my-assignments'].path} element={<MyAssignments />} />
+                    <Route path={ROUTES['my-classes'].path} element={<MyClasses />} />
+                    <Route path={ROUTES['my-schedule'].path} element={<MySchedule />} />
+                    <Route path={ROUTES['settings'].path} element={<Settings />} />
                 </Route>
                 <Route path="*" element={<NotFound />} />
             </Routes>
