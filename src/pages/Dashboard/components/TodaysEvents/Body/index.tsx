@@ -35,7 +35,7 @@ const TodaysEventsBody: React.FC<TodaysEvents.Body.Props> = ({ isMobile, isColla
                     : '17.5rem'
             }}
         >
-            <div ref={contentRef} className="space-y-2 pr-2 flex items-center justify-center min-h-[5rem]">
+            <div ref={contentRef} className="space-y-2 pr-2">
                 {children}
             </div>
         </div>

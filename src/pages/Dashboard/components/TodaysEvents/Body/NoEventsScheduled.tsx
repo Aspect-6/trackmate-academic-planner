@@ -4,7 +4,7 @@ import { DASHBOARD } from '@/app/styles/colors'
 
 const NoEventsScheduled: React.FC<TodaysEvents.Body.NoEventsScheduledProps> = () => {
     return (
-        <p className="text-center pb-3" style={{ color: DASHBOARD.TEXT_TERTIARY }}>
+        <p className="text-center py-6" style={{ color: DASHBOARD.TEXT_TERTIARY }}>
             No events scheduled for today.
         </p>
     )

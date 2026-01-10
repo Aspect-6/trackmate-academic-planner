@@ -72,6 +72,13 @@
 	border-color: var(--focus-color);
 }
 
+/* Override for modals to match other modal inputs */
+.modal-container .app-select-dropdown {
+	background-color: var(--modal-input-bg);
+	border-color: var(--modal-input-border);
+	color: var(--modal-input-text);
+}
+
 
 /* Toast notifications */
 .toast-container {

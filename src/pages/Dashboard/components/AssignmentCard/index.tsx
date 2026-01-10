@@ -39,7 +39,7 @@ const AssignmentCard: React.FC<AssignmentCard.Props> = ({ assignment }) => {
             onClick={() => openEditAssignment(assignment.id)}
             className="flex flex-col gap-3 p-3 sm:p-4 rounded-xl shadow-md cursor-pointer transition-colors"
             style={{
-                backgroundColor: isHovered ? DASHBOARD.BACKGROUND_TERTIARY : DASHBOARD.BACKGROUND_PRIMARY,
+                backgroundColor: isHovered ? DASHBOARD.BACKGROUND_SECONDARY : DASHBOARD.BACKGROUND_PRIMARY,
                 border: `1px solid ${DASHBOARD.BORDER_PRIMARY}`,
                 borderLeft: `4px solid ${classInfo.color}`,
             }}

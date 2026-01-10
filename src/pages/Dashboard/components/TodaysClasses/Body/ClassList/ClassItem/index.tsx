@@ -9,11 +9,11 @@ const ClassItem: React.FC<TodaysClasses.Body.ClassList.ClassItemProps> = ({ clas
 
     return (
         <div
-            className="flex items-center justify-between p-3 rounded-lg transition-colors shadow-md cursor-pointer"
+            className="flex items-center justify-between p-3 rounded-lg shadow-md transition-colors cursor-pointer"
             style={{
                 border: `1px solid ${DASHBOARD.BORDER_PRIMARY}`,
                 borderLeft: `4px solid ${classInfo.color}`,
-                backgroundColor: isHovered ? DASHBOARD.BACKGROUND_TERTIARY : DASHBOARD.BACKGROUND_PRIMARY
+                backgroundColor: isHovered ? DASHBOARD.BACKGROUND_SECONDARY : DASHBOARD.BACKGROUND_PRIMARY
             }}
             onClick={() => openModal('edit-class', classInfo.id)}
             {...hoverProps}

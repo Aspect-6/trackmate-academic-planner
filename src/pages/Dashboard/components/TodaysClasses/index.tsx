@@ -24,11 +24,10 @@ const TodaysClasses: React.FC<TodaysClasses.Props> = ({
 
     return (
         <div
-            className="border p-6 rounded-xl dashboard-collapsible"
+            className="border p-6 rounded-xl shadow-md dashboard-collapsible"
             style={{
                 backgroundColor: DASHBOARD.BACKGROUND_PRIMARY,
-                borderColor: DASHBOARD.BORDER_PRIMARY,
-                boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)'
+                borderColor: DASHBOARD.BORDER_PRIMARY
             }}
             data-collapsed={isMobile && isCollapsed ? 'true' : 'false'}
         >
