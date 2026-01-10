@@ -15,7 +15,7 @@ const ScheduleTypeDropdown: React.FC<ScheduleSettings.Content.ScheduleTypeDropdo
             <select
                 value={schedules.type}
                 onChange={handleChange}
-                className="settings-select"
+                className="app-select-dropdown"
             >
                 {children}
             </select>

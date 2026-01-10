@@ -2,17 +2,17 @@
     /* Primary webpage accent color */
     --global-accent-hue: 158;
 
-    /* General Colors */    
+    /* General Colors */
     --modal-underlay-dark: hsla(0, 0%, 0%, 0.75);
 
     --background-black-50: hsla(0, 0%, 0%, 0.5);
     --background-black-30: hsla(0, 0%, 0%, 0.3);
-    
+
     --focus-color-hsl: var(--global-accent-hue), 70%, 42%;
     --focus-color: hsl(var(--focus-color-hsl));
     --focus-color-70: hsla(var(--focus-color-hsl), 0.7);
     --focus-color-30: hsla(var(--focus-color-hsl), 0.3);
-    
+
     /* Text Colors */
     --page-header-text: hsl(var(--global-accent-hue), 50%, 48%);
     --text-a-day: hsl(260, 60%, 50%);
@@ -54,6 +54,9 @@
     --scrollbar-thumb: hsl(218, 11%, 65%);
     --scrollbar-thumb-hover: hsl(216, 12%, 84%);
 
+    /* Select Dropdown Arrow */
+    --app-select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239ca3af'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+
     /* Common Buttons */
     --cancel-text: hsl(217, 20%, 60%);
 
@@ -84,11 +87,11 @@
 :root.light {
     /* General Colors */
     --webpage-background-color: hsl(215, 36%, 93%);
-    
+
     /* Header Menu Icon */
     --header-menu-icon: hsl(215, 15%, 45%);
     --header-menu-icon-hover: hsl(215, 25%, 28%);
-    
+
     /* Background Colors */
     --background-primary: hsl(215, 20%, 94%);
     --background-secondary: hsl(215, 15%, 92.7%);
@@ -113,6 +116,9 @@
     --scrollbar-track: hsl(215, 20%, 90%);
     --scrollbar-thumb: hsl(215, 15%, 60%);
     --scrollbar-thumb-hover: hsl(215, 15%, 45%);
+
+    /* Select Dropdown Arrow */
+    --app-select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
 
     /* Common Buttons */
     --cancel-text: hsl(217, 20%, 40%);

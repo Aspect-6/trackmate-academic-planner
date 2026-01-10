@@ -1,14 +1,11 @@
 /* Calendar Page Variables */
 :root.dark {
-    /* Day Cell */
-    --calendar-day-inactive-bg: var(--background-secondary); /* Only temporary */
-
     /* No School */
     --calendar-no-school-bg: var(--background-primary);
     --calendar-no-school-pattern: repeating-linear-gradient(
         140deg,
-        rgba(255, 255, 255, 0.04) 0px,
-        rgba(255, 255, 255, 0.04) 12px,
+        hsla(0, 0%, 100%, 0.04) 0px,
+        hsla(0, 0%, 100%, 0.04) 12px,
         transparent 12px,
         transparent 24px
     );
@@ -19,15 +16,12 @@
 }
 
 :root.light {
-    /* Day Cell */
-    --calendar-day-inactive-bg: var(--background-secondary); /* Only temporary */
-
     /* No School */
     --calendar-no-school-bg: var(--background-primary);
     --calendar-no-school-pattern: repeating-linear-gradient(
         140deg,
-        rgba(140, 160, 180, 0.14) 0px,
-        rgba(140, 160, 180, 0.14) 12px,
+        hsla(210, 21%, 63%, 0.14) 0px,
+        hsla(210, 21%, 63%, 0.14) 12px,
         transparent 12px,
         transparent 24px
     );

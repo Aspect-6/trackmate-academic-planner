@@ -7,9 +7,8 @@
     --modal-body-text: hsl(216, 12%, 84%);
     --modal-delete-body-text: hsl(215, 15%, 78%);
     --modal-color-grid-bg: var(--modal-input-bg);
-    --modal-color-tile-hover: #ffffff;
-    --modal-color-tile-selected: #ffffff;
-    --modal-select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239ca3af'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    --modal-color-tile-hover: hsl(0, 0%, 100%);
+    --modal-color-tile-selected: hsl(0, 0%, 100%);
 
     --modal-tab-bg: hsla(0, 0%, 100%, 0.04);
     --modal-tab-border: hsla(0, 0%, 100%, 0.06);
@@ -29,7 +28,6 @@
     --modal-color-grid-bg: var(--modal-input-bg);
     --modal-color-tile-hover: hsl(215, 25%, 95%);
     --modal-color-tile-selected: hsl(215, 25%, 55%);
-    --modal-select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
 
     --modal-tab-bg: hsla(0, 0%, 0%, 0.039);
     --modal-tab-border: hsla(0, 0%, 0%, 0.05);
@@ -92,7 +90,7 @@
     background-color: var(--modal-btn-bg-hover, var(--modal-btn-bg));
     color: var(--modal-btn-text-hover, var(--modal-btn-text));
     border-color: var(--modal-btn-border-hover, var(--modal-btn-border, transparent));
-    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 6px 14px hsla(0, 0%, 0%, 0.122);
 }
 
 .modal-btn-inline {
@@ -191,8 +189,7 @@
 /* Text Inputs */
 .modal-input,
 .modal-date-input,
-.modal-textarea,
-.modal-select {
+.modal-textarea {
     width: 100%;
     border-radius: 0.5rem;
     background-color: var(--modal-input-bg);
@@ -202,8 +199,7 @@
 
 .modal-input:focus,
 .modal-date-input:focus,
-.modal-textarea:focus,
-.modal-select:focus {
+.modal-textarea:focus {
     outline: none;
     border-color: var(--focus-color);
 }
@@ -225,17 +221,6 @@
 
 .modal-textarea {
     padding: 0.25rem 0.75rem;
-}
-
-.modal-select {
-    padding: 0.5rem 2.25rem 0.5rem 0.75rem;
-    appearance: none;
-    background-image: var(--modal-select-arrow);
-    background-repeat: no-repeat;
-    background-position: right 0.5rem center;
-    background-size: 1.5em 1.5em;
-    cursor: pointer;
-    text-overflow: ellipsis;
 }
 
 

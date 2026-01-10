@@ -146,7 +146,7 @@ export const AddAssignmentModal: React.FC<ModalProps> = ({ onClose }) => {
                                 value={formData.classId}
                                 onChange={e => setFormData({ ...formData, classId: e.target.value })}
                                 required
-                                className="modal-select"
+                                className="app-select-dropdown"
                                 style={{ '--focus-color': MODALS.ASSIGNMENT.PRIMARY_BG } as React.CSSProperties}
                             >
                                 {classes.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
@@ -199,7 +199,7 @@ export const AddAssignmentModal: React.FC<ModalProps> = ({ onClose }) => {
                                     name="priority"
                                     value={formData.priority}
                                     onChange={e => setFormData({ ...formData, priority: e.target.value as Priority })}
-                                    className="modal-select"
+                                    className="app-select-dropdown"
                                     style={{ '--focus-color': MODALS.ASSIGNMENT.PRIMARY_BG } as React.CSSProperties}
                                 >
                                     <option value="Low">Low</option>
@@ -213,7 +213,7 @@ export const AddAssignmentModal: React.FC<ModalProps> = ({ onClose }) => {
                                     name="status"
                                     value={formData.status}
                                     onChange={e => setFormData({ ...formData, status: e.target.value as Status })}
-                                    className="modal-select"
+                                    className="app-select-dropdown"
                                     style={{ '--focus-color': MODALS.ASSIGNMENT.PRIMARY_BG } as React.CSSProperties}
                                 >
                                     <option value="To Do">To Do</option>
@@ -226,7 +226,7 @@ export const AddAssignmentModal: React.FC<ModalProps> = ({ onClose }) => {
                             <label className="modal-label">Type</label>
                             <select
                                 name="type"
-                                className="modal-select"
+                                className="app-select-dropdown"
                                 value={formData.type}
                                 onChange={e => setFormData({ ...formData, type: e.target.value as AssignmentType })}
                                 style={{ '--focus-color': MODALS.ASSIGNMENT.PRIMARY_BG } as React.CSSProperties}
@@ -377,7 +377,7 @@ export const EditAssignmentModal: React.FC<EditModalProps> = ({ onClose, assignm
                                 value={formData.classId}
                                 onChange={e => setFormData({ ...formData, classId: e.target.value })}
                                 required
-                                className="modal-select"
+                                className="app-select-dropdown"
                                 style={{ '--focus-color': MODALS.ASSIGNMENT.PRIMARY_BG } as React.CSSProperties}
                             >
                                 {classes.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
@@ -426,7 +426,7 @@ export const EditAssignmentModal: React.FC<EditModalProps> = ({ onClose, assignm
                                 <select
                                     value={formData.priority}
                                     onChange={e => setFormData({ ...formData, priority: e.target.value as Priority })}
-                                    className="modal-select"
+                                    className="app-select-dropdown"
                                     style={{ '--focus-color': MODALS.ASSIGNMENT.PRIMARY_BG } as React.CSSProperties}
                                 >
                                     <option value="Low">Low</option>
@@ -439,7 +439,7 @@ export const EditAssignmentModal: React.FC<EditModalProps> = ({ onClose, assignm
                                 <select
                                     value={formData.status}
                                     onChange={e => setFormData({ ...formData, status: e.target.value as Status })}
-                                    className="modal-select"
+                                    className="app-select-dropdown"
                                     style={{ '--focus-color': MODALS.ASSIGNMENT.PRIMARY_BG } as React.CSSProperties}
                                 >
                                     <option value="To Do">To Do</option>
@@ -452,7 +452,7 @@ export const EditAssignmentModal: React.FC<EditModalProps> = ({ onClose, assignm
                             <label className="modal-label">Type</label>
                             <select
                                 name="type"
-                                className="modal-select"
+                                className="app-select-dropdown"
                                 value={formData.type || currentTypes[0] || ''}
                                 onChange={e => setFormData({ ...formData, type: e.target.value as AssignmentType })}
                                 style={{ '--focus-color': MODALS.ASSIGNMENT.PRIMARY_BG } as React.CSSProperties}

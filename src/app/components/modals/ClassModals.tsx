@@ -124,7 +124,7 @@ export const AddClassModal: React.FC<ModalProps> = ({ onClose }) => {
                                     setSelectedTermId(e.target.value)
                                     setSelectedSemesterId('')
                                 }}
-                                className="modal-select"
+                                className="app-select-dropdown"
                                 style={{ '--focus-color': MODALS.CLASS.PRIMARY_BG } as React.CSSProperties}
                             >
                                 <option value="">No Term Assigned</option>
@@ -139,7 +139,7 @@ export const AddClassModal: React.FC<ModalProps> = ({ onClose }) => {
                                 <select
                                     value={selectedSemesterId}
                                     onChange={e => setSelectedSemesterId(e.target.value)}
-                                    className="modal-select"
+                                    className="app-select-dropdown"
                                     style={{ '--focus-color': MODALS.CLASS.PRIMARY_BG } as React.CSSProperties}
                                 >
                                     <option value="">Year-long (Both Semesters)</option>
@@ -296,7 +296,7 @@ export const EditClassModal: React.FC<ClassModalProps> = ({ onClose, classId }) 
                             <select
                                 value={formData.termId || ''}
                                 onChange={e => setFormData({ ...formData, termId: e.target.value || undefined, semesterId: undefined })}
-                                className="modal-select"
+                                className="app-select-dropdown"
                                 style={{ '--focus-color': MODALS.CLASS.PRIMARY_BG } as React.CSSProperties}
                             >
                                 <option value="">No Term Assigned</option>
@@ -311,7 +311,7 @@ export const EditClassModal: React.FC<ClassModalProps> = ({ onClose, classId }) 
                                 <select
                                     value={formData.semesterId || ''}
                                     onChange={e => setFormData({ ...formData, semesterId: e.target.value || undefined })}
-                                    className="modal-select"
+                                    className="app-select-dropdown"
                                     style={{ '--focus-color': MODALS.CLASS.PRIMARY_BG } as React.CSSProperties}
                                 >
                                     <option value="">Year-long (Both Semesters)</option>

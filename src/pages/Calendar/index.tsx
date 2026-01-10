@@ -34,7 +34,7 @@ const Calendar: React.FC = () => {
 
     const getClassColor = useCallback((classId: string) => {
         const classInfo = getClassById(classId)
-        return classInfo?.color || '#888'
+        return classInfo.color
     }, [getClassById])
 
     // Determine what to render for classes section

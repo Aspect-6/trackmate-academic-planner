@@ -6,7 +6,7 @@ const CalendarGridEmptyDay: React.FC<CalendarBody.Grid.EmptyDayProps> = () => (
 	<div
 		className="border-r border-b p-2"
 		style={{
-			backgroundColor: CALENDAR.DAY_INACTIVE_BG,
+			backgroundColor: CALENDAR.BACKGROUND_SECONDARY,
 			borderColor: CALENDAR.BORDER_PRIMARY,
 		}}
 	/>

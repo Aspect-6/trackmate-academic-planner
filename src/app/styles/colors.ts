@@ -118,7 +118,6 @@ export const DASHBOARD = {
     ICON_IN_PROGRESS: 'var(--dashboard-icon-in-progress)',
     ICON_IN_PROGRESS_HOVER: 'var(--dashboard-icon-in-progress-hover)',
     ICON_COMPLETE: 'var(--dashboard-icon-complete)',
-    ICON_COMPLETE_HOVER: 'var(--dashboard-icon-complete-hover)',
 }
 
 // Calendar page

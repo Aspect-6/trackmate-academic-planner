@@ -1,34 +1,3 @@
-/* Settings Page Variables */
-:root.dark {
-    --settings-semester-bg: var(--background-quaternary);
-}
-
-:root.light {
-    --settings-semester-bg: var(--background-quaternary);
-}
-
-/* ScheduleSettings select dropdown styles */
-.settings-select {
-    width: 100%;
-    border-radius: 0.5rem;
-    background-color: var(--background-secondary);
-    border: 1px solid var(--border-primary);
-    color: var(--text-secondary);
-    padding: 0.5rem 2.25rem 0.5rem 0.75rem;
-    appearance: none;
-    background-image: var(--modal-select-arrow);
-    background-repeat: no-repeat;
-    background-position: right 0.5rem center;
-    background-size: 1.5em 1.5em;
-    cursor: pointer;
-    text-overflow: ellipsis;
-}
-
-.settings-select:focus {
-    outline: none;
-    border-color: var(--focus-color, var(--sidebar-tab-active-bg));
-}
-
 /* DangerZoneSettings danger row divider styles */
 .danger-row+.danger-row {
     border-top: 1px solid var(--border-primary);

@@ -16,7 +16,7 @@ const TermModeDropdown: React.FC<TermSettings.Content.TermModeDropdown.Props> = 
             <select
                 value={termMode}
                 onChange={(e) => setTermMode(e.target.value as TermMode)}
-                className="settings-select"
+                className="app-select-dropdown"
             >
                 {children}
             </select>
