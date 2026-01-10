@@ -19,12 +19,12 @@ import type {
 
 const AppContext = createContext<AppContextType | undefined>(undefined)
 
-const ASSIGNMENTS_KEY = 'studentTrackerAssignments'
-const CLASSES_KEY = 'studentTrackerClasses'
+const ASSIGNMENTS_KEY = 'trackmateAssignments'
+const CLASSES_KEY = 'trackmateClasses'
 const SCHEDULES_KEY = 'trackmateSchedules'
-const EVENTS_KEY = 'studentTrackerEvents'
-const NO_SCHOOL_KEY = 'studentTrackerNoSchool'
-const TERMS_KEY = 'studentTrackerTerms'
+const EVENTS_KEY = 'trackmateEvents'
+const NO_SCHOOL_KEY = 'trackmateNoSchool'
+const TERMS_KEY = 'trackmateTerms'
 const TERM_MODE_KEY = 'trackmateTermMode'
 const THEME_KEY = 'trackmateTheme'
 const ASSIGNMENT_TYPES_KEY = 'trackmateAssignmentTypes'
