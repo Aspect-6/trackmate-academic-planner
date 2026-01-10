@@ -18,14 +18,15 @@ src/
 │   ├── lib/          # Utility functions (utils.ts)
 │   ├── styles/       # Global CSS and color system
 │   ├── types/        # Core type definitions
-│   └── config/       # Config files (brand.ts)
+│   └── config/       # Config files (paths.ts, brand.ts)
 └── pages/        # Feature-based page modules
     ├── Dashboard/
     ├── Calendar/
     ├── My Assignments/
     ├── My Classes/
     ├── My Schedule/
-    └── Settings/
+    ├── Settings/
+    └── NotFound/
 ```
 
 ### Page Module Pattern
@@ -111,6 +112,39 @@ const ClassItem: React.FC<TodaysClasses.Body.ClassList.ClassItemProps> = ({ ... 
 
 ---
 
+## Route Configuration
+
+### Centralized Routing (`app/config/paths.ts`)
+
+All route definitions are centralized in a single configuration file:
+
+```typescript
+export interface RouteConfig {
+    path: string      // Relative path (e.g., 'dashboard')
+    fullPath: string  // Full path with base (e.g., '/academic/dashboard')
+    title: string     // Page title for display
+}
+
+export const ROUTES = {
+    'dashboard': route('dashboard', 'Dashboard'),
+    'calendar': route('calendar', 'Calendar'),
+    // ...
+}
+
+export const PATHS = {
+    DASHBOARD: ROUTES['dashboard'].fullPath,
+    // ...
+}
+```
+
+### Usage
+
+- **Navigation:** Use `PATHS.DASHBOARD` for `<Link to={...}>`
+- **Route matching:** Use `getRouteByPath(pathname)` to get config from URL
+- **Page titles:** Access via `ROUTES['dashboard'].title`
+
+---
+
 ## Color System
 
 ### Two-Layer Architecture
@@ -123,10 +157,12 @@ const ClassItem: React.FC<TodaysClasses.Body.ClassList.ClassItemProps> = ({ ... 
 Each page has its own color export that spreads `GLOBAL`:
 
 ```typescript
-export const DASHBOARD = {
+export const CALENDAR = {
     ...GLOBAL,
-    MODULE_BG: 'var(--dashboard-module-bg)',
-    CARD_BG: 'var(--dashboard-card-bg)',
+
+    // No School
+    NO_SCHOOL_BG: 'var(--calendar-no-school-bg)',
+    NO_SCHOOL_PATTERN: 'var(--calendar-no-school-pattern)',
     // ...
 }
 ```
@@ -137,9 +173,9 @@ Colors are applied via inline styles accessing these constants:
 
 ```tsx
 <div style={{
-    backgroundColor: DASHBOARD.BACKGROUND_PRIMARY,
-    borderColor: DASHBOARD.BORDER_PRIMARY,
-    color: DASHBOARD.TEXT_PRIMARY
+    backgroundColor: CALENDAR.BACKGROUND_PRIMARY,
+    borderColor: CALENDAR.BORDER_PRIMARY,
+    color: CALENDAR.TEXT_PRIMARY
 }}>
 ```
 
@@ -201,21 +237,11 @@ closeModal: () => void
 
 Well-documented interfaces with JSDoc comments:
 
-- `Priority`, `Status`, `AssignmentType`, `DayType`, `ThemeMode`
-- `Assignment`, `Class`, `Event`, `NoSchoolPeriod`
-- `DaySchedule`, `SemesterScheduleData`, `TermSchedule`, `Schedules`, `AlternatingABData`
-- `TermMode`, `Quarter`, `Semester`, `AcademicTerm`
-- `AppContextType` - the context interface
-
-### Type Aliases
-
-Reusable derived types:
-
-```typescript
-export type SemesterName = Semester['name']  // 'Fall' | 'Spring'
-export type ScheduleDayType = NonNullable<DayType>  // 'A' | 'B'
-export type SemesterScheduleData = Pick<Schedule, 'aDay' | 'bDay'>
-```
+- **Primitives**: `Priority`, `Status`, `AssignmentType`, `DayType`, `ThemeMode`, `TermMode`, `ScheduleType`, `ToastType`
+- **Core Entities**: `Assignment`, `Class`, `Event`, `NoSchoolPeriod`
+- **Academic Terms**: `AcademicTerm`, `Semester`, `Quarter`
+- **Schedule Data**: `DaySchedule`, `SemesterScheduleData`, `TermSchedule`, `Schedules`, `AlternatingABData`
+- **Context Types**: `AppContextType`, `ToastContextType`
 
 ---
 
@@ -226,15 +252,17 @@ export type SemesterScheduleData = Pick<Schedule, 'aDay' | 'bDay'>
 1. **App-Level Hooks** (`app/hooks/`) - Shared domain logic and UI utilities
 2. **Page-Level Hooks** (`pages/<Page>/hooks/`) - Feature-specific logic
 
-### Domain Hooks (`app/hooks/`)
+### Domain Hooks (`app/hooks/entities/`)
 
-Provide filtered views, indexed data, lookup functions, and CRUD operations:
+Provide filtered views, indexed data, lookup functions, and CRUD operations. All exported from `app/hooks/entities/index.ts`:
 
 | Hook | Purpose |
 |------|--------|
-| `useAssignments` | Assignment data, filtering (active/completed/overdue), indexed by date |
+| `useAssignments` | Assignment data, filtering (active/completed/overdue), indexed by date, CRUD |
+| `useClasses` | Class data, lookup by ID/name, class-to-color mapping |
 | `useEvents` | Event data, filtering (today/upcoming), indexed by date, sorted by time |
 | `useNoSchool` | No-school periods, indexed by date, date range expansion |
+| `useAcademicTerms` | Academic term data, current term detection, term-based filtering |
 
 **Domain Hook Pattern:**
 
@@ -271,12 +299,13 @@ export const useAssignments = () => {
 }
 ```
 
-### UI Interaction Hooks (`app/hooks/`)
+### Other App-Level Hooks (`app/hooks/`)
 
 | Hook | Purpose |
 |------|--------|
 | `useFocus` | Track focus state, returns `isFocused` and `focusProps` to spread |
 | `useHover` | Track hover state, returns `isHovered`, `hoverProps`, and `resetHover` |
+| `useAlternatingABClasses` | Get classes for a specific date based on A/B schedule rotation |
 
 **Usage Pattern:**
 
@@ -300,11 +329,11 @@ Feature-specific hooks live in `pages/<Page>/hooks/`:
 
 | Function | Description |
 |----------|-------------|
-| `cn()` | Tailwind class merging |
-| `generateId()` | Unique ID generation |
+| `cn()` | Tailwind class merging (clsx + twMerge) |
+| `generateId()` | Unique ID generation (random + timestamp) |
 | `formatDate(format, dateString)` | Format date ('short', 'medium', 'long', 'full', 'period') |
 | `todayString()` | Current date as YYYY-MM-DD |
-| `parseDateLocal()` | Parse YYYY-MM-DD to Date |
+| `parseDateLocal()` | Parse YYYY-MM-DD to Date in local time |
 | `dateToLocalISOString()` | Date to YYYY-MM-DD |
 | `getTextColorForBackground()` | Contrast calculation (black/white) for hex colors |
 | `parse12HourTime()` | Convert "2:30 PM" → "14:30" (24-hour format) |
@@ -325,3 +354,5 @@ Feature-specific hooks live in `pages/<Page>/hooks/`:
 | **State access** | `useApp()` hook from AppContext |
 | **Props typing** | Namespaced interfaces mirroring component tree |
 | **Path aliases** | `@/` maps to `src/` |
+| **Route paths** | Centralized in `app/config/paths.ts` |
+| **Domain hooks** | Entity-specific hooks in `app/hooks/entities/` |
