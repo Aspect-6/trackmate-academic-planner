@@ -1,5 +1,5 @@
 import { useApp } from '@/app/contexts/AppContext'
-import { useClasses } from '@/app/hooks/entities/useClasses'
+import { useClasses } from '@/app/hooks/entities'
 import type { TermSchedule, SemesterScheduleData, DaySchedule, DayType } from '@/app/types'
 import type { SemesterName, ScheduleDayType } from '@/pages/My Schedule/types'
 

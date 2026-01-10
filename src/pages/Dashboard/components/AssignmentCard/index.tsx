@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import { useAssignments } from '@/app/hooks/entities/useAssignments'
-import { useClasses } from '@/app/hooks/entities/useClasses'
+import { useAssignments, useClasses } from '@/app/hooks/entities'
 import { useHover } from '@/app/hooks/useHover'
 import type { AssignmentCard } from '@/pages/Dashboard/types'
 import PriorityBadge from '@/app/components/PriorityBadge'

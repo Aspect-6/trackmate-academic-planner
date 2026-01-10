@@ -1,5 +1,5 @@
 import React from 'react'
-import { useClasses } from '@/app/hooks/entities/useClasses'
+import { useClasses } from '@/app/hooks/entities'
 import ClassBoard from './components/ClassBoard'
 import './index.css'
 

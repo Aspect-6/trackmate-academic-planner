@@ -1,7 +1,5 @@
 import { useMemo } from 'react'
-import { useAssignments } from '@/app/hooks/entities/useAssignments'
-import { useEvents } from '@/app/hooks/entities/useEvents'
-import { useNoSchool } from '@/app/hooks/entities/useNoSchool'
+import { useAssignments, useEvents, useNoSchool } from '@/app/hooks/entities'
 import { todayString } from '@/app/lib/utils'
 import type { UseCalendar } from '@/pages/Calendar/types'
 
