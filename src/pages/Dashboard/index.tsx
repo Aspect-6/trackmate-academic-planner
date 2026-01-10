@@ -85,7 +85,7 @@ const Dashboard: React.FC = () => {
                 <div className="space-y-3 custom-scrollbar">
                     {assignmentsToShow.length === 0 ? (
                         <div className="text-center py-z8">
-                            <p style={{ color: DASHBOARD.TEXT_TERTIARY }}>No upcoming assignments to display.</p>
+                            <p className="pt-4" style={{ color: DASHBOARD.TEXT_TERTIARY }}>No upcoming assignments to display.</p>
                         </div>
                     ) : (
                         assignmentsToShow.map(assignment => (

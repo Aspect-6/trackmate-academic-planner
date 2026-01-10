@@ -31,11 +31,11 @@ const TodaysEventsBody: React.FC<TodaysEvents.Body.Props> = ({ isMobile, isColla
             className="overflow-y-scroll custom-scrollbar transition-max-height duration-300"
             style={{
                 maxHeight: isMobile
-                    ? (isCollapsed ? '0' : `min(${contentHeight+5}px, 11rem)`)
+                    ? (isCollapsed ? '0' : `min(${contentHeight + 5}px, 11rem)`)
                     : '17.5rem'
             }}
         >
-            <div ref={contentRef} className="space-y-2 pr-2">
+            <div ref={contentRef} className="space-y-2 pr-2 flex items-center justify-center min-h-[5rem]">
                 {children}
             </div>
         </div>
