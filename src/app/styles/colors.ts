@@ -103,7 +103,7 @@ export const GLOBAL = {
     // Class Colors
     CLASS_COLORS: [0, 10, 25, 38, 47, 142, 173, 199, 217, 239, 258, 292, 330]
         .map((hue) => `hsl(${hue}, 60%, 57%)`),
-    
+
     EVENT_COLORS: [20, 39, 120, 175, 220, 275].map((hue) => `hsl(${hue}, 40%, 63%)`)
 }
 
@@ -183,7 +183,7 @@ export const MODALS = {
         HEADING: GLOBAL.EVENT_HEADING_TEXT,
         PRIMARY_BG: GLOBAL.EVENT_BUTTON_BG,
         PRIMARY_BG_HOVER: GLOBAL.EVENT_BUTTON_BG_HOVER,
-        PRIMARY_TEXT: GLOBAL.EVENT_BUTTON_TEXT,
+        PRIMARY_TEXT: '#ffffff',
         COLORS: GLOBAL.EVENT_COLORS
     },
     CLASS: {
