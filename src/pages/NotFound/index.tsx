@@ -15,7 +15,7 @@ const NotFound: React.FC = () => {
                 <p className="not-found-message">
                     The page you're looking for doesn't exist or has been moved.
                 </p>
-                <Link to={PATHS.DASHBOARD} className="not-found-button">
+                <Link to={PATHS['dashboard']} className="not-found-button">
                     <Home className="w-5 h-5" />
                     <span>Back to Dashboard</span>
                 </Link>
