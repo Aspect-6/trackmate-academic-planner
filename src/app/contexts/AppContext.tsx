@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react'
 import { generateId, todayString, parseDateLocal, addDaysToDateString, dateToLocalISOString } from '@/app/lib/utils'
 import { useToast } from '@/app/contexts/ToastContext'
+import { useClasses } from '@/app/hooks/entities'
 import type {
     Assignment,
     AssignmentType,
@@ -76,9 +77,18 @@ interface AppProviderProps {
 
 export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     const { showToast } = useToast()
+    const {
+        classes,
+        addClass,
+        updateClass: updateClassInternal, // Alias merely for consistency if needed, but not strictly required unless we wrapped it. Actually we don't wrap updateClass.
+        deleteClass: deleteClassInternal,
+        reorderClasses,
+        getClassById
+    } = useClasses()
+
     const [assignments, setAssignments] = useState<Assignment[]>([])
     const [assignmentTypes, setAssignmentTypes] = useState<AssignmentType[]>(DEFAULT_ASSIGNMENT_TYPES)
-    const [classes, setClasses] = useState<Class[]>([])
+    // Classes managed by useClasses hook
     const [events, setEvents] = useState<Event[]>([])
     const [noSchool, setNoSchool] = useState<NoSchoolPeriod[]>([])
     const [academicTerms, setAcademicTerms] = useState<AcademicTerm[]>([])
@@ -143,13 +153,13 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     }
 
     useEffect(() => {
+        // Load classes purely for assignment validation (state managed by useClasses)
         const loadedClasses = loadFromLocalStorage<Class[]>(CLASSES_KEY, []).map(c => ({
             ...c,
             teacherName: c.teacherName || '',
             roomNumber: c.roomNumber || '',
             color: c.color || '#64748b', // Default color if not set
         }))
-        setClasses(loadedClasses)
 
         const storedTypes = loadFromLocalStorage<AssignmentType[]>(ASSIGNMENT_TYPES_KEY, DEFAULT_ASSIGNMENT_TYPES)
         const hydratedTypes = setTypesAndEnsureAssignments(storedTypes)
@@ -245,7 +255,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 
     // Save Data Effects - only save after initialization
     useEffect(() => { if (isInitialized) saveToLocalStorage(ASSIGNMENTS_KEY, assignments) }, [assignments, isInitialized])
-    useEffect(() => { if (isInitialized) saveToLocalStorage(CLASSES_KEY, classes) }, [classes, isInitialized])
+    // Classes saved by hook internally
     useEffect(() => { if (isInitialized) saveToLocalStorage(SCHEDULES_KEY, schedules) }, [schedules, isInitialized])
     useEffect(() => { if (isInitialized) saveToLocalStorage(EVENTS_KEY, events) }, [events, isInitialized])
     useEffect(() => { if (isInitialized) saveToLocalStorage(NO_SCHOOL_KEY, noSchool) }, [noSchool, isInitialized])
@@ -307,29 +317,14 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         setTypesAndEnsureAssignments(types)
     }
 
-    const addClass = (newClass: Omit<Class, 'id'>): boolean => {
-        if (classes.some(c => c.name.toLowerCase() === newClass.name.toLowerCase())) {
-            showToast(`A class with the name "${newClass.name}" already exists.`, 'error')
-            return false
-        }
-        setClasses(prev => [...prev, { ...newClass, id: generateId() }])
-        showToast(`Class "${newClass.name}" added successfully!`, 'success')
-        return true
-    }
-
-    const updateClass = (id: string, updates: Partial<Class>): void => {
-        setClasses(prev => prev.map(c => c.id === id ? { ...c, ...updates } : c))
-    }
+    // Classes actions managed by hook (except delete needing orchestration)
 
     const deleteClass = (id: string): void => {
         setAssignments(prev => prev.filter(a => a.classId !== id))
-        setClasses(prev => prev.filter(c => c.id !== id))
+        deleteClassInternal(id)
     }
 
-    const reorderClasses = (newOrder: Class[]): void => {
-        setClasses(newOrder)
-    }
-
+    // ... Events, NoSchool, Terms ... 
     const addEvent = (event: Omit<Event, 'id' | 'createdAt'>): void => {
         setEvents(prev => [...prev, { ...event, id: generateId(), createdAt: new Date().toISOString() }])
     }
@@ -364,14 +359,21 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 
     const deleteAcademicTerm = (id: string): void => {
         // Clear term assignment from any classes that reference this term
-        setClasses(prev => prev.map(c =>
-            c.termId === id
-                ? { ...c, termId: undefined, semesterId: undefined }
-                : c
-        ))
+        // Need to update classes - this logic must be moved or use useClasses update
+        // Current logic: setClasses(prev => prev.map(...))
+        // We must used classesData.updateClass? No, updateClass updates ONE class.
+        // We need to update multiple classes. useClasses doesn't expose bulk update.
+        // I need to add bulk update or just iterate.
+        // Iterating:
+        const affectedClasses = classes.filter(c => c.termId === id)
+        affectedClasses.forEach(c => {
+            updateClassInternal(c.id, { termId: undefined, semesterId: undefined })
+        })
+
         setAcademicTerms(prev => prev.filter(t => t.id !== id))
     }
 
+    // ... Schedules ...
     const updateTermSchedule = (termId: string, newSchedule: TermSchedule): void => {
         setSchedules(prev => {
             const abData = prev['alternating-ab']
@@ -545,21 +547,32 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         return isEven ? refType : (refType === 'A' ? 'B' : 'A')
     }
 
-    const getClassById = (id: string): Class => classes.find(c => c.id === id) as Class
+    // getClassById now provided by useClasses, but we can wrap it or destructure it. 
+    // AppContext interface defines it.
+    // It is already in classesData.
 
     return (
         <AppContext.Provider value={{
-            assignments, classes, events, noSchool, academicTerms, schedules,
+            assignments, events, noSchool, academicTerms, schedules,
             addAssignment, updateAssignment, deleteAssignment,
             assignmentTypes, addAssignmentType, removeAssignmentType, reorderAssignmentTypes,
-            addClass, updateClass, deleteClass, reorderClasses,
+
+            // Spread useClasses data (includes classes, addClass, updateClass, reorderClasses, getClassById, classesByTerm etc)
+            classes,
+            addClass,
+            updateClass: updateClassInternal,
+            reorderClasses,
+            getClassById,
+            // Override deleteClass to include assignment cleanup
+            deleteClass,
+
             addEvent, updateEvent, deleteEvent,
             addNoSchool, updateNoSchool, deleteNoSchool,
             termMode, setTermMode: setTermModeState, filteredAcademicTerms,
             addAcademicTerm, updateAcademicTerm, deleteAcademicTerm,
             updateTermSchedule, setScheduleType, setReferenceDayType, clearAllData,
             deleteAllAssignments, deleteAllEvents,
-            getDayTypeForDate, getClassById,
+            getDayTypeForDate,
             activeModal, modalData, openModal, closeModal,
             theme, setTheme
         }}>

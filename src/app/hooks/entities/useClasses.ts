@@ -1,13 +1,28 @@
-import { useMemo, useCallback } from 'react'
-import { useApp } from '@/app/contexts/AppContext'
+import { useMemo, useCallback, useEffect } from 'react'
+import { useLocalStorage } from '@/app/hooks/data/useLocalStorage'
+import { useToast } from '@/app/contexts/ToastContext'
+import { generateId } from '@/app/lib/utils'
 import type { Class } from '@/app/types'
+
+const CLASSES_KEY = 'trackmateClasses'
 
 /**
  * Hook for accessing and working with classes.
- * Provides lookup functions, and CRUD operations.
+ * Manages state persistence via useLocalStorage.
  */
 export const useClasses = () => {
-    const { classes, addClass, updateClass, deleteClass, reorderClasses, openModal } = useApp()
+    const [classes, setClasses] = useLocalStorage<Class[]>(CLASSES_KEY, [])
+    const { showToast } = useToast()
+
+    // Migration/Sanitization Effect
+    useEffect(() => {
+        setClasses(prev => prev.map(c => ({
+            ...c,
+            teacherName: c.teacherName || '',
+            roomNumber: c.roomNumber || '',
+            color: c.color || '#64748b',
+        })))
+    }, [setClasses])
 
     // Counts
     const totalNum = classes.length
@@ -22,15 +37,40 @@ export const useClasses = () => {
 
     // Lookup functions
     const getClassById = useCallback((id: string): Class => {
-        const found = classes.find(classItem => classItem.id === id)!
-        return found
+        return classes.find(classItem => classItem.id === id) as Class
     }, [classes])
+
     const getClassesByTerm = useCallback((termId: string) => classesByTerm[termId] ?? []
         , [classesByTerm])
 
     // Actions
-    const openAddClass = useCallback(() => openModal('add-class'), [openModal])
-    const openEditClass = useCallback((id: string) => openModal('edit-class', id), [openModal])
+    const addClass = useCallback((newClass: Omit<Class, 'id'>): boolean => {
+        if (classes.some(c => c.name.toLowerCase() === newClass.name.toLowerCase())) {
+            showToast(`A class with the name "${newClass.name}" already exists.`, 'error')
+            return false
+        }
+        setClasses(prev => [...prev, {
+            ...newClass,
+            id: generateId(),
+            teacherName: newClass.teacherName || '',
+            roomNumber: newClass.roomNumber || '',
+            color: newClass.color || '#64748b'
+        }])
+        showToast(`Class "${newClass.name}" added successfully!`, 'success')
+        return true
+    }, [classes, setClasses, showToast])
+
+    const updateClass = useCallback((id: string, updates: Partial<Class>): void => {
+        setClasses(prev => prev.map(c => c.id === id ? { ...c, ...updates } : c))
+    }, [setClasses])
+
+    const deleteClass = useCallback((id: string): void => {
+        setClasses(prev => prev.filter(c => c.id !== id))
+    }, [setClasses])
+
+    const reorderClasses = useCallback((newOrder: Class[]): void => {
+        setClasses(newOrder)
+    }, [setClasses])
 
     return {
         // Raw data
@@ -50,8 +90,6 @@ export const useClasses = () => {
         addClass,
         updateClass,
         deleteClass,
-        reorderClasses,
-        openAddClass,
-        openEditClass,
+        reorderClasses
     }
 }
