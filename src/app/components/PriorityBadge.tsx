@@ -3,16 +3,10 @@ import { cn } from '@/app/lib/utils'
 import { GLOBAL } from '@/app/styles/colors'
 
 interface PriorityBadgeProps {
-    /** The priority level (High, Medium, Low) or "Done" status */
     priority: string
-    /** Additional CSS classes */
     className?: string
 }
 
-/**
- * A global component for displaying assignment priority badges with consistent styling
- * across all parts of the application.
- */
 const PriorityBadge: React.FC<PriorityBadgeProps> = ({
     priority,
     className

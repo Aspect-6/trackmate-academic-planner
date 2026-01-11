@@ -1,15 +1,9 @@
-/**
- * Route configuration.
- */
 export interface RouteConfig {
     path: string
     fullPath: string
     title: string
 }
 
-/**
- * Base path for all webpage routes.
- */
 export const BASE_PATH = '/academic'
 
 const route = (name: string, title: string): RouteConfig => {
@@ -32,9 +26,6 @@ export const ROUTES = {
     'settings': route('settings', 'Settings'),
 }
 
-/**
- * Quick access to full paths for use in links and navigation.
- */
 export const PATHS = {
     'dashboard': ROUTES['dashboard'].fullPath,
     'calendar': ROUTES['calendar'].fullPath,
@@ -44,14 +35,8 @@ export const PATHS = {
     'settings': ROUTES['settings'].fullPath,
 }
 
-/**
- * Default route to redirect to from root.
- */
 export const DEFAULT_ROUTE = ROUTES['dashboard']
 
-/**
- * Get route config by pathname (with leading slash).
- */
 export function getRouteByPath(pathname: string): RouteConfig | undefined {
     if (pathname === '/') return DEFAULT_ROUTE
     return Object.values(ROUTES).find(r => r.fullPath === pathname)

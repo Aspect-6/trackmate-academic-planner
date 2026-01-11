@@ -23,17 +23,11 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({ children }) => {
         setToasts(prev => [...prev, { id, message, type }])
 
         setTimeout(() => {
-            // Add hide class for animation before removing? 
-            // For simplicity in React, we might just remove it, or we can handle the exit animation.
-            // The legacy CSS has a .hide class for slideOut.
-            // To support that, we'd need a two-step removal.
-            // Let's try to implement the exit animation.
-
             setToasts(prev => prev.map(t => t.id === id ? { ...t, isHiding: true } : t))
 
             setTimeout(() => {
                 setToasts(prev => prev.filter(t => t.id !== id))
-            }, 300) // Match animation duration
+            }, 300)
         }, 3000)
     }, [])
 
@@ -54,20 +48,6 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({ children }) => {
                             )}
                             <span>{toast.message}</span>
                         </div>
-                        {/* Legacy didn't seem to have a close button in the description, but it's good UX. 
-                            The user said "copy its implementation", so maybe I should stick to exactly what legacy had?
-                            Legacy JS: 
-                            const toast = document.createElement('div')
-                            toast.className = `toast-notification toast-${type}`
-                            toast.innerHTML = `
-                                <div class="flex items-center">
-                                    ${icon}
-                                    <span>${message}</span>
-                                </div>
-                            `
-                            
-                            It didn't have a close button. I'll omit it to be safe and match legacy exactly.
-                        */}
                     </div>
                 ))}
             </div>
