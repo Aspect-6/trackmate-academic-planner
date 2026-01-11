@@ -207,7 +207,6 @@ const ModalManager: React.FC = () => {
                 backgroundColor: GLOBAL.MODAL_BACKDROP,
                 touchAction: 'none'
             }}
-            onTouchMove={e => e.preventDefault()}
         >
             {renderModalContent()}
         </div>
