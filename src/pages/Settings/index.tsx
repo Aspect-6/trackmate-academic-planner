@@ -265,7 +265,7 @@ const Settings: React.FC = () => {
                         <DangerZoneRowDetails title="Delete All Assignments">
                             Delete every assignment from your account.
                         </DangerZoneRowDetails>
-                        <DangerZoneRowButton onClick={() => openModal('clear-assignments')}>
+                        <DangerZoneRowButton onClick={() => openModal('delete-assignments')}>
                             Delete All
                         </DangerZoneRowButton>
                     </DangerZoneRow>
@@ -273,7 +273,7 @@ const Settings: React.FC = () => {
                         <DangerZoneRowDetails title="Delete All Events">
                             Delete every calendar event from your account.
                         </DangerZoneRowDetails>
-                        <DangerZoneRowButton onClick={() => openModal('clear-events')}>
+                        <DangerZoneRowButton onClick={() => openModal('delete-events')}>
                             Delete All
                         </DangerZoneRowButton>
                     </DangerZoneRow>

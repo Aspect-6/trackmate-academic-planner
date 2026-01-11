@@ -5,7 +5,7 @@ import type { SemesterScheduleData } from '@/app/types'
 import type { SemesterName, ScheduleDayType } from '@/pages/My Schedule/types'
 import { BookOpen, Calendar } from 'lucide-react'
 
-interface SemesterClassSelectorModalProps {
+interface AlternatingABClassSelectorModalProps {
     onClose: () => void
     data: {
         semester: SemesterName
@@ -17,7 +17,7 @@ interface SemesterClassSelectorModalProps {
     }
 }
 
-export const SemesterClassSelectorModal: React.FC<SemesterClassSelectorModalProps> = ({ onClose, data }) => {
+export const AlternatingABClassSelectorModal: React.FC<AlternatingABClassSelectorModalProps> = ({ onClose, data }) => {
     const { classes } = useApp()
     const { semester, dayType, periodIndex, termId, onSelect, otherSemesterSchedule } = data
 

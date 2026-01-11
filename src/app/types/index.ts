@@ -306,9 +306,9 @@ export interface AppContextType {
     /** Clears all application data (Danger Zone) */
     clearAllData: () => void
     /** Clears all assignments */
-    clearAllAssignments: () => void
+    deleteAllAssignments: () => void
     /** Clears all events */
-    clearAllEvents: () => void
+    deleteAllEvents: () => void
 
     // Helper functions
     /** Calculates the day type (A, B, or null) for a specific date */

@@ -1,29 +1,44 @@
 import React, { useEffect } from 'react'
 import { useApp } from '@/app/contexts/AppContext'
-import { AddAssignmentModal, EditAssignmentModal, DeleteAssignmentModal } from '@/app/components/modals/AssignmentModals'
-import { AddClassModal, EditClassModal, DeleteClassModal } from '@/app/components/modals/ClassModals'
-import { AddEventModal, EditEventModal, DeleteEventModal } from '@/app/components/modals/EventModals'
-import { AddNoSchoolModal, EditNoSchoolModal, DeleteNoSchoolModal } from '@/app/components/modals/NoSchoolModal'
-import { ClearAllDataModal, ClearAllAssignmentsModal, ClearAllEventsModal } from '@/app/components/modals/ClearAllDataModal'
-import { AddTermModal, EditTermModal, DeleteTermModal } from '@/app/components/modals/TermModals'
-import { SemesterClassSelectorModal } from '@/app/components/modals/SemesterClassSelectorModal'
+import { useAcademicTerms } from '@/app/hooks/entities'
+import { useToast } from '@/app/contexts/ToastContext'
+import { AssignmentFormModal } from '@/app/components/modals/AssignmentFormModal'
+import { ClassFormModal } from '@/app/components/modals/ClassFormModal'
+import { EventFormModal } from '@/app/components/modals/EventFormModal'
+import { NoSchoolFormModal } from '@/app/components/modals/NoSchoolFormModal'
+import { TermFormModal } from '@/app/components/modals/TermFormModal'
+
+import { DeleteConfirmationModal } from '@/app/components/modals/DeleteConfirmationModal'
+import { AlternatingABClassSelectorModal } from '@/app/components/modals/AlternatingABClassSelectorModal'
 import { TypeSelectorModal } from '@/app/components/modals/TypeSelectorModal'
 import { GLOBAL } from '@/app/styles/colors'
 
 const ModalManager: React.FC = () => {
-    const { activeModal, modalData, closeModal, openModal } = useApp()
+    const {
+        activeModal,
+        modalData,
+        closeModal,
+        openModal,
+        assignments,
+        deleteAssignment,
+        classes,
+        deleteClass,
+        events,
+        deleteEvent,
+        noSchool,
+        deleteNoSchool,
+        clearAllData,
+        deleteAllAssignments,
+        deleteAllEvents
+    } = useApp()
+    const { academicTerms, deleteAcademicTerm } = useAcademicTerms()
+    const { showToast } = useToast()
 
     useEffect(() => {
         if (activeModal) {
-            // Prevent background scrolling on all devices including mobile
             document.body.style.overflow = 'hidden'
-            // document.body.style.position = 'fixed'
-            // document.body.style.top = `-${window.scrollY}px`
         } else {
-            // const scrollY = document.body.style.top
             document.body.style.overflow = ''
-            // document.body.style.position = ''
-            // document.body.style.top = ''
         }
 
         return () => {
@@ -43,44 +58,143 @@ const ModalManager: React.FC = () => {
         switch (activeModal) {
             case 'type-selector':
                 return <TypeSelectorModal onClose={closeModal} openModal={openModal} />
+
+            // Assignment modals
             case 'add-assignment':
-                return <AddAssignmentModal onClose={closeModal} />
+                return <AssignmentFormModal onClose={closeModal} />
             case 'edit-assignment':
-                return <EditAssignmentModal onClose={closeModal} assignmentId={modalData} />
-            case 'delete-assignment':
-                return <DeleteAssignmentModal onClose={closeModal} assignmentId={modalData} />
+                return <AssignmentFormModal onClose={closeModal} assignmentId={modalData} />
+            case 'delete-assignment': {
+                const assignment = assignments.find(a => a.id === modalData)
+                if (!assignment) return null
+                return (
+                    <DeleteConfirmationModal
+                        onClose={closeModal}
+                        title="Delete Assignment?"
+                        entityName={assignment.title}
+                        buttonText="Delete Assignment"
+                        onDelete={() => deleteAssignment(modalData)}
+                    />
+                )
+            }
+
+            // Class modals
             case 'add-class':
-                return <AddClassModal onClose={closeModal} />
+                return <ClassFormModal onClose={closeModal} />
             case 'edit-class':
-                return <EditClassModal onClose={closeModal} classId={modalData} />
-            case 'delete-class':
-                return <DeleteClassModal onClose={closeModal} classId={modalData} />
+                return <ClassFormModal onClose={closeModal} classId={modalData} />
+            case 'delete-class': {
+                const classToDelete = classes.find(c => c.id === modalData)
+                if (!classToDelete) return null
+                return (
+                    <DeleteConfirmationModal
+                        onClose={closeModal}
+                        title="Delete Class?"
+                        entityName={classToDelete.name}
+                        description="This will delete all assignments from this class."
+                        buttonText="Delete Class"
+                        onDelete={() => deleteClass(modalData)}
+                    />
+                )
+            }
+
+            // Event modals
             case 'add-event':
-                return <AddEventModal onClose={closeModal} />
+                return <EventFormModal onClose={closeModal} />
             case 'edit-event':
-                return <EditEventModal onClose={closeModal} eventId={modalData} />
-            case 'delete-event':
-                return <DeleteEventModal onClose={closeModal} eventId={modalData} />
+                return <EventFormModal onClose={closeModal} eventId={modalData} />
+            case 'delete-event': {
+                const event = events.find(e => e.id === modalData)
+                if (!event) return null
+                return (
+                    <DeleteConfirmationModal
+                        onClose={closeModal}
+                        title="Delete Event?"
+                        entityName={event.title}
+                        buttonText="Delete Event"
+                        onDelete={() => deleteEvent(modalData)}
+                    />
+                )
+            }
+
+            // No School modals
             case 'add-no-school':
-                return <AddNoSchoolModal onClose={closeModal} />
+                return <NoSchoolFormModal onClose={closeModal} />
             case 'edit-no-school':
-                return <EditNoSchoolModal onClose={closeModal} noSchoolId={modalData} />
-            case 'delete-no-school':
-                return <DeleteNoSchoolModal onClose={closeModal} noSchoolId={modalData} />
-            case 'clear-all-data':
-                return <ClearAllDataModal onClose={closeModal} />
-            case 'clear-assignments':
-                return <ClearAllAssignmentsModal onClose={closeModal} />
-            case 'clear-events':
-                return <ClearAllEventsModal onClose={closeModal} />
+                return <NoSchoolFormModal onClose={closeModal} noSchoolId={modalData} />
+            case 'delete-no-school': {
+                const period = noSchool.find(ns => ns.id === modalData)
+                if (!period) return null
+                return (
+                    <DeleteConfirmationModal
+                        onClose={closeModal}
+                        title="Delete No School Period?"
+                        entityName={period.name}
+                        buttonText="Delete Period"
+                        onDelete={() => deleteNoSchool(modalData)}
+                    />
+                )
+            }
+
+            // Term modals
             case 'add-term':
-                return <AddTermModal onClose={closeModal} />
+                return <TermFormModal onClose={closeModal} />
             case 'edit-term':
-                return <EditTermModal onClose={closeModal} termId={modalData} />
-            case 'delete-term':
-                return <DeleteTermModal onClose={closeModal} termId={modalData} />
+                return <TermFormModal onClose={closeModal} termId={modalData} />
+            case 'delete-term': {
+                const term = academicTerms.find(t => t.id === modalData)
+                if (!term) return null
+                return (
+                    <DeleteConfirmationModal
+                        onClose={closeModal}
+                        title="Delete Academic Term?"
+                        entityName={term.name}
+                        description="Any classes in this term will be unassigned. This action cannot be undone."
+                        buttonText="Delete Term"
+                        onDelete={() => {
+                            deleteAcademicTerm(modalData)
+                            showToast('Academic term deleted.', 'success')
+                        }}
+                    />
+                )
+            }
+
+            // Clear data modals
+            case 'clear-all-data':
+                return (
+                    <DeleteConfirmationModal
+                        onClose={closeModal}
+                        title="Clear All Data?"
+                        message="This will permanently delete all assignments, classes, events, schedules, no-school days, and custom assignment types. This action cannot be undone."
+                        buttonText="Delete Everything"
+                        onDelete={clearAllData}
+                    />
+                )
+            case 'delete-assignments':
+                return (
+                    <DeleteConfirmationModal
+                        onClose={closeModal}
+                        title="Delete All Assignments?"
+                        message="This will permanently delete every assignment from your account. This action cannot be undone."
+                        buttonText="Delete All Assignments"
+                        onDelete={deleteAllAssignments}
+                    />
+                )
+            case 'delete-events':
+                return (
+                    <DeleteConfirmationModal
+                        onClose={closeModal}
+                        title="Delete All Events?"
+                        message="This will permanently delete every calendar event from your account. This action cannot be undone."
+                        buttonText="Delete All Events"
+                        onDelete={deleteAllEvents}
+                    />
+                )
+
+            // Other modals
             case 'semester-class-selector':
-                return <SemesterClassSelectorModal onClose={closeModal} data={modalData} />
+                return <AlternatingABClassSelectorModal onClose={closeModal} data={modalData} />
+
             default:
                 return null
         }

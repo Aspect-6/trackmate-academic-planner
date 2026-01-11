@@ -414,13 +414,13 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         })
     }
 
-    const clearAllAssignments = (): void => {
+    const deleteAllAssignments = (): void => {
         setAssignments([])
         localStorage.removeItem(ASSIGNMENTS_KEY)
         window.location.reload()
     }
 
-    const clearAllEvents = (): void => {
+    const deleteAllEvents = (): void => {
         setEvents([])
         localStorage.removeItem(EVENTS_KEY)
         window.location.reload()
@@ -558,7 +558,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
             termMode, setTermMode: setTermModeState, filteredAcademicTerms,
             addAcademicTerm, updateAcademicTerm, deleteAcademicTerm,
             updateTermSchedule, setScheduleType, setReferenceDayType, clearAllData,
-            clearAllAssignments, clearAllEvents,
+            deleteAllAssignments, deleteAllEvents,
             getDayTypeForDate, getClassById,
             activeModal, modalData, openModal, closeModal,
             theme, setTheme
