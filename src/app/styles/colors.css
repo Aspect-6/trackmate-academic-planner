@@ -38,7 +38,6 @@
     /* Border Colors */
     --border-primary: hsl(212, 12%, 21%);
     --border-secondary: hsl(215, 14%, 34%);
-    --border-light: hsl(217, 19%, 27%);
     --page-header-divider: hsl(215, 24%, 20%);
 
     /* Text Colors */
@@ -101,7 +100,6 @@
     /* Border Colors */
     --border-primary: hsl(215, 20%, 85%);
     --border-secondary: hsl(215, 20%, 80%);
-    --border-light: hsl(215, 20%, 88%);
     --page-header-divider: hsl(215, 20%, 80%);
 
     /* Text Colors */

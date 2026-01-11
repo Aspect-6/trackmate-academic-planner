@@ -59,7 +59,7 @@ export const SemesterClassSelectorModal: React.FC<SemesterClassSelectorModalProp
                 boxShadow: '0 12px 30px rgba(0,0,0,0.25)'
             }}
         >
-            <div className="flex-shrink-0 pb-4 mb-3 border-b" style={{ borderColor: 'var(--header-divider-color, rgba(128,128,128,0.1))' }}>
+            <div className="flex-shrink-0 pb-4 mb-3 border-b" style={{ borderColor: 'rgba(128,128,128,0.3)' }}>
                 <h2 className="text-2xl font-bold mb-4" style={{ color: MODALS.CLASS.HEADING }}>
                     Select Class
                 </h2>
@@ -67,8 +67,8 @@ export const SemesterClassSelectorModal: React.FC<SemesterClassSelectorModalProp
                     <div
                         className="px-3 py-1 rounded-md text-sm font-medium flex items-center gap-2 border"
                         style={{
-                            borderColor: 'var(--border-light)',
-                            color: 'var(--text-primary)',
+                            borderColor: GLOBAL.BORDER_SECONDARY,
+                            color: GLOBAL.TEXT_PRIMARY,
                             backgroundColor: 'transparent'
                         }}
                     >
@@ -78,8 +78,8 @@ export const SemesterClassSelectorModal: React.FC<SemesterClassSelectorModalProp
                     <div
                         className="px-3 py-1 rounded-md text-sm font-medium flex items-center gap-2 border"
                         style={{
-                            borderColor: 'var(--border-light)',
-                            color: 'var(--text-secondary)',
+                            borderColor: GLOBAL.BORDER_SECONDARY,
+                            color: GLOBAL.TEXT_SECONDARY,
                             backgroundColor: 'transparent'
                         }}
                     >
@@ -92,11 +92,11 @@ export const SemesterClassSelectorModal: React.FC<SemesterClassSelectorModalProp
                 <div className="space-y-3">
                     {availableClasses.length === 0 ? (
                         <div className="flex flex-col items-center justify-center py-12 text-center opacity-60">
-                            <BookOpen size={32} className="mb-3 text-[var(--text-tertiary)]" />
-                            <p className="text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>
+                            <BookOpen size={32} className="mb-3" style={{ color: GLOBAL.TEXT_TERTIARY }} />
+                            <p className="text-sm font-medium" style={{ color: GLOBAL.TEXT_SECONDARY }}>
                                 No classes available
                             </p>
-                            <p className="text-xs mt-1" style={{ color: 'var(--text-tertiary)' }}>
+                            <p className="text-xs mt-1" style={{ color: GLOBAL.TEXT_TERTIARY }}>
                                 Add classes to this term to see them here
                             </p>
                         </div>
@@ -116,11 +116,11 @@ export const SemesterClassSelectorModal: React.FC<SemesterClassSelectorModalProp
                                     style={{ backgroundColor: classData.color }}
                                 />
                                 <div className="p-4 pl-5">
-                                    <div className="font-bold text-base md:text-lg leading-tight mb-1" style={{ color: 'var(--text-primary)' }}>
+                                    <div className="font-bold text-base md:text-lg leading-tight mb-1" style={{ color: GLOBAL.TEXT_PRIMARY }}>
                                         {classData.name}
                                     </div>
-                                    <div className="text-sm flex items-center gap-2 opacity-80" style={{ color: 'var(--text-secondary)' }}>
-                                        <span className="font-medium text-[var(--text-primary)] opacity-75">
+                                    <div className="text-sm flex items-center gap-2 opacity-80" style={{ color: GLOBAL.TEXT_SECONDARY }}>
+                                        <span className="font-medium opacity-75" style={{ color: GLOBAL.TEXT_PRIMARY }}>
                                             {classData.semesterId ? 'Semester' : 'Year-long'}
                                         </span>
                                         {(classData.teacherName || classData.roomNumber) && (

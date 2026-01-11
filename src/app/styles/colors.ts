@@ -30,7 +30,6 @@ export const GLOBAL = {
     // Border Colors
     BORDER_PRIMARY: 'var(--border-primary)',
     BORDER_SECONDARY: 'var(--border-secondary)',
-    BORDER_LIGHT: 'var(--border-light)',
     HEADER_DIVIDER: 'var(--page-header-divider)',
     HEADER_MENU_ICON: 'var(--header-menu-icon)',
     HEADER_MENU_ICON_HOVER: 'var(--header-menu-icon-hover)',

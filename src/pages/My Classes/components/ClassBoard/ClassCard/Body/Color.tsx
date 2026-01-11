@@ -71,7 +71,7 @@ const ClassCardColor: React.FC<ClassBoard.Card.Body.ColorProps> = ({ color }) =>
             <div className="flex items-center space-x-2">
                 <div
                     className="w-4 h-4 rounded-full"
-                    style={{ border: `1px solid ${MY_CLASSES.BORDER_LIGHT}`, backgroundColor: resolvedColor }}
+                    style={{ border: `1px solid ${MY_CLASSES.BORDER_SECONDARY}`, backgroundColor: resolvedColor }}
                 />
                 <span className="text-xs uppercase" style={{ color: MY_CLASSES.TEXT_PRIMARY }}>{colorLabel}</span>
             </div>
