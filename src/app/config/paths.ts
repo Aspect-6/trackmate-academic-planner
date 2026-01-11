@@ -36,12 +36,12 @@ export const ROUTES = {
  * Quick access to full paths for use in links and navigation.
  */
 export const PATHS = {
-    DASHBOARD: ROUTES['dashboard'].fullPath,
-    CALENDAR: ROUTES['calendar'].fullPath,
-    ASSIGNMENTS: ROUTES['my-assignments'].fullPath,
-    CLASSES: ROUTES['my-classes'].fullPath,
-    SCHEDULES: ROUTES['my-schedule'].fullPath,
-    SETTINGS: ROUTES['settings'].fullPath,
+    'dashboard': ROUTES['dashboard'].fullPath,
+    'calendar': ROUTES['calendar'].fullPath,
+    'my-assignments': ROUTES['my-assignments'].fullPath,
+    'my-classes': ROUTES['my-classes'].fullPath,
+    'my-schedule': ROUTES['my-schedule'].fullPath,
+    'settings': ROUTES['settings'].fullPath,
 }
 
 /**

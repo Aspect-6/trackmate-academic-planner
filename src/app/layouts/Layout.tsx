@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import { Plus, Menu } from 'lucide-react'
 import Sidebar from '@/app/components/Sidebar'
-import MobileSidebar from '@/app/components/MobileSidebar'
 import { useApp } from '@/app/contexts/AppContext'
 import { cn } from '@/app/lib/utils'
 import { GLOBAL, MY_CLASSES } from '@/app/styles/colors'
@@ -41,19 +40,19 @@ const Layout: React.FC = () => {
     const currentRoute = getRouteByPath(location.pathname) ?? DEFAULT_ROUTE
 
     // Fixed viewport logic (kept in Layout since it's UI behavior)
-    const isCalendar = location.pathname === PATHS.CALENDAR
-    const isAssignments = location.pathname === PATHS.ASSIGNMENTS
+    const isCalendar = location.pathname === PATHS['calendar']
+    const isAssignments = location.pathname === PATHS['my-assignments']
     const isFixedViewportPage = isCalendar || (isAssignments && isDesktopViewport)
 
     // Add button logic (kept in Layout since it's UI behavior)
     const getAddButtonConfig = () => {
-        if (location.pathname === PATHS.CLASSES) {
+        if (location.pathname === PATHS['my-classes']) {
             return { modal: 'add-class' as const, label: 'Add Class', bg: MY_CLASSES.CLASS_BUTTON_BG, bgHover: MY_CLASSES.CLASS_BUTTON_BG_HOVER }
         }
-        if (location.pathname === PATHS.ASSIGNMENTS) {
+        if (location.pathname === PATHS['my-assignments']) {
             return { modal: 'add-assignment' as const, label: 'Add Assignment', bg: GLOBAL.ASSIGNMENT_BUTTON_BG, bgHover: GLOBAL.ASSIGNMENT_BUTTON_BG_HOVER }
         }
-        if (location.pathname === PATHS.CALENDAR) {
+        if (location.pathname === PATHS['calendar']) {
             return { modal: 'add-event' as const, label: 'Add Event', bg: GLOBAL.EVENT_BUTTON_BG, bgHover: GLOBAL.EVENT_BUTTON_BG_HOVER }
         }
         return { modal: 'type-selector' as const, label: 'Add Item', bg: GLOBAL.ADDITEM_BUTTON_BG, bgHover: GLOBAL.ADDITEM_BUTTON_BG_HOVER }
@@ -68,8 +67,8 @@ const Layout: React.FC = () => {
         )}
             style={{ backgroundColor: GLOBAL.WEBPAGE_BACKGROUND }}
         >
-            <Sidebar />
-            <MobileSidebar isOpen={isMobileSidebarOpen} onClose={() => setIsMobileSidebarOpen(false)} />
+            <Sidebar variant="desktop" />
+            <Sidebar variant="mobile" isOpen={isMobileSidebarOpen} onClose={() => setIsMobileSidebarOpen(false)} />
 
             <main className={cn(
                 "content-area flex-grow min-w-0 w-full p-6 lg:p-8 flex flex-col",

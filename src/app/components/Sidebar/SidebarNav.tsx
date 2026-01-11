@@ -1,34 +1,33 @@
 import React from 'react'
-import { cn } from '@/app/lib/utils'
 import { NavLink } from 'react-router-dom'
 import { LayoutDashboard, Calendar, FileText, BookOpen, Clock, Settings } from 'lucide-react'
-import { APP_NAME } from '@/app/config/brand'
+import { cn } from '@/app/lib/utils'
 import { GLOBAL } from '@/app/styles/colors'
-import { PATHS } from '@/app/config/paths'
+import { PATHS, ROUTES } from '@/app/config/paths'
 
-const Sidebar: React.FC = () => {
-    const navItems = [
-        { to: PATHS.DASHBOARD, label: 'Dashboard', icon: LayoutDashboard },
-        { to: PATHS.CALENDAR, label: 'Calendar', icon: Calendar },
-        { to: PATHS.ASSIGNMENTS, label: 'My Assignments', icon: FileText },
-        { to: PATHS.CLASSES, label: 'My Classes', icon: BookOpen },
-        { to: PATHS.SCHEDULES, label: 'My Schedule', icon: Clock },
-    ]
+// Shared navigation items generation
+const NAV_ITEMS = [
+    { to: PATHS['dashboard'], label: ROUTES['dashboard'].title, icon: LayoutDashboard },
+    { to: PATHS['calendar'], label: ROUTES['calendar'].title, icon: Calendar },
+    { to: PATHS['my-assignments'], label: ROUTES['my-assignments'].title, icon: FileText },
+    { to: PATHS['my-classes'], label: ROUTES['my-classes'].title, icon: BookOpen },
+    { to: PATHS['my-schedule'], label: ROUTES['my-schedule'].title, icon: Clock },
+]
 
+interface SidebarNavProps {
+    onLinkClick?: () => void
+    className?: string
+}
+
+const SidebarNav: React.FC<SidebarNavProps> = ({ onLinkClick, className }) => {
     return (
-        <nav
-            className="sidebar w-64 flex-shrink-0 border-r sticky top-0 h-screen py-8 hidden lg:block"
-            style={{ backgroundColor: GLOBAL.SIDEBAR_BG, borderColor: GLOBAL.SIDEBAR_BORDER }}
-        >
-            <h1 className="text-2xl font-black px-6 mb-6" style={{ color: GLOBAL.PAGE_HEADER_TEXT }}>{APP_NAME}</h1>
-            <div className="px-4">
-                <div className="border-t mb-3" style={{ borderColor: GLOBAL.SIDEBAR_BORDER }}></div>
-            </div>
-            <div className="space-y-2 px-4">
-                {navItems.map((item) => (
+        <div className={cn("flex flex-col h-full", className)}>
+            <div className="flex-grow space-y-2 px-4 py-2">
+                {NAV_ITEMS.map((item) => (
                     <NavLink
                         key={item.to}
                         to={item.to}
+                        onClick={onLinkClick}
                         style={({ isActive }) => isActive ? { backgroundColor: GLOBAL.SIDEBAR_ACTIVE_TAB_GREEN_BG, color: GLOBAL.SIDEBAR_TEXT_ACTIVE } : { color: GLOBAL.SIDEBAR_TEXT_INACTIVE, backgroundColor: GLOBAL.SIDEBAR_INACTIVE_TAB_BLANK_BG }}
                         onMouseEnter={(e) => { if (!e.currentTarget.classList.contains('active')) e.currentTarget.style.backgroundColor = GLOBAL.SIDEBAR_INACTIVE_TAB_BLANK_BG_HOVER }}
                         onMouseLeave={(e) => { if (!e.currentTarget.classList.contains('active')) e.currentTarget.style.backgroundColor = GLOBAL.SIDEBAR_INACTIVE_TAB_BLANK_BG }}
@@ -42,10 +41,12 @@ const Sidebar: React.FC = () => {
                     </NavLink>
                 ))}
             </div>
-            <div className="absolute bottom-0 w-full px-4 pb-4">
+
+            <div className="flex-shrink-0 px-4 pb-4">
                 <div className="border-t mb-2" style={{ borderColor: GLOBAL.SIDEBAR_BORDER }}></div>
                 <NavLink
-                    to={PATHS.SETTINGS}
+                    to={PATHS['settings']}
+                    onClick={onLinkClick}
                     style={({ isActive }) => isActive ? { backgroundColor: GLOBAL.SIDEBAR_ACTIVE_TAB_GREEN_BG, color: GLOBAL.SIDEBAR_TEXT_ACTIVE } : { color: GLOBAL.SIDEBAR_TEXT_INACTIVE, backgroundColor: GLOBAL.SIDEBAR_INACTIVE_TAB_BLANK_BG }}
                     onMouseEnter={(e) => { if (!e.currentTarget.classList.contains('active')) e.currentTarget.style.backgroundColor = GLOBAL.SIDEBAR_INACTIVE_TAB_BLANK_BG_HOVER }}
                     onMouseLeave={(e) => { if (!e.currentTarget.classList.contains('active')) e.currentTarget.style.backgroundColor = GLOBAL.SIDEBAR_INACTIVE_TAB_BLANK_BG }}
@@ -55,11 +56,11 @@ const Sidebar: React.FC = () => {
                     )}
                 >
                     <Settings className="w-5 h-5 mr-3" />
-                    Settings
+                    {ROUTES['settings'].title}
                 </NavLink>
             </div>
-        </nav>
+        </div>
     )
 }
 
-export default Sidebar
+export default SidebarNav
