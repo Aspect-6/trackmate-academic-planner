@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useApp } from '@/app/contexts/AppContext'
 import { useAssignments, useClasses } from '@/app/hooks/entities'
 import { useHover } from '@/app/hooks/useHover'
 import type { UpcomingAssignments } from '@/pages/Dashboard/types'
@@ -10,7 +11,8 @@ import { DASHBOARD } from '@/app/styles/colors'
 
 const AssignmentCard: React.FC<UpcomingAssignments.AssignmentCard.Props> = ({ assignment }) => {
     const { getClassById } = useClasses()
-    const { updateAssignment, openEditAssignment } = useAssignments()
+    const { updateAssignment } = useAssignments()
+    const { openModal } = useApp()
     const { isHovered, hoverProps } = useHover()
     const [isCompleting, setIsCompleting] = useState(false)
     const classInfo = getClassById(assignment.classId)!
@@ -36,7 +38,7 @@ const AssignmentCard: React.FC<UpcomingAssignments.AssignmentCard.Props> = ({ as
 
     return (
         <div
-            onClick={() => openEditAssignment(assignment.id)}
+            onClick={() => openModal('edit-assignment', assignment.id)}
             className="flex flex-col gap-3 p-3 sm:p-4 rounded-xl shadow-md cursor-pointer transition-colors"
             style={{
                 backgroundColor: isHovered ? DASHBOARD.BACKGROUND_SECONDARY : DASHBOARD.BACKGROUND_PRIMARY,

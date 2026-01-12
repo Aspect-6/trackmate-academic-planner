@@ -1,5 +1,6 @@
 import React, { useMemo } from "react"
 import { useDroppable } from "@dnd-kit/core"
+import { useApp } from "@/app/contexts/AppContext"
 import { useClasses } from "@/app/hooks/entities/useClasses"
 import { useAssignments } from "@/app/hooks/entities/useAssignments"
 import type { AssignmentBoard as AssignmentBoardTypes } from "@/pages/My Assignments/types"
@@ -21,8 +22,9 @@ const AssignmentBoard: React.FC<AssignmentBoardTypes.Props> = ({
 	dragEnabled,
 }) => {
 	// Get global data
+	const { openModal } = useApp()
 	const { getClassById } = useClasses()
-	const { getAssignmentsByStatus, openEditAssignment } = useAssignments()
+	const { getAssignmentsByStatus } = useAssignments()
 
 	// Derive local state from props
 	const isCollapsed = isMobile ? !openColumns[status] : false
@@ -50,7 +52,7 @@ const AssignmentBoard: React.FC<AssignmentBoardTypes.Props> = ({
 		: -1
 	const showPlaceholder = dragEnabled && !!activeId && isOverColumn
 
-	const handleAssignmentClick = (id: string) => openEditAssignment(id)
+	const handleAssignmentClick = (id: string) => openModal('edit-assignment', id)
 
 	return (
 		<div

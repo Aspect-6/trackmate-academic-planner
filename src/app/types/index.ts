@@ -245,7 +245,7 @@ export interface AppContextType {
     /** Add a new assignment type (case-insensitive uniqueness) */
     addAssignmentType: (type: AssignmentType) => boolean
     /** Remove an existing assignment type */
-    removeAssignmentType: (type: AssignmentType) => void
+    removeAssignmentType: (type: AssignmentType, existingAssignments: Assignment[]) => void
     /** Reorder the assignment types list */
     reorderAssignmentTypes: (types: AssignmentType[]) => void
 
@@ -330,7 +330,7 @@ export interface AppContextType {
 /**
  * Types of toast notifications available.
  */
-export type ToastType = 'success' | 'error' | 'info'
+export type ToastType = 'success' | 'error'
 
 /**
  * Context interface for managing toast notifications.

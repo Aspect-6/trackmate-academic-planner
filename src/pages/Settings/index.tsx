@@ -1,6 +1,7 @@
 import React from 'react'
 import { useApp } from '@/app/contexts/AppContext'
 import { useAcademicTerms } from '@/app/hooks/entities'
+import { useSettings } from '@/app/hooks/useSettings'
 import { useAssignmentTypeSettings } from '@/pages/Settings/hooks/useAssignmentTypeSettings'
 // Base settings module imports
 import {
@@ -67,10 +68,10 @@ const Settings: React.FC = () => {
         openModal,
         setReferenceDayType,
         getDayTypeForDate,
-        theme,
-        setTheme: setThemeMode,
         schedules
     } = useApp()
+
+    const { theme, setTheme } = useSettings()
 
     const { filteredAcademicTerms } = useAcademicTerms()
 
@@ -80,9 +81,9 @@ const Settings: React.FC = () => {
         sensors,
         setNewType,
         handleAdd,
+        handleRemove,
         handleDragEnd,
         moveType,
-        removeAssignmentType
     } = useAssignmentTypeSettings()
 
     const today = todayString()
@@ -102,14 +103,14 @@ const Settings: React.FC = () => {
                         description="Bright, paper-like interface"
                         Icon={Sun}
                         active={theme === 'light'}
-                        onClick={() => setThemeMode('light')}
+                        onClick={() => setTheme('light')}
                     />
                     <ThemeButton
                         label="Dark Mode"
                         description="Soft glow for relaxed eyes."
                         Icon={Moon}
                         active={theme === 'dark'}
-                        onClick={() => setThemeMode('dark')}
+                        onClick={() => setTheme('dark')}
                     />
                 </ThemeSettingsContent>
             </ThemeSettings>
@@ -131,7 +132,7 @@ const Settings: React.FC = () => {
                                 isOnly={assignmentTypes.length === 1}
                                 onMoveUp={() => moveType(type, 'up')}
                                 onMoveDown={() => moveType(type, 'down')}
-                                onRemove={() => removeAssignmentType(type)}
+                                onRemove={() => handleRemove(type)}
                             />
                         ))}
                     </AssignmentTypeList>

@@ -1,5 +1,6 @@
-import React from 'react'
+import { useState } from 'react'
 import { useApp } from '@/app/contexts/AppContext'
+import { useSettings } from '@/app/hooks/useSettings'
 import { MouseSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core'
 import { arrayMove } from '@dnd-kit/sortable'
 
@@ -16,10 +17,12 @@ export const useAssignmentTypeSettings = () => {
         addAssignmentType,
         removeAssignmentType,
         reorderAssignmentTypes
-    } = useApp()
+    } = useSettings()
+
+    const { assignments } = useApp()
 
     // State for the "add new type" input
-    const [newType, setNewType] = React.useState('')
+    const [newType, setNewType] = useState('')
 
     // Sensors for drag-and-drop functionality
     const sensors = useSensors(
@@ -30,9 +33,12 @@ export const useAssignmentTypeSettings = () => {
     // Handler for adding a new assignment type
     const handleAdd = () => {
         const success = addAssignmentType(newType)
-        if (success) {
-            setNewType('')
-        }
+        if (success) setNewType('')
+    }
+
+    // Handler for removing an assignment type
+    const handleRemove = (type: string) => {
+        removeAssignmentType(type, assignments)
     }
 
     // Handler for drag-and-drop reordering
@@ -67,6 +73,6 @@ export const useAssignmentTypeSettings = () => {
         handleAdd,
         handleDragEnd,
         moveType,
-        removeAssignmentType
+        handleRemove
     }
 }

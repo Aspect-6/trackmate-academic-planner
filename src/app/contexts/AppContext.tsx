@@ -1,11 +1,8 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react'
 import { generateId, todayString, parseDateLocal, addDaysToDateString, dateToLocalISOString } from '@/app/lib/utils'
-import { useToast } from '@/app/contexts/ToastContext'
-import { useClasses } from '@/app/hooks/entities'
+import { useSettings } from '@/app/hooks/useSettings'
+import { useClasses, useAssignments } from '@/app/hooks/entities'
 import type {
-    Assignment,
-    AssignmentType,
-    Class,
     Event,
     NoSchoolPeriod,
     AcademicTerm,
@@ -14,36 +11,16 @@ import type {
     TermSchedule,
     AppContextType,
     DayType,
-    ThemeMode,
-    TermMode
 } from '../types'
 
 const AppContext = createContext<AppContextType | undefined>(undefined)
 
-const ASSIGNMENTS_KEY = 'trackmateAssignments'
-const CLASSES_KEY = 'trackmateClasses'
+// Keys
 const SCHEDULES_KEY = 'trackmateSchedules'
 const EVENTS_KEY = 'trackmateEvents'
 const NO_SCHOOL_KEY = 'trackmateNoSchool'
 const TERMS_KEY = 'trackmateTerms'
-const TERM_MODE_KEY = 'trackmateTermMode'
-const THEME_KEY = 'trackmateTheme'
-const ASSIGNMENT_TYPES_KEY = 'trackmateAssignmentTypes'
-
-export const DEFAULT_ASSIGNMENT_TYPES: AssignmentType[] = [
-    'Homework',
-    'Classwork',
-    'Workbook',
-    'Project',
-    'Presentation',
-    'Paper',
-    'Lab',
-    'Quiz',
-    'Test',
-    'Midterm',
-    'Final Exam',
-    'Other'
-]
+// Note: Assignments, Classes, Settings managed by their hooks now.
 
 const loadFromLocalStorage = <T,>(key: string, defaultValue: T): T => {
     const data = localStorage.getItem(key)
@@ -58,25 +35,11 @@ const saveToLocalStorage = <T,>(key: string, data: T): void => {
     localStorage.setItem(key, JSON.stringify(data))
 }
 
-const getStoredTheme = (): ThemeMode => {
-    if (typeof window === 'undefined') return 'light'
-    const stored = localStorage.getItem(THEME_KEY)
-    if (!stored) return 'light'
-    return stored as ThemeMode
-}
-
-const getStoredTermMode = (): TermMode => {
-    if (typeof window === 'undefined') return 'Semesters Only'
-    const stored = localStorage.getItem(TERM_MODE_KEY)
-    return stored === 'Semesters With Quarters' ? 'Semesters With Quarters' : 'Semesters Only'
-}
-
 interface AppProviderProps {
     children: ReactNode
 }
 
 export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
-    const { showToast } = useToast()
     const {
         classes,
         addClass,
@@ -86,9 +49,25 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         getClassById
     } = useClasses()
 
-    const [assignments, setAssignments] = useState<Assignment[]>([])
-    const [assignmentTypes, setAssignmentTypes] = useState<AssignmentType[]>(DEFAULT_ASSIGNMENT_TYPES)
-    // Classes managed by useClasses hook
+    const {
+        assignments,
+        assignmentTypes,
+        addAssignment,
+        updateAssignment,
+        deleteAssignment
+    } = useAssignments()
+
+    const {
+        theme,
+        setTheme,
+        termMode,
+        setTermMode,
+        addAssignmentType,
+        removeAssignmentType,
+        reorderAssignmentTypes
+    } = useSettings()
+
+    // Legacy State managed in AppContext (to be migrated)
     const [events, setEvents] = useState<Event[]>([])
     const [noSchool, setNoSchool] = useState<NoSchoolPeriod[]>([])
     const [academicTerms, setAcademicTerms] = useState<AcademicTerm[]>([])
@@ -101,8 +80,6 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
             terms: {}
         }
     })
-    const [theme, setThemeState] = useState<ThemeMode>(() => getStoredTheme())
-    const [termMode, setTermModeState] = useState<TermMode>(() => getStoredTermMode())
 
     // Computed: filter terms by current termMode
     const filteredAcademicTerms = academicTerms.filter(term => term.termType === termMode)
@@ -123,46 +100,10 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     }
 
     // Load Data
-    const sanitizeTypes = (types: AssignmentType[]): AssignmentType[] => {
-        const seen = new Set<string>()
-        const cleaned: AssignmentType[] = []
-        const banned = new Set(['study', 'stody'])
-        types.forEach(t => {
-            const trimmed = (t || '').toString().trim()
-            if (!trimmed) return
-            const key = trimmed.toLowerCase()
-            if (banned.has(key)) return
-            if (seen.has(key)) return
-            seen.add(key)
-            cleaned.push(trimmed)
-        })
-        return cleaned
-    }
-
-    const hydrateAssignmentTypes = (types: AssignmentType[]): AssignmentType[] => {
-        const cleaned = sanitizeTypes(types)
-        return cleaned.length ? cleaned : DEFAULT_ASSIGNMENT_TYPES
-    }
-
-    const setTypesAndEnsureAssignments = (types: AssignmentType[]): AssignmentType[] => {
-        const valid = hydrateAssignmentTypes(types)
-        const fallbackType: AssignmentType = (valid[0] ?? DEFAULT_ASSIGNMENT_TYPES[0]) as AssignmentType
-        setAssignmentTypes(valid)
-        setAssignments(prev => prev.map(a => (valid.includes(a.type) ? a : { ...a, type: fallbackType })))
-        return valid
-    }
-
+    // Load Data
     useEffect(() => {
-        // Load classes purely for assignment validation (state managed by useClasses)
-        const loadedClasses = loadFromLocalStorage<Class[]>(CLASSES_KEY, []).map(c => ({
-            ...c,
-            teacherName: c.teacherName || '',
-            roomNumber: c.roomNumber || '',
-            color: c.color || '#64748b', // Default color if not set
-        }))
-
-        const storedTypes = loadFromLocalStorage<AssignmentType[]>(ASSIGNMENT_TYPES_KEY, DEFAULT_ASSIGNMENT_TYPES)
-        const hydratedTypes = setTypesAndEnsureAssignments(storedTypes)
+        // Assignments and Classes loaded by hooks.
+        // We only load the remaining AppContext state.
 
         // Load schedules from localStorage
         const loadedSchedules = loadFromLocalStorage<Schedules>(SCHEDULES_KEY, {
@@ -175,27 +116,6 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
             }
         })
         setSchedules(loadedSchedules)
-
-        let loadedAssignments = loadFromLocalStorage<any[]>(ASSIGNMENTS_KEY, [])
-        loadedAssignments = loadedAssignments.map(a => {
-            if (typeof a.completed !== 'undefined') {
-                const status = a.completed ? 'Done' : 'To Do'
-                const { completed, ...rest } = a
-                a = { ...rest, status }
-            }
-            if (typeof a.classId === 'undefined' && loadedClasses.length > 0) {
-                a.classId = loadedClasses[0]?.id
-            }
-            if (!a.dueTime || typeof a.dueTime !== 'string') {
-                a.dueTime = '23:59'
-            }
-            const validTypes = hydrateAssignmentTypes(hydratedTypes)
-            if (!a.type || !validTypes.includes(a.type)) {
-                a.type = validTypes[0]
-            }
-            return a
-        }).filter(a => a.classId)
-        setAssignments(loadedAssignments as Assignment[])
 
         let loadedEvents = loadFromLocalStorage<any[]>(EVENTS_KEY, [])
         loadedEvents = loadedEvents.map(e => {
@@ -254,73 +174,22 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     }, [])
 
     // Save Data Effects - only save after initialization
-    useEffect(() => { if (isInitialized) saveToLocalStorage(ASSIGNMENTS_KEY, assignments) }, [assignments, isInitialized])
-    // Classes saved by hook internally
+    // Assignments and Classes saved by hooks.
     useEffect(() => { if (isInitialized) saveToLocalStorage(SCHEDULES_KEY, schedules) }, [schedules, isInitialized])
     useEffect(() => { if (isInitialized) saveToLocalStorage(EVENTS_KEY, events) }, [events, isInitialized])
     useEffect(() => { if (isInitialized) saveToLocalStorage(NO_SCHOOL_KEY, noSchool) }, [noSchool, isInitialized])
     useEffect(() => { if (isInitialized) saveToLocalStorage(TERMS_KEY, academicTerms) }, [academicTerms, isInitialized])
-    useEffect(() => { if (isInitialized) saveToLocalStorage(ASSIGNMENT_TYPES_KEY, assignmentTypes) }, [assignmentTypes, isInitialized])
-    useEffect(() => {
-        localStorage.setItem(TERM_MODE_KEY, termMode)
-    }, [termMode])
-    useEffect(() => {
-        const root = document.documentElement
-        root.classList.remove('light', 'dark')
-        root.classList.add(theme)
-        localStorage.setItem(THEME_KEY, theme)
-    }, [theme])
 
     // Actions
-    const addAssignment = (assignment: Omit<Assignment, 'id' | 'createdAt'>): void => {
-        setAssignments(prev => [...prev, { ...assignment, id: generateId(), createdAt: new Date().toISOString() }])
-    }
+    // Assignment actions managed by useAssignments hook
 
-    const updateAssignment = (id: string, updates: Partial<Assignment>): void => {
-        setAssignments(prev => prev.map(a => a.id === id ? { ...a, ...updates } : a))
-    }
-
-    const deleteAssignment = (id: string): void => {
-        setAssignments(prev => prev.filter(a => a.id !== id))
-    }
-
-    const addAssignmentType = (type: AssignmentType): boolean => {
-        const trimmed = (type || '').trim()
-        if (!trimmed) {
-            showToast('Assignment type cannot be empty.', 'error')
-            return false
-        }
-        const exists = assignmentTypes.some(t => t.toLowerCase() === trimmed.toLowerCase())
-        if (exists) {
-            showToast('That assignment type already exists.', 'error')
-            return false
-        }
-        const next = [...assignmentTypes, trimmed]
-        setTypesAndEnsureAssignments(next)
-        showToast(`Added "${trimmed}"`, 'success')
-        return true
-    }
-
-    const removeAssignmentType = (type: AssignmentType): void => {
-        if (assignmentTypes.length <= 1) {
-            showToast('Keep at least one assignment type.', 'error')
-            return
-        }
-        const next = assignmentTypes.filter(t => t !== type)
-        const validated = setTypesAndEnsureAssignments(next)
-        if (!validated.includes(type)) {
-            showToast(`Removed "${type}"`, 'info')
-        }
-    }
-
-    const reorderAssignmentTypes = (types: AssignmentType[]): void => {
-        setTypesAndEnsureAssignments(types)
-    }
-
-    // Classes actions managed by hook (except delete needing orchestration)
+    // Class actions managed by useClasses hook
 
     const deleteClass = (id: string): void => {
-        setAssignments(prev => prev.filter(a => a.classId !== id))
+        // Cascade delete assignments
+        const toDelete = assignments.filter(a => a.classId === id)
+        toDelete.forEach(a => deleteAssignment(a.id))
+
         deleteClassInternal(id)
     }
 
@@ -417,8 +286,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     }
 
     const deleteAllAssignments = (): void => {
-        setAssignments([])
-        localStorage.removeItem(ASSIGNMENTS_KEY)
+        localStorage.removeItem('trackmateAssignments')
         window.location.reload()
     }
 
@@ -429,19 +297,16 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     }
 
     const clearAllData = (): void => {
-        localStorage.removeItem(ASSIGNMENTS_KEY)
-        localStorage.removeItem(CLASSES_KEY)
+        localStorage.removeItem('trackmateAssignments')
+        localStorage.removeItem('trackmateClasses')
         localStorage.removeItem(SCHEDULES_KEY)
         localStorage.removeItem(EVENTS_KEY)
         localStorage.removeItem(NO_SCHOOL_KEY)
         localStorage.removeItem(TERMS_KEY)
-        localStorage.removeItem(ASSIGNMENT_TYPES_KEY)
+        localStorage.removeItem('trackmateAssignmentTypes')
         window.location.reload()
     }
 
-    const setTheme = (mode: ThemeMode): void => {
-        setThemeState(mode === 'dark' ? 'dark' : 'light')
-    }
 
     // Helpers
     const getDayTypeForDate = (dateString: string): DayType => {
@@ -555,7 +420,8 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         <AppContext.Provider value={{
             assignments, events, noSchool, academicTerms, schedules,
             addAssignment, updateAssignment, deleteAssignment,
-            assignmentTypes, addAssignmentType, removeAssignmentType, reorderAssignmentTypes,
+            assignmentTypes, addAssignmentType, removeAssignmentType,
+            reorderAssignmentTypes,
 
             // Spread useClasses data (includes classes, addClass, updateClass, reorderClasses, getClassById, classesByTerm etc)
             classes,
@@ -568,7 +434,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 
             addEvent, updateEvent, deleteEvent,
             addNoSchool, updateNoSchool, deleteNoSchool,
-            termMode, setTermMode: setTermModeState, filteredAcademicTerms,
+            termMode, setTermMode, filteredAcademicTerms,
             addAcademicTerm, updateAcademicTerm, deleteAcademicTerm,
             updateTermSchedule, setScheduleType, setReferenceDayType, clearAllData,
             deleteAllAssignments, deleteAllEvents,

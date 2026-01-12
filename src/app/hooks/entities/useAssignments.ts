@@ -1,67 +1,91 @@
-import { useMemo, useCallback } from 'react'
-import { useApp } from '@/app/contexts/AppContext'
+import { useMemo, useCallback, useEffect } from 'react'
+import { useSettings } from '@/app/hooks/useSettings'
+import { useLocalStorage } from '@/app/hooks/data/useLocalStorage'
+import { generateId } from '@/app/lib/utils'
 import type { Assignment, Status } from '@/app/types'
 
-/**
- * Hook for accessing and working with assignments.
- * Provides filtered views, lookup functions, and CRUD operations.
- */
+const ASSIGNMENTS_KEY = 'trackmateAssignments'
+
 export const useAssignments = () => {
-    const { assignments, addAssignment, updateAssignment, deleteAssignment, openModal } = useApp()
+    const [assignments, setAssignments] = useLocalStorage<Assignment[]>(ASSIGNMENTS_KEY, [])
+    const { assignmentTypes } = useSettings()
+
+    // Make sure that all assignments have a valid assignment type if their's was deleted
+    useEffect(() => {
+        setAssignments(prev => prev.map(assignment => {
+            if (assignment.type !== 'No Type' && !assignmentTypes.includes(assignment.type)) {
+                return { ...assignment, type: 'No Type' }
+            }
+            return assignment
+        }))
+    }, [setAssignments, assignmentTypes])
 
     // Counts
     const totalNum = assignments.length
 
     // Filtered views (sorted by due date)
-    const activeAssignments = useMemo(() => assignments.filter(
-        assignment => assignment.status === 'To Do' || assignment.status === 'In Progress'
-    ).toSorted((a, b) => 
-        new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime()
-    ), [assignments])
-
-    const completedAssignments = useMemo(() => assignments.filter(assignment =>
-        assignment.status === 'Done'
-    ), [assignments])
-
-    const overdueAssignments = useMemo(() => assignments.filter(assignment =>
-        assignment.status !== 'Done' && new Date(assignment.dueDate) < new Date()
-    ), [assignments])
+    const activeAssignments = useMemo(() => {
+        return assignments
+            .filter(assignment => assignment.status === 'To Do' || assignment.status === 'In Progress')
+            .toSorted((a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime())
+    }, [assignments])
+    const completedAssignments = useMemo(() => {
+        return assignments.filter(assignment => assignment.status === 'Done')
+    }, [assignments])
+    const overdueAssignments = useMemo(() => {
+        return assignments.filter(assignment => assignment.status !== 'Done' && new Date(assignment.dueDate) < new Date())
+    }, [assignments])
 
     // Sorted views
-    const sortedByDueDate = useMemo(() => assignments.toSorted((assignmentA, assignmentB) =>
-        new Date(assignmentA.dueDate).getTime() - new Date(assignmentB.dueDate).getTime()
-    ), [assignments])
+    const sortedByDueDate = useMemo(() => {
+        return assignments.toSorted((assignmentA, assignmentB) =>
+            new Date(assignmentA.dueDate).getTime() - new Date(assignmentB.dueDate).getTime()
+        )
+    }, [assignments])
 
     // Indexed by date
-    const assignmentsByDate = useMemo(() => assignments.reduce<Record<string, Assignment[]>>((acc, assignment) => {
-        if (assignment.dueDate) {
-            if (!acc[assignment.dueDate]) acc[assignment.dueDate] = []
-            acc[assignment.dueDate]!.push(assignment)
-        }
-        return acc
-    }, {}), [assignments])
+    const assignmentsByDate = useMemo(() => {
+        return assignments.reduce<Record<string, Assignment[]>>((acc, assignment) => {
+            if (assignment.dueDate) {
+                if (!acc[assignment.dueDate]) acc[assignment.dueDate] = []
+                acc[assignment.dueDate]!.push(assignment)
+            }
+            return acc
+        }, {})
+    }, [assignments])
 
     // Lookup functions
-    const getAssignmentById = useCallback((id: string) => assignments.find(assignment => assignment.id === id) ?? null
-        , [assignments])
-    const getAssignmentsForDate = useCallback((date: string) => assignmentsByDate[date] ?? []
-        , [assignmentsByDate])
-    const getAssignmentsByStatus = useCallback((status: Status) => assignments.filter(assignment => assignment.status === status)
-        , [assignments])
-    const getAssignmentsByClass = useCallback((classId: string) => assignments.filter(assignment => assignment.classId === classId)
-        , [assignments])
+    const getAssignmentById = useCallback((id: string) => {
+        return assignments.find(assignment => assignment.id === id) ?? null
+    }, [assignments])
+    const getAssignmentsForDate = useCallback((date: string) => {
+        return assignmentsByDate[date] ?? []
+    }, [assignmentsByDate])
+    const getAssignmentsByStatus = useCallback((status: Status) => {
+        return assignments.filter(assignment => assignment.status === status)
+    }, [assignments])
+    const getAssignmentsByClass = useCallback((classId: string) => {
+        return assignments.filter(assignment => assignment.classId === classId)
+    }, [assignments])
 
     // Actions
-    const markAsDone = useCallback((id: string) => updateAssignment(id, { status: 'Done' })
-        , [updateAssignment])
-    const openAddAssignment = useCallback(() => openModal('add-assignment')
-        , [openModal])
-    const openEditAssignment = useCallback((id: string) => openModal('edit-assignment', id)
-        , [openModal])
+    const addAssignment = useCallback((assignment: Omit<Assignment, 'id' | 'createdAt'>): void => {
+        setAssignments(prev => [...prev, { ...assignment, id: generateId(), createdAt: new Date().toISOString() }])
+    }, [setAssignments])
+    const updateAssignment = useCallback((id: string, updates: Partial<Assignment>): void => {
+        setAssignments(prev => prev.map(a => a.id === id ? { ...a, ...updates } : a))
+    }, [setAssignments])
+    const deleteAssignment = useCallback((id: string): void => {
+        setAssignments(prev => prev.filter(a => a.id !== id))
+    }, [setAssignments])
+    const markAsDone = useCallback((id: string) => {
+        return updateAssignment(id, { status: 'Done' })
+    }, [updateAssignment])
 
     return {
         // Raw data
         assignments,
+        assignmentTypes,
 
         // Counts
         totalNum,
@@ -88,7 +112,6 @@ export const useAssignments = () => {
         updateAssignment,
         deleteAssignment,
         markAsDone,
-        openAddAssignment,
-        openEditAssignment,
+
     }
 }

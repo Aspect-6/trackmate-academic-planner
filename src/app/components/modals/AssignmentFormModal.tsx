@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { DEFAULT_ASSIGNMENT_TYPES, useApp } from '@/app/contexts/AppContext'
+import { useApp } from '@/app/contexts/AppContext'
 import { useToast } from '@/app/contexts/ToastContext'
+import { DEFAULT_ASSIGNMENT_TYPES } from '@/app/hooks/useSettings'
 import { todayString } from '@/app/lib/utils'
 import { AssignmentType, Priority, Status } from '@/app/types'
 import { MODALS } from '@/app/styles/colors'
@@ -76,7 +77,7 @@ export const AssignmentFormModal: React.FC<AssignmentFormModalProps> = ({ onClos
         }
     }, [isEditMode, assignmentId, assignments])
 
-    // Set default classId if not set
+    // Select a class for an assignment if not set (only for Add Assignment)
     useEffect(() => {
         if (classes.length > 0 && !formData.classId) {
             const firstClassId = classes[0]?.id || ''
@@ -86,16 +87,13 @@ export const AssignmentFormModal: React.FC<AssignmentFormModalProps> = ({ onClos
         }
     }, [classes, formData.classId])
 
-    // Set default type if not set or invalid
+    // Select a type for an assignment if not set (only for Add Assignment)
     useEffect(() => {
-        const types = assignmentTypes.length ? assignmentTypes : DEFAULT_ASSIGNMENT_TYPES
-        const fallbackType = types[0] ?? ''
-        if (!formData.type && types.length) {
-            setFormData(prev => ({ ...prev, type: fallbackType }))
-        } else if (formData.type && !types.includes(formData.type)) {
-            setFormData(prev => ({ ...prev, type: fallbackType }))
+        if (isEditMode) return
+        if (!formData.type && assignmentTypes.length) {
+            setFormData(prev => ({ ...prev, type: assignmentTypes[0]! }))
         }
-    }, [assignmentTypes, formData.type])
+    }, [assignmentTypes, formData.type, isEditMode])
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -107,7 +105,7 @@ export const AssignmentFormModal: React.FC<AssignmentFormModalProps> = ({ onClos
         const safeData = { ...formData }
 
         if (!safeData.title.trim()) {
-            showToast('Please enter a title.', 'error')
+            showToast('Please enter a title', 'error')
             return
         }
 
@@ -132,16 +130,17 @@ export const AssignmentFormModal: React.FC<AssignmentFormModalProps> = ({ onClos
         }
 
         const fallbackType = validTypes[0] ?? ''
-        if (!safeData.type || !validTypes.includes(safeData.type as AssignmentType)) {
+        // Allow "No Type" explicitly
+        if (!safeData.type || (safeData.type !== 'No Type' && !validTypes.includes(safeData.type as AssignmentType))) {
             safeData.type = fallbackType
         }
 
         if (isEditMode) {
             updateAssignment(assignmentId, safeData)
-            showToast('Assignment updated.', 'success')
+            showToast('Successfully updated assignment', 'success')
         } else {
             addAssignment(safeData)
-            showToast('Assignment added!', 'success')
+            showToast('Successfully added assignment', 'success')
         }
         onClose()
     }
@@ -264,7 +263,7 @@ export const AssignmentFormModal: React.FC<AssignmentFormModalProps> = ({ onClos
                                 onChange={e => setFormData({ ...formData, type: e.target.value as AssignmentType })}
                                 focusColor={focusColor}
                             >
-                                {currentTypes.map(type => (
+                                {currentTypes.map((type: AssignmentType) => (
                                     <ModalSelectInputOption key={type} value={type}>
                                         {type}
                                     </ModalSelectInputOption>

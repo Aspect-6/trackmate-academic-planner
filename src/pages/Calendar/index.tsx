@@ -2,7 +2,7 @@ import React, { useCallback } from 'react'
 import { X } from 'lucide-react'
 import { useApp } from '@/app/contexts/AppContext'
 import { useScheduleComponents } from '@/app/contexts/ScheduleComponentsContext'
-import { useClasses, useAssignments, useEvents, useNoSchool } from '@/app/hooks/entities'
+import { useClasses, useEvents, useNoSchool } from '@/app/hooks/entities'
 import { useSelectedDate } from './hooks/useSelectedDate'
 import { useCalendarNavigation } from './hooks/useCalendarNavigation'
 import { useCalendarGrid } from './hooks/useCalendarGrid'
@@ -18,9 +18,12 @@ import NoClassesScheduled from './components/CalendarBody/SidePanel/Body/ClassLi
 import './index.css'
 
 const Calendar: React.FC = () => {
-    const { schedules } = useApp()
+    const { schedules, openModal } = useApp()
     const { getClassById } = useClasses()
-    const { openEditAssignment } = useAssignments()
+    
+    // temp
+    const openEditAssignment = useCallback((id: string) => openModal('edit-assignment', id), [openModal])
+
     const { useClassIdsForDate } = useScheduleComponents()
     const { openEditEvent } = useEvents()
     const { openEditNoSchool } = useNoSchool()
@@ -32,14 +35,8 @@ const Calendar: React.FC = () => {
     // Get class IDs for the selected date
     const { classIds, hasClasses } = useClassIdsForDate(sidePanelData?.dateString || '')
 
-    const getClassColor = useCallback((classId: string) => {
-        const classInfo = getClassById(classId)
-        return classInfo.color
-    }, [getClassById])
-
     // Determine what to render for classes section
     const renderClassesSection = () => {
-        // No school day - show nothing (handled by DayType component)
         if (sidePanelData?.noSchoolDay) {
             return (
                 <div>
@@ -51,12 +48,8 @@ const Calendar: React.FC = () => {
             )
         }
 
-        // No classes scheduled
-        if (!hasClasses) {
-            return <NoClassesScheduled />
-        }
+        if (!hasClasses) return <NoClassesScheduled />
 
-        // Render class list
         return (
             <ClassList
                 classes={classIds}
@@ -101,7 +94,7 @@ const Calendar: React.FC = () => {
                                     onSelectDate={setSelectedDate}
                                     onAssignmentClick={openEditAssignment}
                                     onEventClick={openEditEvent}
-                                    getClassColor={getClassColor}
+                                    getClassColor={(classId: string) => getClassById(classId).color}
                                 />
                             )
                         })}
