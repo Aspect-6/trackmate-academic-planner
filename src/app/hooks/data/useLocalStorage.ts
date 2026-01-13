@@ -1,13 +1,5 @@
 import { useCallback, useMemo, useSyncExternalStore } from 'react'
 
-/**
- * A hook for persisting state to localStorage with cross-component sync.
- * - Reads initial value from localStorage on mount
- * - Writes to localStorage synchronously on every update
- * - Syncs across components in the same tab via custom events
- * - Syncs across browser tabs via the native 'storage' event
- */
-
 // Custom event for same-tab sync between hook instances
 const STORAGE_EVENT = 'app-storage-update'
 
@@ -15,6 +7,13 @@ function dispatchStorageEvent(key: string) {
     window.dispatchEvent(new CustomEvent(STORAGE_EVENT, { detail: { key } }))
 }
 
+/**
+ * A hook for persisting state to localStorage with cross-component sync.
+ * - Reads initial value from localStorage on mount
+ * - Writes to localStorage synchronously on every update
+ * - Syncs across components in the same tab via custom events
+ * - Syncs across browser tabs via the native "storage" event
+ */
 export function useLocalStorage<T>(key: string, initialValue: T) {
     // Read from localStorage
     const getSnapshot = useCallback(() => {
