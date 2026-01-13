@@ -1,12 +1,12 @@
 import React from 'react'
-import { useApp } from '@/app/contexts/AppContext'
+import { useModal } from '@/app/contexts/ModalContext'
 import { useHover } from '@/app/hooks/useHover'
 import type { TermSettings } from '@/pages/Settings/types'
 import { Plus } from 'lucide-react'
 import { GLOBAL } from '@/app/styles/colors'
 
 const AddTermButton: React.FC<TermSettings.Content.AddTermButtonProps> = ({ children }) => {
-    const { openModal } = useApp()
+    const { openModal } = useModal()
     const { isHovered, hoverProps } = useHover()
 
     return (

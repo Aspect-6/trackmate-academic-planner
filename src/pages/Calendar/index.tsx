@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react'
 import { X } from 'lucide-react'
-import { useApp } from '@/app/contexts/AppContext'
+import { useModal } from '@/app/contexts/ModalContext'
 import { useScheduleComponents } from '@/app/contexts/ScheduleComponentsContext'
-import { useClasses, useEvents, useNoSchool } from '@/app/hooks/entities'
+import { useClasses, useSchedules } from '@/app/hooks/entities'
 import { useSelectedDate } from './hooks/useSelectedDate'
 import { useCalendarNavigation } from './hooks/useCalendarNavigation'
 import { useCalendarGrid } from './hooks/useCalendarGrid'
@@ -18,15 +18,15 @@ import NoClassesScheduled from './components/CalendarBody/SidePanel/Body/ClassLi
 import './index.css'
 
 const Calendar: React.FC = () => {
-    const { schedules, openModal } = useApp()
+    const { schedules } = useSchedules()
+    const { openModal } = useModal()
     const { getClassById } = useClasses()
-    
-    // temp
-    const openEditAssignment = useCallback((id: string) => openModal('edit-assignment', id), [openModal])
-
     const { useClassIdsForDate } = useScheduleComponents()
-    const { openEditEvent } = useEvents()
-    const { openEditNoSchool } = useNoSchool()
+
+    // Modal open callbacks
+    const openEditAssignment = useCallback((id: string) => openModal('edit-assignment', id), [openModal])
+    const openEditEvent = useCallback((id: string) => openModal('edit-event', id), [openModal])
+    const openEditNoSchool = useCallback((id: string) => openModal('edit-no-school', id), [openModal])
     const { selectedDate, setSelectedDate, clearSelection } = useSelectedDate()
     const { changeMonth, period, month, year } = useCalendarNavigation(clearSelection)
     const calendarCells = useCalendarGrid({ month, year })

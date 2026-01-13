@@ -1,11 +1,11 @@
 import React from 'react'
-import { useApp } from '@/app/contexts/AppContext'
+import { useModal } from '@/app/contexts/ModalContext'
 import type { TermSettings } from '@/pages/Settings/types'
 import { Edit2 } from 'lucide-react'
 import { GLOBAL } from '@/app/styles/colors'
 
 const TermItemHeaderEditButton: React.FC<TermSettings.Content.TermList.TermItem.Header.EditButtonProps> = ({ term }) => {
-    const { openModal } = useApp()
+    const { openModal } = useModal()
 
     return (
         <button

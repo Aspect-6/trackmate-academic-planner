@@ -1,14 +1,21 @@
-import { useMemo, useCallback } from 'react'
-import { useApp } from '@/app/contexts/AppContext'
-import { parseDateLocal, dateToLocalISOString } from '@/app/lib/utils'
+import { useMemo, useCallback, useEffect } from 'react'
+import { useLocalStorage } from '@/app/hooks/data/useLocalStorage'
+import { generateId, parseDateLocal, dateToLocalISOString } from '@/app/lib/utils'
+import { STORAGE_KEYS } from '@/app/config/storageKeys'
 import type { NoSchoolPeriod } from '@/app/types'
 
 /**
  * Hook for accessing and working with no-school periods.
+ * Manages state persistence via useLocalStorage.
  * Provides filtered views, lookup functions, and CRUD operations.
  */
 export const useNoSchool = () => {
-    const { noSchool: noSchoolPeriods, addNoSchool, updateNoSchool, deleteNoSchool, openModal } = useApp()
+    const [noSchoolPeriods, setNoSchoolPeriods] = useLocalStorage<NoSchoolPeriod[]>(STORAGE_KEYS.NO_SCHOOL, [])
+
+    // Trigger localStorage sync on mount
+    useEffect(() => {
+        setNoSchoolPeriods(prev => prev)
+    }, [setNoSchoolPeriods])
 
     // Indexed by date (expands date ranges into individual dates)
     const noSchoolByDate = useMemo(() => noSchoolPeriods.reduce<Record<string, NoSchoolPeriod>>((acc, period) => {
@@ -22,15 +29,26 @@ export const useNoSchool = () => {
     }, {}), [noSchoolPeriods])
 
     // Lookup functions
-    const getNoSchoolById = useCallback((id: string) => noSchoolPeriods.find(period => period.id === id) ?? null
-        , [noSchoolPeriods])
+    const getNoSchoolById = useCallback((id: string) => {
+        return noSchoolPeriods.find(period => period.id === id) ?? null
+    }, [noSchoolPeriods])
 
-    const getNoSchoolStatusForDate = useCallback((date: string) => noSchoolByDate[date] ?? null
-        , [noSchoolByDate])
+    const getNoSchoolStatusForDate = useCallback((date: string) => {
+        return noSchoolByDate[date] ?? null
+    }, [noSchoolByDate])
 
-    // Actions
-    const openAddNoSchool = useCallback(() => openModal('add-no-school'), [openModal])
-    const openEditNoSchool = useCallback((id: string) => openModal('edit-no-school', id), [openModal])
+    // CRUD Actions
+    const addNoSchool = useCallback((period: Omit<NoSchoolPeriod, 'id' | 'createdAt'>): void => {
+        setNoSchoolPeriods(prev => [...prev, { ...period, id: generateId(), createdAt: new Date().toISOString() }])
+    }, [setNoSchoolPeriods])
+
+    const updateNoSchool = useCallback((id: string, updates: Partial<NoSchoolPeriod>): void => {
+        setNoSchoolPeriods(prev => prev.map(ns => ns.id === id ? { ...ns, ...updates } : ns))
+    }, [setNoSchoolPeriods])
+
+    const deleteNoSchool = useCallback((id: string): void => {
+        setNoSchoolPeriods(prev => prev.filter(ns => ns.id !== id))
+    }, [setNoSchoolPeriods])
 
     return {
         // Raw data
@@ -47,7 +65,5 @@ export const useNoSchool = () => {
         addNoSchool,
         updateNoSchool,
         deleteNoSchool,
-        openAddNoSchool,
-        openEditNoSchool,
     }
 }

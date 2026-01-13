@@ -2,16 +2,15 @@ import { useMemo, useCallback, useEffect } from 'react'
 import { useLocalStorage } from '@/app/hooks/data/useLocalStorage'
 import { useToast } from '@/app/contexts/ToastContext'
 import { generateId } from '@/app/lib/utils'
+import { STORAGE_KEYS } from '@/app/config/storageKeys'
 import type { Class } from '@/app/types'
-
-const CLASSES_KEY = 'trackmateClasses'
 
 /**
  * Hook for accessing and working with classes.
  * Manages state persistence via useLocalStorage.
  */
 export const useClasses = () => {
-    const [classes, setClasses] = useLocalStorage<Class[]>(CLASSES_KEY, [])
+    const [classes, setClasses] = useLocalStorage<Class[]>(STORAGE_KEYS.CLASSES, [])
     const { showToast } = useToast()
 
     // Migration/Sanitization Effect

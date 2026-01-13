@@ -1,5 +1,5 @@
 import React from 'react'
-import { useApp } from '@/app/contexts/AppContext'
+import { useModal } from '@/app/contexts/ModalContext'
 import { useDeleteModalConfig } from '@/app/hooks/useDeleteModalConfig'
 import { AssignmentFormModal } from '@/app/components/modals/AssignmentFormModal'
 import { ClassFormModal } from '@/app/components/modals/ClassFormModal'
@@ -17,7 +17,7 @@ const ModalManager: React.FC = () => {
         modalData,
         closeModal,
         openModal
-    } = useApp()
+    } = useModal()
 
     const deleteConfig = useDeleteModalConfig(activeModal, modalData)
 

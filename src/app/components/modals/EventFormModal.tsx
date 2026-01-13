@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { useApp } from '@/app/contexts/AppContext'
+import { useModal } from '@/app/contexts/ModalContext'
+import { useToast } from '@/app/contexts/ToastContext'
+import { useEvents } from '@/app/hooks/entities'
 import { todayString } from '@/app/lib/utils'
 import { MODALS } from '@/app/styles/colors'
 import {
@@ -22,7 +24,9 @@ interface EventFormModalProps {
 }
 
 export const EventFormModal: React.FC<EventFormModalProps> = ({ onClose, eventId }) => {
-    const { events, addEvent, updateEvent, openModal } = useApp()
+    const { events, addEvent, updateEvent } = useEvents()
+    const { openModal } = useModal()
+    const { showToast } = useToast()
     const [formData, setFormData] = useState({
         title: '',
         date: todayString(),
@@ -35,7 +39,7 @@ export const EventFormModal: React.FC<EventFormModalProps> = ({ onClose, eventId
     const isEditMode = !!eventId
     const focusColor = MODALS.EVENT.PRIMARY_BG
 
-    // Populate form with existing event data in edit mode
+    // Populate form with existing event data in edit mode (only on mount)
     useEffect(() => {
         if (isEditMode) {
             const event = events.find(e => e.id === eventId)
@@ -50,7 +54,7 @@ export const EventFormModal: React.FC<EventFormModalProps> = ({ onClose, eventId
                 })
             }
         }
-    }, [isEditMode, eventId, events])
+    }, [])
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -70,8 +74,10 @@ export const EventFormModal: React.FC<EventFormModalProps> = ({ onClose, eventId
 
         if (isEditMode) {
             updateEvent(eventId, safeData)
+            showToast('Successfully updated event', 'success')
         } else {
             addEvent(safeData)
+            showToast('Successfully added event', 'success')
         }
         onClose()
     }

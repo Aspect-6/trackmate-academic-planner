@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useApp } from '@/app/contexts/AppContext'
+import { useAssignments } from '@/app/hooks/entities'
 import { useSettings } from '@/app/hooks/useSettings'
 import { MouseSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core'
 import { arrayMove } from '@dnd-kit/sortable'
@@ -19,7 +19,7 @@ export const useAssignmentTypeSettings = () => {
         reorderAssignmentTypes
     } = useSettings()
 
-    const { assignments } = useApp()
+    const { assignments } = useAssignments()
 
     // State for the "add new type" input
     const [newType, setNewType] = useState('')

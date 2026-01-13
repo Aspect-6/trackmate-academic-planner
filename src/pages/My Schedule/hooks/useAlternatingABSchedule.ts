@@ -1,5 +1,5 @@
-import { useApp } from '@/app/contexts/AppContext'
-import { useClasses } from '@/app/hooks/entities'
+import { useModal } from '@/app/contexts/ModalContext'
+import { useClasses, useSchedules } from '@/app/hooks/entities'
 import type { TermSchedule, SemesterScheduleData, DaySchedule, DayType } from '@/app/types'
 import type { SemesterName, ScheduleDayType } from '@/pages/My Schedule/types'
 
@@ -35,7 +35,8 @@ const findDayByLabel = (semester: SemesterScheduleData, label: string): DaySched
  * Provides schedule data access and cell manipulation functions.
  */
 export const useAlternatingABSchedule = (selectedTermId: string | null) => {
-    const { schedules, updateTermSchedule, openModal } = useApp()
+    const { schedules, updateTermSchedule } = useSchedules()
+    const { openModal } = useModal()
     const { getClassById } = useClasses()
 
     // Get terms from the alternating-ab data

@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
+import { useModal } from '@/app/contexts/ModalContext'
 import { useEvents } from '@/app/hooks/entities'
 import UpcomingAssignments from '@/pages/Dashboard/components/UpcomingAssignments'
 import TodaysEvents from '@/pages/Dashboard/components/TodaysEvents'
@@ -8,7 +9,10 @@ import '@/pages/Dashboard/index.css'
 const MOBILE_BREAKPOINT = '(max-width: 767px)'
 
 const Dashboard: React.FC = () => {
-    const { todaysEvents, openEditEvent } = useEvents()
+    const { openModal } = useModal()
+    const { todaysEvents } = useEvents()
+
+    const openEditEvent = useCallback((id: string) => openModal('edit-event', id), [openModal])
 
     const [isMobile, setIsMobile] = useState<boolean>(() => {
         if (typeof window === 'undefined') return false

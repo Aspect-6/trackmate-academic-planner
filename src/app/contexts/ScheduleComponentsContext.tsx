@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useMemo } from 'react'
-import { useApp } from './AppContext'
+import { useSchedules } from '@/app/hooks/entities'
 import type { ScheduleType } from '@/app/types'
 
 // Import schedule-type-specific components
@@ -49,7 +49,7 @@ const COMPONENTS_BY_TYPE: Record<ScheduleType, ScheduleComponents> = {
 const ScheduleComponentsContext = createContext<ScheduleComponents>(COMPONENTS_BY_TYPE['none'])
 
 export const ScheduleComponentsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const { schedules } = useApp()
+    const { schedules } = useSchedules()
 
     const components = useMemo(() => {
         return COMPONENTS_BY_TYPE[schedules.type] || COMPONENTS_BY_TYPE['none']

@@ -1,9 +1,8 @@
 import { useCallback, useEffect } from 'react'
 import { useLocalStorage } from '@/app/hooks/data/useLocalStorage'
-import type { Assignment, AssignmentType, ThemeMode, TermMode } from '@/app/types'
 import { useToast } from '@/app/contexts/ToastContext'
-
-const SETTINGS_KEY = 'trackmateSettings'
+import { STORAGE_KEYS } from '@/app/config/storageKeys'
+import type { Assignment, AssignmentType, ThemeMode, TermMode } from '@/app/types'
 
 export const DEFAULT_ASSIGNMENT_TYPES: AssignmentType[] = [
     'Homework',
@@ -33,7 +32,7 @@ const DEFAULT_SETTINGS: Settings = {
 }
 
 export const useSettings = () => {
-    const [settings, setSettings] = useLocalStorage<Settings>(SETTINGS_KEY, DEFAULT_SETTINGS)
+    const [settings, setSettings] = useLocalStorage<Settings>(STORAGE_KEYS.SETTINGS, DEFAULT_SETTINGS)
     const { showToast } = useToast()
 
     // Update settings actions

@@ -1,14 +1,21 @@
-import { useMemo, useCallback } from 'react'
-import { useApp } from '@/app/contexts/AppContext'
-import { todayString } from '@/app/lib/utils'
+import { useMemo, useCallback, useEffect } from 'react'
+import { useLocalStorage } from '@/app/hooks/data/useLocalStorage'
+import { generateId, todayString } from '@/app/lib/utils'
+import { STORAGE_KEYS } from '@/app/config/storageKeys'
 import type { Event } from '@/app/types'
 
 /**
  * Hook for accessing and working with events.
+ * Manages state persistence via useLocalStorage.
  * Provides filtered views, lookup functions, and CRUD operations.
  */
 export const useEvents = () => {
-    const { events, addEvent, updateEvent, deleteEvent, openModal } = useApp()
+    const [events, setEvents] = useLocalStorage<Event[]>(STORAGE_KEYS.EVENTS, [])
+
+    // Trigger localStorage sync on mount
+    useEffect(() => {
+        setEvents(prev => prev)
+    }, [setEvents])
 
     // Counts
     const totalNum = events.length
@@ -57,14 +64,25 @@ export const useEvents = () => {
     }, [eventsByDate, sortByStartTime])
 
     // Lookup functions
-    const getEventById = useCallback((id: string) => events.find(event => event.id === id) ?? null
-        , [events])
-    const getEventsForDate = useCallback((date: string) => eventsByDateSorted[date] ?? []
-        , [eventsByDateSorted])
+    const getEventById = useCallback((id: string) => {
+        return events.find(event => event.id === id) ?? null
+    }, [events])
+    const getEventsForDate = useCallback((date: string) => {
+        return eventsByDateSorted[date] ?? []
+    }, [eventsByDateSorted])
 
-    // Actions
-    const openAddEvent = useCallback(() => openModal('add-event'), [openModal])
-    const openEditEvent = useCallback((id: string) => openModal('edit-event', id), [openModal])
+    // CRUD Actions
+    const addEvent = useCallback((event: Omit<Event, 'id' | 'createdAt'>): void => {
+        setEvents(prev => [...prev, { ...event, id: generateId(), createdAt: new Date().toISOString() }])
+    }, [setEvents])
+
+    const updateEvent = useCallback((id: string, updates: Partial<Event>): void => {
+        setEvents(prev => prev.map(e => e.id === id ? { ...e, ...updates } : e))
+    }, [setEvents])
+
+    const deleteEvent = useCallback((id: string): void => {
+        setEvents(prev => prev.filter(e => e.id !== id))
+    }, [setEvents])
 
     return {
         // Raw data
@@ -88,7 +106,5 @@ export const useEvents = () => {
         addEvent,
         updateEvent,
         deleteEvent,
-        openAddEvent,
-        openEditEvent,
     }
 }

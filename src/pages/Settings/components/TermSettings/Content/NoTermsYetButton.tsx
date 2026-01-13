@@ -1,11 +1,11 @@
 import React from 'react'
 import { useHover } from '@/app/hooks/useHover'
-import { useApp } from '@/app/contexts/AppContext'
+import { useModal } from '@/app/contexts/ModalContext'
 import type { TermSettings } from '@/pages/Settings/types'
 import { SETTINGS } from '@/app/styles/colors'
 
 const NoTermsYetButton: React.FC<TermSettings.Content.NoTermsYetButtonProps> = ({ children }) => {
-    const { openModal } = useApp()
+    const { openModal } = useModal()
     const { isHovered, hoverProps } = useHover()
 
     return (

@@ -1,11 +1,11 @@
 import React, { useCallback } from 'react'
-import { useApp } from '@/app/contexts/AppContext'
+import { useModal } from '@/app/contexts/ModalContext'
 import { useClasses } from '@/app/hooks/entities'
 import ClassBoard from './components/ClassBoard'
 import './index.css'
 
 const MyClasses: React.FC = () => {
-    const { openModal } = useApp()
+    const { openModal } = useModal()
     const { classes, reorderClasses } = useClasses()
 
     const handleAddClass = useCallback(() => {

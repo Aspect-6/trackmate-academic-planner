@@ -1,5 +1,5 @@
 import React from 'react'
-import { useApp } from '@/app/contexts/AppContext'
+import { useModal } from '@/app/contexts/ModalContext'
 import { useScheduleComponents } from '@/app/contexts/ScheduleComponentsContext'
 import { useClasses, useNoSchool } from '@/app/hooks/entities'
 import { todayString } from '@/app/lib/utils'
@@ -13,7 +13,7 @@ const TodaysClasses: React.FC<TodaysClasses.Props> = ({
     isCollapsed,
     onToggleCollapse
 }) => {
-    const { openModal } = useApp()
+    const { openModal } = useModal()
     const { getClassById } = useClasses()
     const { useClassIdsForDate } = useScheduleComponents()
     const { getNoSchoolStatusForDate } = useNoSchool()

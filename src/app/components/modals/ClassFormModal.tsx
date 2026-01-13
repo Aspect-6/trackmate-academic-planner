@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { useApp } from '@/app/contexts/AppContext'
-import { useAcademicTerms } from '@/app/hooks/entities'
+import { useModal } from '@/app/contexts/ModalContext'
+import { useClasses, useAcademicTerms } from '@/app/hooks/entities'
 import { DASHBOARD, MODALS } from '@/app/styles/colors'
 import {
     ModalContainer,
@@ -25,8 +25,9 @@ interface ClassFormModalProps {
 }
 
 export const ClassFormModal: React.FC<ClassFormModalProps> = ({ onClose, classId }) => {
-    const { classes, addClass, updateClass, openModal } = useApp()
+    const { classes, addClass, updateClass } = useClasses()
     const { academicTerms } = useAcademicTerms()
+    const { openModal } = useModal()
     const [activeTab, setActiveTab] = useState<'details' | 'settings'>('details')
     const [formData, setFormData] = useState({
         name: '',
@@ -41,7 +42,7 @@ export const ClassFormModal: React.FC<ClassFormModalProps> = ({ onClose, classId
     const focusColor = MODALS.CLASS.PRIMARY_BG
     const selectedTerm = academicTerms.find(t => t.id === formData.termId)
 
-    // Populate form with existing class data in edit mode
+    // Populate form with existing class data in edit mode (only on mount)
     useEffect(() => {
         if (isEditMode) {
             const classInfo = classes.find(c => c.id === classId)
@@ -56,7 +57,7 @@ export const ClassFormModal: React.FC<ClassFormModalProps> = ({ onClose, classId
                 })
             }
         }
-    }, [isEditMode, classId, classes])
+    }, [])
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()

@@ -1,26 +1,90 @@
-import { useMemo, useCallback } from 'react'
-import { useApp } from '@/app/contexts/AppContext'
-import type { AcademicTerm, Semester } from '@/app/types'
+import { useMemo, useCallback, useEffect } from 'react'
+import { useLocalStorage } from '@/app/hooks/data/useLocalStorage'
+import {
+    generateId,
+    parseDateLocal,
+    addDaysToDateString,
+    dateToLocalISOString
+} from '@/app/lib/utils'
+import { STORAGE_KEYS } from '@/app/config/storageKeys'
+import type { AcademicTerm, Semester, TermMode } from '@/app/types'
 
 /**
  * Hook for accessing and working with academic terms.
- * Provides lookup functions, date utilities, and CRUD operations.
+ * Should be used within AppContext or by components that need access to terms data.
  */
-export const useAcademicTerms = () => {
-    const {
-        academicTerms,
-        filteredAcademicTerms,
-        termMode,
-        setTermMode,
-        addAcademicTerm,
-        updateAcademicTerm,
-        deleteAcademicTerm,
-        openModal
-    } = useApp()
+export const useAcademicTerms = (termMode: TermMode = 'Semesters Only') => {
+    const [academicTerms, setAcademicTerms] = useLocalStorage<AcademicTerm[]>(STORAGE_KEYS.TERMS, [])
+
+    // Data Migration / Sanitization
+    useEffect(() => {
+        setAcademicTerms(prev => {
+            let hasChanges = false
+            const next = prev.map(t => {
+                // Migrate semesters if missing
+                const semesters = t.semesters || []
+
+                // Migrate quarters for each semester if missing
+                const migratedSemesters = semesters.map(sem => {
+                    if (sem.quarters && sem.quarters.length > 0) {
+                        return sem
+                    }
+
+                    // Calculate midpoint for default quarter boundary
+                    const startDate = parseDateLocal(sem.startDate)
+                    const endDate = parseDateLocal(sem.endDate)
+                    const midpointTime = startDate.getTime() + (endDate.getTime() - startDate.getTime()) / 2
+                    const midpointDate = new Date(midpointTime)
+                    const midpoint = dateToLocalISOString(midpointDate)
+                    const dayAfterMidpoint = addDaysToDateString(midpoint, 1)
+
+                    const quarterNames = sem.name === 'Fall'
+                        ? ['Q1', 'Q2'] as const
+                        : ['Q3', 'Q4'] as const
+
+                    hasChanges = true
+                    return {
+                        ...sem,
+                        quarters: [
+                            { id: generateId(), name: quarterNames[0], startDate: sem.startDate, endDate: midpoint },
+                            { id: generateId(), name: quarterNames[1], startDate: dayAfterMidpoint, endDate: sem.endDate }
+                        ]
+                    }
+                })
+
+                // Default termType
+                if (!t.termType) {
+                    hasChanges = true
+                }
+
+                if (hasChanges) {
+                    return {
+                        ...t,
+                        termType: t.termType || 'semesters',
+                        semesters: migratedSemesters
+                    }
+                }
+                return t
+            })
+
+            return hasChanges ? next : prev
+        })
+    }, [setAcademicTerms])
+
+    // Computed: filter terms by current termMode
+    const filteredAcademicTerms = useMemo(() =>
+        academicTerms.filter(term => term.termType === termMode)
+        , [academicTerms, termMode])
 
     // Counts
     const totalNum = academicTerms.length
     const filteredNum = filteredAcademicTerms.length
+
+    // Indexed by id for quick lookups
+    const termsById = useMemo(() => academicTerms.reduce<Record<string, AcademicTerm>>((acc, term) => {
+        acc[term.id] = term
+        return acc
+    }, {}), [academicTerms])
 
     // Lookup functions
     const getTermById = useCallback((id: string): AcademicTerm | undefined => {
@@ -67,25 +131,23 @@ export const useAcademicTerms = () => {
         })
     }, [])
 
-    // Indexed by id for quick lookups
-    const termsById = useMemo(() => academicTerms.reduce<Record<string, AcademicTerm>>((acc, term) => {
-        acc[term.id] = term
-        return acc
-    }, {}), [academicTerms])
+    // Actions
+    const addAcademicTerm = useCallback((term: Omit<AcademicTerm, 'id'>): void => {
+        setAcademicTerms(prev => [...prev, { ...term, id: generateId() }])
+    }, [setAcademicTerms])
 
-    // Modal actions
-    const openAddTerm = useCallback(() => openModal('add-term'), [openModal])
-    const openEditTerm = useCallback((id: string) => openModal('edit-term', id), [openModal])
+    const updateAcademicTerm = useCallback((id: string, updates: Partial<AcademicTerm>): void => {
+        setAcademicTerms(prev => prev.map(t => t.id === id ? { ...t, ...updates } : t))
+    }, [setAcademicTerms])
+
+    const deleteAcademicTerm = useCallback((id: string): void => {
+        setAcademicTerms(prev => prev.filter(t => t.id !== id))
+    }, [setAcademicTerms])
 
     return {
         // Raw data
         academicTerms,
-
-        // Filtered data
         filteredAcademicTerms,
-
-        // The active term type selected in settings
-        termMode,
 
         // Counts
         totalNum,
@@ -103,14 +165,9 @@ export const useAcademicTerms = () => {
         getActiveTermForDate,
         getActiveSemesterForDate,
 
-        // CRUD actions
+        // Actions
         addAcademicTerm,
         updateAcademicTerm,
         deleteAcademicTerm,
-        setTermMode,
-
-        // Modal actions
-        openAddTerm,
-        openEditTerm,
     }
 }

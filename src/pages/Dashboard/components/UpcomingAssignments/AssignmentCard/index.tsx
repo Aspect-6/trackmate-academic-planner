@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useApp } from '@/app/contexts/AppContext'
+import { useModal } from '@/app/contexts/ModalContext'
 import { useAssignments, useClasses } from '@/app/hooks/entities'
 import { useHover } from '@/app/hooks/useHover'
 import type { UpcomingAssignments } from '@/pages/Dashboard/types'
@@ -12,7 +12,7 @@ import { DASHBOARD } from '@/app/styles/colors'
 const AssignmentCard: React.FC<UpcomingAssignments.AssignmentCard.Props> = ({ assignment }) => {
     const { getClassById } = useClasses()
     const { updateAssignment } = useAssignments()
-    const { openModal } = useApp()
+    const { openModal } = useModal()
     const { isHovered, hoverProps } = useHover()
     const [isCompleting, setIsCompleting] = useState(false)
     const classInfo = getClassById(assignment.classId)!

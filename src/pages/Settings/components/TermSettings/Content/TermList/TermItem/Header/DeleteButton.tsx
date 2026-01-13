@@ -1,11 +1,11 @@
 import React from 'react'
-import { useApp } from '@/app/contexts/AppContext'
+import { useModal } from '@/app/contexts/ModalContext'
 import type { TermSettings } from '@/pages/Settings/types'
 import { Trash2 } from 'lucide-react'
 import { GLOBAL } from '@/app/styles/colors'
 
 const TermItemHeaderDeleteButton: React.FC<TermSettings.Content.TermList.TermItem.Header.DeleteButtonProps> = ({ term }) => {
-    const { openModal } = useApp()
+    const { openModal } = useModal()
 
     return (
         <button

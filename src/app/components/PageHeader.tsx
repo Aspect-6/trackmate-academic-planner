@@ -1,7 +1,7 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
 import { Plus, Menu } from 'lucide-react'
-import { useApp } from '@/app/contexts/AppContext'
+import { useModal } from '@/app/contexts/ModalContext'
 import { getRouteByPath, DEFAULT_ROUTE } from '@/app/config/paths'
 import { GLOBAL } from '@/app/styles/colors'
 import { useHeaderAction } from '@/app/hooks/useHeaderAction'
@@ -13,7 +13,7 @@ interface PageHeaderProps {
 
 const PageHeader: React.FC<PageHeaderProps> = ({ onMenuClick }) => {
     const location = useLocation()
-    const { openModal } = useApp()
+    const { openModal } = useModal()
 
     // Get current route config for page title
     const currentRoute = getRouteByPath(location.pathname) ?? DEFAULT_ROUTE

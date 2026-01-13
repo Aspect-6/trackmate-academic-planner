@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { useApp } from '@/app/contexts/AppContext'
+import { useModal } from '@/app/contexts/ModalContext'
+import { useAssignments, useClasses } from '@/app/hooks/entities'
+import { useSettings } from '@/app/hooks/useSettings'
 import { useToast } from '@/app/contexts/ToastContext'
 import { DEFAULT_ASSIGNMENT_TYPES } from '@/app/hooks/useSettings'
 import { todayString } from '@/app/lib/utils'
@@ -31,7 +33,10 @@ interface AssignmentFormModalProps {
 }
 
 export const AssignmentFormModal: React.FC<AssignmentFormModalProps> = ({ onClose, assignmentId }) => {
-    const { classes, assignments, addAssignment, updateAssignment, assignmentTypes, openModal } = useApp()
+    const { classes } = useClasses()
+    const { assignments, addAssignment, updateAssignment } = useAssignments()
+    const { assignmentTypes } = useSettings()
+    const { openModal } = useModal()
     const { showToast } = useToast()
     const [activeTab, setActiveTab] = useState<'details' | 'settings'>('details')
     const [formData, setFormData] = useState<{
@@ -58,7 +63,7 @@ export const AssignmentFormModal: React.FC<AssignmentFormModalProps> = ({ onClos
     const currentTypes = assignmentTypes.length ? assignmentTypes : DEFAULT_ASSIGNMENT_TYPES
     const focusColor = MODALS.ASSIGNMENT.PRIMARY_BG
 
-    // Populate form with existing assignment data in edit mode
+    // Populate form with existing assignment data in edit mode (only on mount)
     useEffect(() => {
         if (isEditMode) {
             const assignment = assignments.find(a => a.id === assignmentId)
@@ -75,7 +80,7 @@ export const AssignmentFormModal: React.FC<AssignmentFormModalProps> = ({ onClos
                 })
             }
         }
-    }, [isEditMode, assignmentId, assignments])
+    }, [])
 
     // Select a class for an assignment if not set (only for Add Assignment)
     useEffect(() => {

@@ -1,6 +1,6 @@
 import React, { useMemo } from "react"
 import { useDroppable } from "@dnd-kit/core"
-import { useApp } from "@/app/contexts/AppContext"
+import { useModal } from "@/app/contexts/ModalContext"
 import { useClasses } from "@/app/hooks/entities/useClasses"
 import { useAssignments } from "@/app/hooks/entities/useAssignments"
 import type { AssignmentBoard as AssignmentBoardTypes } from "@/pages/My Assignments/types"
@@ -22,7 +22,7 @@ const AssignmentBoard: React.FC<AssignmentBoardTypes.Props> = ({
 	dragEnabled,
 }) => {
 	// Get global data
-	const { openModal } = useApp()
+	const { openModal } = useModal()
 	const { getClassById } = useClasses()
 	const { getAssignmentsByStatus } = useAssignments()
 

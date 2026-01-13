@@ -1,24 +1,13 @@
-import { useMemo, useCallback, useEffect } from 'react'
+import { useMemo, useCallback } from 'react'
 import { useSettings } from '@/app/hooks/useSettings'
 import { useLocalStorage } from '@/app/hooks/data/useLocalStorage'
 import { generateId } from '@/app/lib/utils'
+import { STORAGE_KEYS } from '@/app/config/storageKeys'
 import type { Assignment, Status } from '@/app/types'
 
-const ASSIGNMENTS_KEY = 'trackmateAssignments'
-
 export const useAssignments = () => {
-    const [assignments, setAssignments] = useLocalStorage<Assignment[]>(ASSIGNMENTS_KEY, [])
+    const [assignments, setAssignments] = useLocalStorage<Assignment[]>(STORAGE_KEYS.ASSIGNMENTS, [])
     const { assignmentTypes } = useSettings()
-
-    // Make sure that all assignments have a valid assignment type if their's was deleted
-    useEffect(() => {
-        setAssignments(prev => prev.map(assignment => {
-            if (assignment.type !== 'No Type' && !assignmentTypes.includes(assignment.type)) {
-                return { ...assignment, type: 'No Type' }
-            }
-            return assignment
-        }))
-    }, [setAssignments, assignmentTypes])
 
     // Counts
     const totalNum = assignments.length
@@ -112,6 +101,5 @@ export const useAssignments = () => {
         updateAssignment,
         deleteAssignment,
         markAsDone,
-
     }
 }

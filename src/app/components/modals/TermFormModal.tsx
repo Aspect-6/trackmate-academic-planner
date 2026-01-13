@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { AcademicTerm } from '@/app/types'
 import { useAcademicTerms } from '@/app/hooks/entities'
+import { useSettings } from '@/app/hooks/useSettings'
 import { useToast } from '@/app/contexts/ToastContext'
 import { generateId } from '@/app/lib/utils'
 import { GLOBAL, MODALS } from '@/app/styles/colors'
@@ -21,7 +22,8 @@ interface TermFormModalProps {
 }
 
 export const TermFormModal: React.FC<TermFormModalProps> = ({ onClose, termId }) => {
-    const { academicTerms, addAcademicTerm, updateAcademicTerm, termMode } = useAcademicTerms()
+    const { academicTerms, addAcademicTerm, updateAcademicTerm } = useAcademicTerms()
+    const { termMode } = useSettings()
     const { showToast } = useToast()
 
     const isEditMode = !!termId
@@ -51,7 +53,7 @@ export const TermFormModal: React.FC<TermFormModalProps> = ({ onClose, termId })
         q4Start: '',
     })
 
-    // Populate form with existing term data in edit mode
+    // Populate form with existing term data in edit mode (only on mount)
     useEffect(() => {
         if (isEditMode && existingTerm) {
             setFormData({
@@ -68,7 +70,7 @@ export const TermFormModal: React.FC<TermFormModalProps> = ({ onClose, termId })
                 q4Start: springSemester?.quarters?.find(q => q.name === 'Q4')?.startDate || '',
             })
         }
-    }, [isEditMode, existingTerm, fallSemester, springSemester])
+    }, [])
 
     if (isEditMode && !existingTerm) return null
 

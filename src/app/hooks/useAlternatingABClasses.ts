@@ -1,13 +1,21 @@
-import { useApp } from '@/app/contexts/AppContext'
-import { useAcademicTerms } from '@/app/hooks/entities'
+import { useSchedules, useAcademicTerms, useNoSchool } from '@/app/hooks/entities'
+import { useMemo } from 'react'
 
 /**
  * Gets classes for a given date from the alternating A/B schedule.
  * Determines the active term, semester, and day type to return the correct class list.
  */
 export const useAlternatingABClasses = (date: string) => {
-    const { schedules, getDayTypeForDate } = useApp()
-    const { filteredAcademicTerms } = useAcademicTerms()
+    const { schedules, getDayTypeForDate } = useSchedules()
+    const { filteredAcademicTerms, getActiveTermForDate, getActiveSemesterForDate } = useAcademicTerms()
+    const { getNoSchoolStatusForDate } = useNoSchool()
+
+    // Create helpers object for getDayTypeForDate
+    const dayTypeHelpers = useMemo(() => ({
+        getNoSchoolStatusForDate,
+        getActiveTermForDate,
+        getActiveSemesterForDate
+    }), [getNoSchoolStatusForDate, getActiveTermForDate, getActiveSemesterForDate])
 
     // Find the active term for this date
     const activeTerm = filteredAcademicTerms.find(term => {
@@ -20,7 +28,7 @@ export const useAlternatingABClasses = (date: string) => {
     if (!activeTerm) return { classIds: [] }
 
     // Get the day type for this date
-    const dayType = getDayTypeForDate(date)
+    const dayType = getDayTypeForDate(date, dayTypeHelpers)
     if (!dayType) return { classIds: [] }
 
     // Determine which semester we're in based on actual semester dates

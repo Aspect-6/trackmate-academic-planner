@@ -1,5 +1,5 @@
 import React from 'react'
-import { useAcademicTerms } from '@/app/hooks/entities'
+import { useSettings } from '@/app/hooks/useSettings'
 import type { TermSettings } from '@/pages/Settings/types'
 import type { TermMode } from '@/app/types'
 import { SETTINGS } from '@/app/styles/colors'
@@ -9,7 +9,7 @@ const TermModeDropdown: React.FC<TermSettings.Content.TermModeDropdown.Props> = 
     children,
     messages
 }) => {
-    const { termMode, setTermMode } = useAcademicTerms()
+    const { termMode, setTermMode } = useSettings()
 
     return (
         <div className={className}>

@@ -1,6 +1,6 @@
-import { useApp } from '@/app/contexts/AppContext'
-import { useAcademicTerms } from '@/app/hooks/entities'
 import { useToast } from '@/app/contexts/ToastContext'
+import { useAssignments, useClasses, useEvents, useNoSchool, useAcademicTerms } from '@/app/hooks/entities'
+import { useDangerZone } from '@/pages/Settings/hooks/useDangerZone'
 
 export interface DeleteModalConfig {
     title: string
@@ -12,21 +12,12 @@ export interface DeleteModalConfig {
 }
 
 export const useDeleteModalConfig = (activeModal: string | null, modalData: any): DeleteModalConfig | null => {
-    const {
-        assignments,
-        deleteAssignment,
-        classes,
-        deleteClass,
-        events,
-        deleteEvent,
-        noSchool,
-        deleteNoSchool,
-        clearAllData,
-        deleteAllAssignments,
-        deleteAllEvents
-    } = useApp()
-
+    const { assignments, deleteAssignment } = useAssignments()
+    const { classes, deleteClass, updateClass } = useClasses()
+    const { events, deleteEvent } = useEvents()
+    const { noSchoolPeriods: noSchool, deleteNoSchool } = useNoSchool()
     const { academicTerms, deleteAcademicTerm } = useAcademicTerms()
+    const { deleteAllAssignments, deleteAllEvents, clearAllData } = useDangerZone()
     const { showToast } = useToast()
 
     if (!activeModal) return null
@@ -69,7 +60,13 @@ export const useDeleteModalConfig = (activeModal: string | null, modalData: any)
         'delete-class': {
             data: classes,
             getName: i => i.name,
-            action: deleteClass,
+            action: (id: string) => {
+                // Cascade: delete all assignments for this class first
+                assignments
+                    .filter(a => a.classId === id)
+                    .forEach(a => deleteAssignment(a.id))
+                deleteClass(id)
+            },
             label: 'Class',
             msg: 'Successfully deleted class',
             desc: 'This will delete all assignments from this class.'
@@ -91,7 +88,13 @@ export const useDeleteModalConfig = (activeModal: string | null, modalData: any)
         'delete-term': {
             data: academicTerms,
             getName: i => i.name,
-            action: deleteAcademicTerm,
+            action: (id: string) => {
+                // Cascade: unassign classes from this term before deleting
+                classes
+                    .filter(c => c.termId === id)
+                    .forEach(c => updateClass(c.id, { termId: undefined, semesterId: undefined }))
+                deleteAcademicTerm(id)
+            },
             label: 'Academic Term',
             msg: 'Successfully deleted academic term',
             desc: 'Any classes in this term will be unassigned. This action cannot be undone.'

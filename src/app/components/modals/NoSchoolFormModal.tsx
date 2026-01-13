@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { useApp } from '@/app/contexts/AppContext'
+import { useModal } from '@/app/contexts/ModalContext'
+import { useNoSchool } from '@/app/hooks/entities'
 import { todayString } from '@/app/lib/utils'
 import { MODALS } from '@/app/styles/colors'
 import {
@@ -20,7 +21,8 @@ interface NoSchoolFormModalProps {
 }
 
 export const NoSchoolFormModal: React.FC<NoSchoolFormModalProps> = ({ onClose, noSchoolId }) => {
-    const { noSchool, addNoSchool, updateNoSchool, openModal } = useApp()
+    const { noSchoolPeriods, addNoSchool, updateNoSchool } = useNoSchool()
+    const { openModal } = useModal()
     const [formData, setFormData] = useState({
         name: '',
         startDate: todayString(),
@@ -30,10 +32,10 @@ export const NoSchoolFormModal: React.FC<NoSchoolFormModalProps> = ({ onClose, n
     const isEditMode = !!noSchoolId
     const focusColor = MODALS.SCHEDULE.PRIMARY_BG
 
-    // Populate form with existing no school data in edit mode
+    // Populate form with existing no school data in edit mode (only on mount)
     useEffect(() => {
         if (isEditMode) {
-            const period = noSchool.find(ns => ns.id === noSchoolId)
+            const period = noSchoolPeriods.find((ns: { id: string }) => ns.id === noSchoolId)
             if (period) {
                 setFormData({
                     name: period.name,
@@ -42,7 +44,7 @@ export const NoSchoolFormModal: React.FC<NoSchoolFormModalProps> = ({ onClose, n
                 })
             }
         }
-    }, [isEditMode, noSchoolId, noSchool])
+    }, [])
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()

@@ -1,6 +1,6 @@
-import React from 'react'
-import { useApp } from '@/app/contexts/AppContext'
-import { useAcademicTerms } from '@/app/hooks/entities'
+import React, { useMemo } from 'react'
+import { useModal } from '@/app/contexts/ModalContext'
+import { useAcademicTerms, useSchedules, useNoSchool } from '@/app/hooks/entities'
 import { useSettings } from '@/app/hooks/useSettings'
 import { useAssignmentTypeSettings } from '@/pages/Settings/hooks/useAssignmentTypeSettings'
 // Base settings module imports
@@ -64,16 +64,24 @@ import { SETTINGS } from '@/app/styles/colors'
 import './index.css'
 
 const Settings: React.FC = () => {
+    const { openModal } = useModal()
     const {
-        openModal,
+        schedules,
         setReferenceDayType,
-        getDayTypeForDate,
-        schedules
-    } = useApp()
+        getDayTypeForDate
+    } = useSchedules()
+
+    const { filteredAcademicTerms, getActiveTermForDate, getActiveSemesterForDate } = useAcademicTerms()
+    const { getNoSchoolStatusForDate } = useNoSchool()
 
     const { theme, setTheme } = useSettings()
 
-    const { filteredAcademicTerms } = useAcademicTerms()
+    // Create helpers for getDayTypeForDate
+    const dayTypeHelpers = useMemo(() => ({
+        getNoSchoolStatusForDate,
+        getActiveTermForDate,
+        getActiveSemesterForDate
+    }), [getNoSchoolStatusForDate, getActiveTermForDate, getActiveSemesterForDate])
 
     const {
         assignmentTypes,
@@ -87,7 +95,7 @@ const Settings: React.FC = () => {
     } = useAssignmentTypeSettings()
 
     const today = todayString()
-    const currentDayType = getDayTypeForDate(today)
+    const currentDayType = getDayTypeForDate(today, dayTypeHelpers)
 
     return (
         <div className="w-full max-w-2xl mx-auto">

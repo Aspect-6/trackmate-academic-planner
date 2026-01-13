@@ -1,5 +1,5 @@
 import React from 'react'
-import { useApp } from '@/app/contexts/AppContext'
+import { useClasses } from '@/app/hooks/entities'
 import { GLOBAL, MODALS } from '@/app/styles/colors'
 import type { SemesterScheduleData } from '@/app/types'
 import type { SemesterName, ScheduleDayType } from '@/pages/My Schedule/types'
@@ -18,7 +18,7 @@ interface AlternatingABClassSelectorModalProps {
 }
 
 export const AlternatingABClassSelectorModal: React.FC<AlternatingABClassSelectorModalProps> = ({ onClose, data }) => {
-    const { classes } = useApp()
+    const { classes } = useClasses()
     const { semester, dayType, periodIndex, termId, onSelect, otherSemesterSchedule } = data
 
     const handleSelect = (classId: string, isSemesterClass: boolean) => {
