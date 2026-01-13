@@ -71,10 +71,10 @@ const Settings: React.FC = () => {
         getDayTypeForDate
     } = useSchedules()
 
-    const { filteredAcademicTerms, getActiveTermForDate, getActiveSemesterForDate } = useAcademicTerms()
-    const { getNoSchoolStatusForDate } = useNoSchool()
+    const { theme, setTheme, termMode } = useSettings()
 
-    const { theme, setTheme } = useSettings()
+    const { filteredAcademicTerms, getActiveTermForDate, getActiveSemesterForDate } = useAcademicTerms(termMode)
+    const { getNoSchoolStatusForDate } = useNoSchool()
 
     // Create helpers for getDayTypeForDate
     const dayTypeHelpers = useMemo(() => ({

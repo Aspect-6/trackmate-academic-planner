@@ -115,12 +115,12 @@ export const useAcademicTerms = (termMode: TermMode = 'Semesters Only') => {
     // Date utilities
     const getActiveTermForDate = useCallback((date: string): AcademicTerm | undefined => {
         const dateObj = new Date(date)
-        return filteredAcademicTerms.find(term => {
+        return academicTerms.find(term => {
             const start = new Date(term.startDate)
             const end = new Date(term.endDate)
             return dateObj >= start && dateObj <= end
         })
-    }, [filteredAcademicTerms])
+    }, [academicTerms])
 
     const getActiveSemesterForDate = useCallback((date: string, term: AcademicTerm): Semester | undefined => {
         const dateObj = new Date(date)
