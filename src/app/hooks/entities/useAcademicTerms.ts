@@ -1,11 +1,6 @@
-import { useMemo, useCallback, useEffect } from 'react'
+import { useMemo, useCallback } from 'react'
 import { useLocalStorage } from '@/app/hooks/data/useLocalStorage'
-import {
-    generateId,
-    parseDateLocal,
-    addDaysToDateString,
-    dateToLocalISOString
-} from '@/app/lib/utils'
+import { generateId } from '@/app/lib/utils'
 import { STORAGE_KEYS } from '@/app/config/storageKeys'
 import type { AcademicTerm, Semester, TermMode } from '@/app/types'
 
@@ -15,61 +10,6 @@ import type { AcademicTerm, Semester, TermMode } from '@/app/types'
  */
 export const useAcademicTerms = (termMode: TermMode = 'Semesters Only') => {
     const [academicTerms, setAcademicTerms] = useLocalStorage<AcademicTerm[]>(STORAGE_KEYS.TERMS, [])
-
-    // Data Migration / Sanitization
-    useEffect(() => {
-        setAcademicTerms(prev => {
-            let hasChanges = false
-            const next = prev.map(t => {
-                // Migrate semesters if missing
-                const semesters = t.semesters || []
-
-                // Migrate quarters for each semester if missing
-                const migratedSemesters = semesters.map(sem => {
-                    if (sem.quarters && sem.quarters.length > 0) {
-                        return sem
-                    }
-
-                    // Calculate midpoint for default quarter boundary
-                    const startDate = parseDateLocal(sem.startDate)
-                    const endDate = parseDateLocal(sem.endDate)
-                    const midpointTime = startDate.getTime() + (endDate.getTime() - startDate.getTime()) / 2
-                    const midpointDate = new Date(midpointTime)
-                    const midpoint = dateToLocalISOString(midpointDate)
-                    const dayAfterMidpoint = addDaysToDateString(midpoint, 1)
-
-                    const quarterNames = sem.name === 'Fall'
-                        ? ['Q1', 'Q2'] as const
-                        : ['Q3', 'Q4'] as const
-
-                    hasChanges = true
-                    return {
-                        ...sem,
-                        quarters: [
-                            { id: generateId(), name: quarterNames[0], startDate: sem.startDate, endDate: midpoint },
-                            { id: generateId(), name: quarterNames[1], startDate: dayAfterMidpoint, endDate: sem.endDate }
-                        ]
-                    }
-                })
-
-                // Default termType
-                if (!t.termType) {
-                    hasChanges = true
-                }
-
-                if (hasChanges) {
-                    return {
-                        ...t,
-                        termType: t.termType || 'semesters',
-                        semesters: migratedSemesters
-                    }
-                }
-                return t
-            })
-
-            return hasChanges ? next : prev
-        })
-    }, [setAcademicTerms])
 
     // Computed: filter terms by current termMode
     const filteredAcademicTerms = useMemo(() =>
