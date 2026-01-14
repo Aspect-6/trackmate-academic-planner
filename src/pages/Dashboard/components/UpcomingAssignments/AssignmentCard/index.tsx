@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useModal } from '@/app/contexts/ModalContext'
 import { useAssignments, useClasses } from '@/app/hooks/entities'
-import { useHover } from '@/app/hooks/useHover'
+import { useHover } from '@/app/hooks/ui/useHover'
 import type { UpcomingAssignments } from '@/pages/Dashboard/types'
 import PriorityBadge from '@/app/components/PriorityBadge'
 import StatusButton from './StatusButton'

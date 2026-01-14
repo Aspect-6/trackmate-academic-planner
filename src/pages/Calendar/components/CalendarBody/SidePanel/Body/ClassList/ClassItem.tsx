@@ -1,11 +1,11 @@
 import React from 'react'
-import { useHover } from '@/app/hooks/useHover'
+import { useHover } from '@/app/hooks/ui/useHover'
 import type { CalendarBody } from '@/pages/Calendar/types'
 import { CALENDAR } from '@/app/styles/colors'
 
 const ClassItem: React.FC<CalendarBody.SidePanel.Body.ClassList.ClassItemProps> = ({ classId, index, getClassById }) => {
     const { isHovered, hoverProps } = useHover()
-    
+
     if (!classId) return null
     const classInfo = getClassById(classId)
     if (!classInfo) return null

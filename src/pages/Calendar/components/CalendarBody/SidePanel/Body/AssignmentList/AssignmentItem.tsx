@@ -1,5 +1,5 @@
 import React from 'react'
-import { useHover } from '@/app/hooks/useHover'
+import { useHover } from '@/app/hooks/ui/useHover'
 import type { CalendarBody } from '@/pages/Calendar/types'
 import PriorityBadge from '@/app/components/PriorityBadge'
 import { CALENDAR } from '@/app/styles/colors'

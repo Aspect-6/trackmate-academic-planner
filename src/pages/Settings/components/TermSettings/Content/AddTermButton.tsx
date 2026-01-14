@@ -1,6 +1,6 @@
 import React from 'react'
 import { useModal } from '@/app/contexts/ModalContext'
-import { useHover } from '@/app/hooks/useHover'
+import { useHover } from '@/app/hooks/ui/useHover'
 import type { TermSettings } from '@/pages/Settings/types'
 import { Plus } from 'lucide-react'
 import { GLOBAL } from '@/app/styles/colors'

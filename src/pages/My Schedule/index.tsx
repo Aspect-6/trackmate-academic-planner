@@ -1,6 +1,6 @@
 import React from 'react'
-import { useHover } from '@/app/hooks/useHover'
-import { useFocus } from '@/app/hooks/useFocus'
+import { useHover } from '@/app/hooks/ui/useHover'
+import { useFocus } from '@/app/hooks/ui/useFocus'
 import { useScheduleComponents } from '@/app/contexts/ScheduleComponentsContext'
 import { useScheduleData } from './hooks/useScheduleData'
 import { MY_SCHEDULE } from '@/app/styles/colors'

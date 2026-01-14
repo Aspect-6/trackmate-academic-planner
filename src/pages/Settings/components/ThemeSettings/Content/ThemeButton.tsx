@@ -1,5 +1,5 @@
 import React from 'react'
-import { useHover } from '@/app/hooks/useHover'
+import { useHover } from '@/app/hooks/ui/useHover'
 import type { ThemeSettings } from '@/pages/Settings/types'
 import { SETTINGS } from '@/app/styles/colors'
 
@@ -19,18 +19,18 @@ const ThemeButton: React.FC<ThemeSettings.Content.ThemeButtonProps> = ({
             style={{
                 color: active ? SETTINGS.TEXT_WHITE : SETTINGS.TEXT_PRIMARY,
                 border: `1px solid ${(isHovered || active) ? SETTINGS.SIDEBAR_ACTIVE_TAB_GREEN_BG : SETTINGS.BORDER_PRIMARY}`,
-                backgroundColor: active 
+                backgroundColor: active
                     ? SETTINGS.SIDEBAR_ACTIVE_TAB_GREEN_BG
-                    : isHovered 
-                        ? SETTINGS.BACKGROUND_QUATERNARY 
+                    : isHovered
+                        ? SETTINGS.BACKGROUND_QUATERNARY
                         : SETTINGS.BACKGROUND_SECONDARY
             }}
             onClick={onClick}
             {...hoverProps}
         >
-            <Icon 
+            <Icon
                 className="w-5 h-5 mr-3 transition-colors duration-300"
-                style={{ color: active ? SETTINGS.TEXT_WHITE : SETTINGS.SIDEBAR_ACTIVE_TAB_GREEN_BG }}    
+                style={{ color: active ? SETTINGS.TEXT_WHITE : SETTINGS.SIDEBAR_ACTIVE_TAB_GREEN_BG }}
             />
             <div className="text-left">
                 <div className="font-semibold leading-tight">{label}</div>

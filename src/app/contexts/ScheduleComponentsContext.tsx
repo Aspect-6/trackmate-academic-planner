@@ -8,7 +8,7 @@ import type { ScheduleType } from '@/app/types'
 import AlternatingABRenderer from '@/pages/My Schedule/components/scheduleRenderers/AlternatingAB'
 
 // Import schedule-type-specific hooks
-import { useAlternatingABClassIds } from '@/app/hooks/useAlternatingABClassIds'
+import { useAlternatingABClassIds } from '@/app/hooks/schedules/useAlternatingABClassIds'
 
 export interface ScheduleRendererProps {
     selectedTermId: string | null

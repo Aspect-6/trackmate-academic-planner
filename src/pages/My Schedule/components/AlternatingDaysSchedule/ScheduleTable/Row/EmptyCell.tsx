@@ -1,5 +1,5 @@
 import React from 'react'
-import { useHover } from '@/app/hooks/useHover'
+import { useHover } from '@/app/hooks/ui/useHover'
 import type { AlternatingDaysSchedule } from '@/pages/My Schedule/types'
 import { Plus } from 'lucide-react'
 import { MY_SCHEDULE } from '@/app/styles/colors'

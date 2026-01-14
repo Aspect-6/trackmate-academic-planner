@@ -1,5 +1,5 @@
 import React from 'react'
-import { useHover } from '@/app/hooks/useHover'
+import { useHover } from '@/app/hooks/ui/useHover'
 import type { DangerZone } from '@/pages/Settings/types'
 import { SETTINGS } from '@/app/styles/colors'
 
