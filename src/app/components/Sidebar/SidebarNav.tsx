@@ -42,7 +42,7 @@ const SidebarNav: React.FC<SidebarNavProps> = ({ onLinkClick, className }) => {
                 ))}
             </div>
 
-            <div className="flex-shrink-0 px-4 pb-4">
+            <div className="flex-shrink-0 px-4">
                 <div className="border-t mb-2" style={{ borderColor: GLOBAL.SIDEBAR_BORDER }}></div>
                 <NavLink
                     to={PATHS['settings']}
