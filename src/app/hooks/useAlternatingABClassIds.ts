@@ -9,6 +9,7 @@ import type { Semester } from '@/app/types'
 export const useAlternatingABClassIds = (date: string) => {
     const { schedules, getDayTypeForDate } = useSchedules()
     const { filteredAcademicTerms } = useAcademicTerms()
+    const { noSchoolPeriods } = useNoSchool()
 
     // Find the active term for this date
     const activeTerm = getActiveTerm(date, filteredAcademicTerms)
@@ -16,7 +17,7 @@ export const useAlternatingABClassIds = (date: string) => {
     if (!activeTerm) return { classIds: [] }
 
     // Get the day type for this date
-    const dayType = getDayTypeForDate(date, activeTerm, useNoSchool().noSchoolPeriods)
+    const dayType = getDayTypeForDate(date, activeTerm, noSchoolPeriods)
     if (!dayType) return { classIds: [] }
 
     // Determine which semester we're in based on actual semester dates

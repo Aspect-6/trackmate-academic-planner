@@ -62,14 +62,14 @@ export const calculateDayType = (
     if (getNoSchoolPeriod(dateString, noSchoolPeriods)) return null
 
     if (!getActiveSemester(dateString, activeTerm)) return null
-    if (activeTerm.termType === 'Semesters With Quarters' && getActiveQuarter(dateString, activeTerm)) return null
+    if (activeTerm.termType === 'Semesters With Quarters' && !getActiveQuarter(dateString, activeTerm)) return null
 
     // Find the most recent override ON OR BEFORE this target date to use as reference
     if (abData.dayTypeOverrides[dateString]) return abData.dayTypeOverrides[dateString]
     const overrideDates = Object.keys(abData.dayTypeOverrides).sort()
     const lastValidOverride = overrideDates.filter(date => date <= dateString).pop()
 
-    const refDate = lastValidOverride || abData.startDate
+    const refDate = lastValidOverride || activeTerm.startDate
     const refType = lastValidOverride ? abData.dayTypeOverrides[lastValidOverride]! : abData.startDayType
 
     // Count school days from reference point
