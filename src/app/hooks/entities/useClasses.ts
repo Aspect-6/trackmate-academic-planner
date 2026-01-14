@@ -29,8 +29,9 @@ export const useClasses = () => {
         return classes.find(classItem => classItem.id === id) as Class
     }, [classes])
 
-    const getClassesByTerm = useCallback((termId: string) => classesByTerm[termId] ?? []
-        , [classesByTerm])
+    const getClassesByTerm = useCallback((termId: string) => {
+        return classesByTerm[termId] ?? []
+    }, [classesByTerm])
 
     // Actions
     const addClass = useCallback((newClass: Omit<Class, 'id'>): boolean => {
@@ -41,11 +42,8 @@ export const useClasses = () => {
         setClasses(prev => [...prev, {
             ...newClass,
             id: generateId(),
-            teacherName: newClass.teacherName || '',
-            roomNumber: newClass.roomNumber || '',
-            color: newClass.color || '#64748b'
         }])
-        showToast(`Class "${newClass.name}" added successfully!`, 'success')
+        showToast(`Successfully added class "${newClass.name}"`, 'success')
         return true
     }, [classes, setClasses, showToast])
 
