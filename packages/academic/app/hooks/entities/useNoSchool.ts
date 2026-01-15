@@ -1,7 +1,6 @@
 import { useMemo, useCallback } from 'react'
 import { useLocalStorage } from '@/app/hooks/data/useLocalStorage'
-import { parseDateLocal, dateToLocalISOString } from '@shared/lib/date'
-import { generateId } from '@shared/lib/id'
+import { generateId, parseDateLocal, dateToLocalISOString } from '@shared/lib'
 import { STORAGE_KEYS } from '@/app/config/storageKeys'
 import type { NoSchoolPeriod } from '@/app/types'
 

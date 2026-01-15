@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { useAssignments, useEvents, useNoSchool } from '@/app/hooks/entities'
-import { todayString } from '@shared/lib/date'
+import { todayString } from '@shared/lib'
 import type { UseCalendar } from '@/pages/Calendar/types'
 
 interface UseCalendarGridProps {

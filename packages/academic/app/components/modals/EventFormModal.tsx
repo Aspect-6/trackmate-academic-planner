@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useModal } from '@/app/contexts/ModalContext'
 import { useToast } from '@/app/contexts/ToastContext'
 import { useEvents } from '@/app/hooks/entities'
-import { todayString } from '@shared/lib/date'
+import { todayString } from '@shared/lib'
 import { MODALS } from '@/app/styles/colors'
 import {
     ModalContainer,

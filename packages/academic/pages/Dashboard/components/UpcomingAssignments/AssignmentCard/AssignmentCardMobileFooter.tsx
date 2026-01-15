@@ -1,7 +1,7 @@
 import React from 'react'
 import type { UpcomingAssignments } from '@/pages/Dashboard/types'
 import { Clock } from 'lucide-react'
-import { formatDate } from '@shared/lib/date'
+import { formatDate } from '@shared/lib'
 import { DASHBOARD } from '@/app/styles/colors'
 import PriorityBadge from '@/app/components/PriorityBadge'
 

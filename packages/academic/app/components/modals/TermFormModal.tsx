@@ -3,7 +3,7 @@ import { AcademicTerm } from '@/app/types'
 import { useAcademicTerms } from '@/app/hooks/entities'
 import { useSettings } from '@/app/hooks/useSettings'
 import { useToast } from '@/app/contexts/ToastContext'
-import { generateId } from '@shared/lib/id'
+import { generateId } from '@shared/lib'
 import { GLOBAL, MODALS } from '@/app/styles/colors'
 import {
     ModalContainer,

@@ -1,6 +1,6 @@
 import { useMemo, useCallback } from 'react'
 import { useLocalStorage } from '@/app/hooks/data/useLocalStorage'
-import { generateId } from '@shared/lib/id'
+import { generateId } from '@shared/lib'
 import { STORAGE_KEYS } from '@/app/config/storageKeys'
 import type { AcademicTerm, Semester, TermMode } from '@/app/types'
 

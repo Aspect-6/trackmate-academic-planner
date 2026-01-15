@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react'
-import { formatDate, dateToLocalISOString } from '@shared/lib/date'
+import { formatDate, dateToLocalISOString } from '@shared/lib'
 
 /**
  * Hook for managing calendar navigation state.

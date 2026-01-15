@@ -1,7 +1,7 @@
 import React from 'react'
 import type { TermSettings } from '@/pages/Settings/types'
 import { SETTINGS, GLOBAL } from '@/app/styles/colors'
-import { formatDate } from '@shared/lib/date'
+import { formatDate } from '@shared/lib'
 
 const TermItemBodySemester: React.FC<TermSettings.Content.TermList.TermItem.Body.SemesterProps> = ({
     name,

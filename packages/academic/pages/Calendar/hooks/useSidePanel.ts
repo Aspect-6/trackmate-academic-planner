@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { useAssignments, useEvents, useNoSchool, useSchedules, useAcademicTerms } from '@/app/hooks/entities'
-import { dateToLocalISOString, formatDate } from '@shared/lib/date'
+import { dateToLocalISOString, formatDate } from '@shared/lib'
 import { getActiveTerm } from '@/app/lib/schedule'
 
 interface UseSidePanelProps {

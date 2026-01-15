@@ -1,4 +1,4 @@
-import { parseDateLocal, dateToLocalISOString } from '@shared/lib/date'
+import { parseDateLocal, dateToLocalISOString } from '@shared/lib'
 import type { Schedules, DayType, AcademicTerm, NoSchoolPeriod } from '@/app/types'
 
 

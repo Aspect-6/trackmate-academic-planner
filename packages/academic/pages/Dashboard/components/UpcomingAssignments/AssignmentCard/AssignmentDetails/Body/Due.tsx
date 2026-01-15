@@ -1,7 +1,7 @@
 import React from 'react'
 import type { UpcomingAssignments } from '@/pages/Dashboard/types'
 import { Clock } from 'lucide-react'
-import { formatDate } from '@shared/lib/date'
+import { formatDate } from '@shared/lib'
 
 const AssignmentDetailsDue: React.FC<UpcomingAssignments.AssignmentCard.Details.Body.AssignmentDetailsDueProps> = ({ assignment }) => {
     return (

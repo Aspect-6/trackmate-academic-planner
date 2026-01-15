@@ -59,7 +59,7 @@ import DangerZoneSettings, {
 import AppInfoFooter from '@/pages/Settings/components/AppInfoFooter'
 // Other imports
 import { Sun, Moon } from 'lucide-react'
-import { todayString, formatDate } from '@shared/lib/date'
+import { todayString, formatDate } from '@shared/lib'
 import { SETTINGS } from '@/app/styles/colors'
 import './index.css'
 

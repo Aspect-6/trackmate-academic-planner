@@ -1,7 +1,7 @@
 import React from "react"
 import type { AssignmentCardContentProps } from "@/pages/My Assignments/types"
 import { GripVertical } from "lucide-react"
-import { formatDate } from "@shared/lib/date"
+import { formatDate } from "@shared/lib"
 import { MY_ASSIGNMENTS } from "@/app/styles/colors"
 import PriorityBadge from "@/app/components/PriorityBadge"
 

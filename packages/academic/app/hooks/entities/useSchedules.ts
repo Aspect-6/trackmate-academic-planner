@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import { useLocalStorage } from '@/app/hooks/data/useLocalStorage'
-import { todayString } from '@shared/lib/date'
+import { todayString } from '@shared/lib'
 import { calculateDayType } from '@/app/lib/schedule'
 import { STORAGE_KEYS } from '@/app/config/storageKeys'
 import type { Schedules, ScheduleType, TermSchedule, DayType, AcademicTerm, NoSchoolPeriod } from '@/app/types'

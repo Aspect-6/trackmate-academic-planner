@@ -4,7 +4,7 @@ import { useAssignments, useClasses } from '@/app/hooks/entities'
 import { useSettings } from '@/app/hooks/useSettings'
 import { useToast } from '@/app/contexts/ToastContext'
 import { DEFAULT_ASSIGNMENT_TYPES } from '@/app/hooks/useSettings'
-import { todayString } from '@shared/lib/date'
+import { todayString } from '@shared/lib'
 import { AssignmentType, Priority, Status } from '@/app/types'
 import { MODALS } from '@/app/styles/colors'
 import {
