@@ -1,18 +1,19 @@
 @import "tailwindcss";
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+@import "@shared/styles/colors.css";
+@import "@shared/styles/modals.css";
 @import "./styles/colors.css";
-@import "./styles/modals.css";
 @import "./styles/components/sidebar.css";
 @import "./styles/resources-types.css";
 
 /* Page-specific styles */
-@import "../pages/Dashboard/index.css";
-@import "../pages/Calendar/index.css";
-@import "../pages/My Assignments/index.css";
-@import "../pages/My Classes/index.css";
-@import "../pages/My Schedule/index.css";
-@import "../pages/Settings/index.css";
+@import "@/pages/Dashboard/index.css";
+@import "@/pages/Calendar/index.css";
+@import "@/pages/My Assignments/index.css";
+@import "@/pages/My Classes/index.css";
+@import "@/pages/My Schedule/index.css";
+@import "@/pages/Settings/index.css";
 
 :root {
 	--font-sans: 'Inter', sans-serif;

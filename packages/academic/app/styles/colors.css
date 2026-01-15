@@ -22,43 +22,6 @@
 }
 
 :root.dark {
-    /* General Colors */
-    --webpage-background-color: hsl(215, 21%, 7%);
-
-    /* Header Menu Icon */
-    --header-menu-icon: hsl(215, 18%, 70%);
-    --header-menu-icon-hover: hsl(215, 28%, 90%);
-
-    /* Background Colors */
-    --background-primary: hsl(215, 21%, 10.5%);
-    --background-secondary: hsl(215, 21%, 11.3%);
-    --background-tertiary: hsl(215, 21%, 13%);
-    --background-quaternary: hsl(215, 21%, 15%);
-
-    /* Border Colors */
-    --border-primary: hsl(212, 12%, 21%);
-    --border-secondary: hsl(215, 14%, 34%);
-    --page-header-divider: hsl(215, 24%, 20%);
-
-    /* Text Colors */
-    --text-primary: hsl(218, 0%, 83%);
-    --text-secondary: hsl(218, 11%, 65%);
-    --text-tertiary: hsl(218, 9%, 46%);
-    --text-muted: hsl(217, 19%, 27%);
-    --text-danger: hsl(0, 100%, 68.57%);
-    --text-white: hsl(217, 0%, 95%);
-
-    /* Scrollbar Colors */
-    --scrollbar-track: hsl(217, 19%, 27%);
-    --scrollbar-thumb: hsl(218, 11%, 65%);
-    --scrollbar-thumb-hover: hsl(216, 12%, 84%);
-
-    /* Select Dropdown Arrow */
-    --app-select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239ca3af'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
-
-    /* Common Buttons */
-    --cancel-text: hsl(217, 20%, 60%);
-
     /* Add Item Button Colors */
     --additem-bg: hsl(var(--global-accent-hue), 70%, 28%);
     --additem-bg-hover: hsl(var(--global-accent-hue), 70%, 23.5%);
@@ -84,43 +47,6 @@
 }
 
 :root.light {
-    /* General Colors */
-    --webpage-background-color: hsl(215, 36%, 93%);
-
-    /* Header Menu Icon */
-    --header-menu-icon: hsl(215, 15%, 45%);
-    --header-menu-icon-hover: hsl(215, 25%, 28%);
-
-    /* Background Colors */
-    --background-primary: hsl(215, 20%, 94%);
-    --background-secondary: hsl(215, 15%, 92.7%);
-    --background-tertiary: hsl(215, 7%, 91.7%);
-    --background-quaternary: hsl(215, 7%, 89.2%);
-
-    /* Border Colors */
-    --border-primary: hsl(215, 20%, 85%);
-    --border-secondary: hsl(215, 20%, 80%);
-    --page-header-divider: hsl(215, 20%, 80%);
-
-    /* Text Colors */
-    --text-primary: hsl(215, 25%, 15%);
-    --text-secondary: hsl(215, 15%, 40%);
-    --text-tertiary: hsl(215, 15%, 60%);
-    --text-muted: hsl(215, 15%, 60%);
-    --text-danger: hsl(0, 70%, 50%);
-    --text-white: hsl(217, 0%, 95%);
-
-    /* Scrollbar Colors */
-    --scrollbar-track: hsl(215, 20%, 90%);
-    --scrollbar-thumb: hsl(215, 15%, 60%);
-    --scrollbar-thumb-hover: hsl(215, 15%, 45%);
-
-    /* Select Dropdown Arrow */
-    --app-select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
-
-    /* Common Buttons */
-    --cancel-text: hsl(217, 20%, 40%);
-
     /* Add Item Button Colors */
     --additem-bg: hsl(var(--global-accent-hue), 50%, 55%);
     --additem-bg-hover: hsl(var(--global-accent-hue), 70%, 40%);
