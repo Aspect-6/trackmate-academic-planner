@@ -1,8 +1,7 @@
 {
-	"name": "trackmate",
+	"name": "trackmate-landing",
 	"version": "0.9.6",
 	"private": true,
-	"workspaces": ["packages/*"],
 	"scripts": {
 		"dev": "vite --host",
 		"build": "npx tsc --noEmit && vite build",
@@ -10,7 +9,18 @@
 		"preview": "vite preview"
 	},
 	"type": "module",
-	"homepage": "https://trackmate.co",
+	"homepage": "https://trackmate.co/landing",
+	"dependencies": {
+		"@tailwindcss/postcss": "^4.1.17",
+		"autoprefixer": "^10.4.22",
+		"clsx": "^2.1.1",
+		"lucide-react": "^0.555.0",
+		"postcss": "^8.5.6",
+		"react": "^19.2.0",
+		"react-dom": "^19.2.0",
+		"react-router-dom": "^7.9.6",
+		"tailwindcss": "^4.1.17"
+	},
 	"devDependencies": {
 		"@eslint/js": "^9.39.1",
 		"@types/node": "^24.10.1",

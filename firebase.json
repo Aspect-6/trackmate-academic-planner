@@ -10,6 +10,23 @@
 			{
 				"source": "/academic/**",
 				"destination": "/academic/index.html"
+			},
+
+			{
+				"source": "/login",
+				"destination": "/index.html"
+			},
+			{
+				"source": "/signup",
+				"destination": "/index.html"
+			},
+			{
+				"source": "/landing",
+				"destination": "/index.html"
+			},
+			{
+				"source": "/",
+				"destination": "/index.html"
 			}
 		]
 	}

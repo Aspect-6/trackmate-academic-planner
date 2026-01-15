@@ -1,0 +1,57 @@
+/**
+ * Converts a Date object to a 'YYYY-MM-DD' string using local time.
+ * @param date - The Date object to convert. Defaults to current date.
+ * @returns The date string in 'YYYY-MM-DD' format.
+ */
+export const dateToLocalISOString = (date: Date = new Date()): string => {
+    const year = date.getFullYear()
+    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const day = String(date.getDate()).padStart(2, '0')
+    return `${year}-${month}-${day}`
+}
+
+/**
+ * Returns the current date as a string in 'YYYY-MM-DD' format.
+ * Uses local time.
+ * @returns The current date string.
+ */
+export const todayString = (): string => dateToLocalISOString()
+
+type DateFormat = 'short' | 'medium' | 'long' | 'full' | 'period'
+
+/**
+ * Formats a date string into the specified format.
+ * @param dateString - The date string in 'YYYY-MM-DD' format.
+ * @param format - 'short' (Jan 1), 'medium' (Jan 1, 2026), or 'long' (January 1, 2026)
+ * @returns The formatted date string, or an empty string if input is invalid.
+ */
+export const formatDate = (format: DateFormat, dateString: string): string => {
+    if (!dateString) return ''
+    const dateToParse = dateString.includes('T') ? dateString : `${dateString}T00:00:00`
+    const date = new Date(dateToParse)
+    if (isNaN(date.getTime())) return ''
+
+    const options: Record<DateFormat, Intl.DateTimeFormatOptions> = {
+        short: { month: 'short', day: 'numeric' },
+        medium: { month: 'short', day: 'numeric', year: 'numeric' },
+        long: { month: 'long', day: 'numeric', year: 'numeric' },
+        full: { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' },
+        period: { year: 'numeric', month: 'long' },
+    }
+
+    return date.toLocaleDateString('en-US', options[format])
+}
+
+/**
+ * Parses a 'YYYY-MM-DD' string into a Date object in local time.
+ * @param dateString - The date string to parse.
+ * @returns The parsed Date object. Returns current date if parsing fails.
+ */
+export const parseDateLocal = (dateString: string): Date => {
+    if (!dateString) return new Date()
+    const parts = dateString.split('-').map(Number)
+    if (parts[0] === undefined || parts[1] === undefined || parts[2] === undefined) {
+        return new Date()
+    }
+    return new Date(parts[0], parts[1] - 1, parts[2])
+}
