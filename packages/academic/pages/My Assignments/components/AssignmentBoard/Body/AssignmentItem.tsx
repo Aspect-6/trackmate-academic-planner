@@ -1,5 +1,5 @@
 import React from "react"
-import { useHover } from "@/app/hooks/ui/useHover"
+import { useHover } from "@shared/hooks/ui/useHover"
 import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
 import type { AssignmentBoard as AssignmentBoardTypes } from "@/pages/My Assignments/types"

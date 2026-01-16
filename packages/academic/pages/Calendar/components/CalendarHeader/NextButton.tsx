@@ -1,5 +1,5 @@
 import React from 'react'
-import { useHover } from '@/app/hooks/ui/useHover'
+import { useHover } from '@shared/hooks/ui/useHover'
 import type { CalendarHeader } from '@/pages/Calendar/types'
 import { ChevronRight } from 'lucide-react'
 import { CALENDAR } from '@/app/styles/colors'

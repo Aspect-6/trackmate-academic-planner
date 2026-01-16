@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useHover } from '@/app/hooks/ui/useHover'
+import { useHover } from '@shared/hooks/ui/useHover'
 import type { UpcomingAssignments } from '@/pages/Dashboard/types'
 import { cn } from '@/app/lib/utils'
 import { CheckCircle, Circle, PlayCircle } from 'lucide-react'

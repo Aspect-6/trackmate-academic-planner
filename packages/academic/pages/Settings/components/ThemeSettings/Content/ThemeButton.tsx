@@ -1,5 +1,5 @@
 import React from 'react'
-import { useHover } from '@/app/hooks/ui/useHover'
+import { useHover } from '@shared/hooks/ui/useHover'
 import type { ThemeSettings } from '@/pages/Settings/types'
 import { SETTINGS } from '@/app/styles/colors'
 

@@ -5,7 +5,7 @@ import { useModal } from '@/app/contexts/ModalContext'
 import { getRouteByPath, DEFAULT_ROUTE } from '@/app/config/paths'
 import { GLOBAL } from '@/app/styles/colors'
 import { useHeaderAction } from '@/app/hooks/ui/useHeaderAction'
-import { useHover } from '@/app/hooks/ui/useHover'
+import { useHover } from '@shared/hooks/ui/useHover'
 
 interface PageHeaderProps {
     onMenuClick: () => void

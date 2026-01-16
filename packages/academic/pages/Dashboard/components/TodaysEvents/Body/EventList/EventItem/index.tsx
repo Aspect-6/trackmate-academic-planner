@@ -1,5 +1,5 @@
 import React from 'react'
-import { useHover } from '@/app/hooks/ui/useHover'
+import { useHover } from '@shared/hooks/ui/useHover'
 import { formatEventTimeRange } from '@/app/lib/utils'
 import type { TodaysEvents } from '@/pages/Dashboard/types'
 import { DASHBOARD } from '@/app/styles/colors'
