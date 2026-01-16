@@ -17,7 +17,7 @@ const Landing: React.FC = () => {
                 TrackMate
             </h1>
             <p style={{ opacity: 0.8, marginBottom: "2rem" }}>
-                Unified planners. Separate identities.
+                Unified planners.
             </p>
 
             <button
