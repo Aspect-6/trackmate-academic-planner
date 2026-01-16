@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
+import { createRoot} from "react-dom/client";
 import App from "./App";
 import { ToastProvider } from "@shared/contexts/ToastContext";
 
@@ -9,10 +9,10 @@ if (!rootElement) {
 	throw new Error("Root element not found");
 }
 
-ReactDOM.createRoot(rootElement).render(
+createRoot(rootElement).render(
 	<React.StrictMode>
 		<ToastProvider>
 			<App />
 		</ToastProvider>
 	</React.StrictMode>
-);
+)
