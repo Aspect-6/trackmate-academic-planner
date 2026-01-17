@@ -1,14 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Home } from 'lucide-react'
-import { APP_NAME } from '@/app/config/brand'
+import { BRAND_NAME } from '@shared/config/brand'
 import { PATHS } from '@/app/config/paths'
 import './index.css'
 
 const NotFound: React.FC = () => {
     return (
         <div className="not-found-page">
-            <div className="not-found-brand">{APP_NAME}</div>
+            <div className="not-found-brand">{BRAND_NAME}</div>
             <div className="not-found-container">
                 <h1 className="not-found-title">404</h1>
                 <h2 className="not-found-subtitle">Page Not Found</h2>

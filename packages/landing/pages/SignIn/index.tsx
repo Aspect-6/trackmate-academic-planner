@@ -1,3 +1,4 @@
+import { useToast } from '@shared/contexts/ToastContext'
 import Title from '@/app/components/AuthForm/Title'
 import FormField from '@/app/components/AuthForm/FormField'
 import FormFieldLabel from '@/app/components/AuthForm/FormLabel'
@@ -11,15 +12,23 @@ import './index.css'
 // Local color constants (since landing doesn't have the GLOBAL config from academic)
 const COLORS = {
     BACKGROUND_SECONDARY: 'var(--auth-bg-secondary)',
+    BACKGROUND_TERTIARY: 'var(--auth-bg-tertiary)',
     BORDER_PRIMARY: 'var(--auth-border-primary)',
+    TEXT_PRIMARY: 'var(--auth-text-primary)',
     TEXT_SECONDARY: 'var(--auth-text-secondary)',
+    TEXT_WHITE: 'var(--auth-text-white)',
     FOCUS_COLOR: 'var(--focus-color)',
+    FOCUS_COLOR_70: 'var(--focus-color-70)',
+    BUTTON_BG: 'var(--auth-button-bg)',
+    BUTTON_BG_HOVER: 'var(--auth-button-bg-hover)',
 }
 
-const SignUp: React.FC = () => {
+const SignIn: React.FC = () => {
+    const { showToast } = useToast()
+
     return (
         <div className="auth-page min-h-screen flex items-center justify-center p-4">
-            {/* Signup card */}
+            {/* Login card */}
             <div
                 className="relative z-10 w-full max-w-md p-8 rounded-2xl shadow-2xl"
                 style={{
@@ -28,9 +37,9 @@ const SignUp: React.FC = () => {
                 }}
             >
                 {/* Header / Branding */}
-                <Title>Create your {BRAND_NAME} account</Title>
+                <Title>Sign in to {BRAND_NAME}</Title>
 
-                <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
+                <form className="space-y-5" onSubmit={(e) => { e.preventDefault() }}>
                     <FormField>
                         <FormFieldLabel htmlFor="email">Email</FormFieldLabel>
                         <FormFieldTextInput
@@ -38,7 +47,6 @@ const SignUp: React.FC = () => {
                             placeholder="you@example.com"
                             id="email"
                             name="email"
-                            autoComplete="email"
                         />
                     </FormField>
 
@@ -49,23 +57,12 @@ const SignUp: React.FC = () => {
                             placeholder="••••••••"
                             id="password"
                             name="password"
-                            autoComplete="new-password"
+                            autoComplete="current-password"
                         />
                     </FormField>
 
-                    <FormField>
-                        <FormFieldLabel htmlFor="confirm-password">Confirm Password</FormFieldLabel>
-                        <FormFieldTextInput
-                            type="password"
-                            placeholder="••••••••"
-                            id="confirm-password"
-                            name="confirm-password"
-                            autoComplete="new-password"
-                        />
-                    </FormField>
-
-                    <SubmitButton onClick={() => {}}>
-                        Sign Up
+                    <SubmitButton onClick={() => { showToast('Toast error', 'error') }}>
+                        Sign In
                     </SubmitButton>
                 </form>
 
@@ -77,13 +74,13 @@ const SignUp: React.FC = () => {
                     className="mt-6 text-center text-sm"
                     style={{ color: COLORS.TEXT_SECONDARY }}
                 >
-                    Already have an account?{' '}
+                    Don't have an account?{' '}
                     <a
-                        href="/login"
+                        href="/signup"
                         className="auth-link font-medium transition-colors duration-200"
                         style={{ color: COLORS.FOCUS_COLOR }}
                     >
-                        Sign in
+                        Sign up
                     </a>
                 </p>
             </div>
@@ -91,4 +88,4 @@ const SignUp: React.FC = () => {
     )
 }
 
-export default SignUp
+export default SignIn

@@ -1,0 +1,72 @@
+:root {
+    /* Accent color - matching the app's primary accent */
+    --auth-accent-hsl: 206, 63%, 44%;
+    --focus-color: hsl(var(--auth-accent-hsl));
+    --focus-color-70: hsla(var(--auth-accent-hsl), 0.7);
+    --focus-color-30: hsla(var(--auth-accent-hsl), 0.3);
+
+    /* Background colors */
+    --auth-bg-primary: hsl(215, 21%, 7%);
+    --auth-bg-secondary: hsl(215, 21%, 10.5%);
+    --auth-bg-tertiary: hsl(215, 21%, 13%);
+
+    /* Border colors */
+    --auth-border-primary: hsl(212, 12%, 21%);
+
+    /* Text colors */
+    --auth-text-primary: hsl(218, 0%, 83%);
+    --auth-text-secondary: hsl(218, 11%, 65%);
+    --text-muted: hsl(217, 19%, 27%);
+    --auth-text-white: hsl(217, 0%, 95%);
+
+    /* Button color - using the blue accent */
+    --auth-button-bg: hsl(206, 63%, 44%);
+    --auth-button-bg-hover: hsl(206, 63%, 38%);
+}
+
+.auth-page {
+    background: linear-gradient(135deg,
+            #0a0a0f 0%,
+            color-mix(in srgb, var(--focus-color-70) 60%, black) 40%,
+            color-mix(in srgb, var(--focus-color-70) 60%, black) 60%,
+            #0a0a0f 100%);
+}
+
+.auth-input::placeholder {
+    color: var(--text-muted);
+}
+
+.auth-input:focus {
+    outline: none;
+    border-color: var(--focus-color) !important;
+    box-shadow: 0 0 0 3px var(--focus-color-30);
+}
+
+.auth-button:hover {
+    filter: brightness(0.9);
+    transform: translateY(-0.65px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.auth-button:active {
+    transform: translateY(0);
+}
+
+.auth-link:hover {
+    filter: brightness(1.2);
+    text-decoration: underline;
+}
+
+.auth-checkbox:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--focus-color-30);
+}
+
+.google-button:hover {
+    filter: brightness(1.1);
+    transform: translateY(-0.65px);
+}
+
+.google-button:active {
+    transform: translateY(0);
+}

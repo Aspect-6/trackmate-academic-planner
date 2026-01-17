@@ -1,7 +1,7 @@
 import React from 'react'
 import { X } from 'lucide-react'
 import { cn } from '@/app/lib/utils'
-import { APP_NAME } from '@/app/config/brand'
+import { BRAND_NAME } from '@shared/config/brand'
 import { GLOBAL } from '@/app/styles/colors'
 
 interface SidebarHeaderProps {
@@ -24,7 +24,7 @@ const SidebarHeader: React.FC<SidebarHeaderProps> = ({ isMobile, onClose }) => {
                 borderBottomWidth: isMobile ? '1px' : '0px'
             }}
         >
-            <h1 className="text-2xl font-black" style={{ color: GLOBAL.PAGE_HEADER_TEXT }}>{APP_NAME}</h1>
+            <h1 className="text-2xl font-black" style={{ color: GLOBAL.PAGE_HEADER_TEXT }}>{BRAND_NAME}</h1>
 
             {isMobile && onClose && (
                 <button
