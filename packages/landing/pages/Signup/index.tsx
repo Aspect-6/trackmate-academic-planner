@@ -18,7 +18,7 @@ const COLORS = {
 
 const SignUp: React.FC = () => {
     return (
-        <div className="auth-page min-h-screen flex items-center justify-center p-4">
+        <div className="auth-page min-h-[100dvh] flex items-center justify-center p-4">
             {/* Signup card */}
             <div
                 className="relative z-10 w-full max-w-md p-8 rounded-2xl shadow-2xl"
