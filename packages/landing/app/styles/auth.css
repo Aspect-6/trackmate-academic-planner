@@ -7,8 +7,8 @@
 
     /* Background colors */
     --auth-bg-primary: hsl(215, 21%, 7%);
-    --auth-bg-secondary: hsl(215, 21%, 10.5%);
-    --auth-bg-tertiary: hsl(215, 21%, 13%);
+    --auth-bg-secondary: var(--background-secondary);
+    --auth-bg-tertiary: var(--background-tertiary);
 
     /* Border colors */
     --auth-border-primary: hsl(212, 12%, 21%);
@@ -18,18 +18,19 @@
     --auth-text-secondary: hsl(218, 11%, 65%);
     --text-muted: hsl(217, 19%, 27%);
     --auth-text-white: hsl(217, 0%, 95%);
+    --auth-error-border: var(--text-danger);
 
     /* Button color - using the blue accent */
-    --auth-button-bg: hsl(206, 63%, 44%);
-    --auth-button-bg-hover: hsl(206, 63%, 38%);
+    --auth-button-bg: hsl(var(--auth-accent-hsl));
+    --auth-button-bg-hover: hsla(var(--auth-accent-hsl), 0.8);
 }
 
 .auth-page {
     background: linear-gradient(135deg,
-            #0a0a0f 0%,
+            #0a0a0f 3%,
             color-mix(in srgb, var(--focus-color-70) 60%, black) 40%,
             color-mix(in srgb, var(--focus-color-70) 60%, black) 60%,
-            #0a0a0f 100%);
+            #0a0a0f 97%);
 }
 
 .auth-input::placeholder {
@@ -39,13 +40,7 @@
 .auth-input:focus {
     outline: none;
     border-color: var(--focus-color) !important;
-    box-shadow: 0 0 0 3px var(--focus-color-30);
-}
-
-.auth-button:hover {
-    filter: brightness(0.9);
-    transform: translateY(-0.65px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0 0 2px var(--focus-color-30);
 }
 
 .auth-button:active {

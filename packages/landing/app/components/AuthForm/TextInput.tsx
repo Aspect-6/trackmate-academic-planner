@@ -4,34 +4,24 @@ const COLORS = {
     BACKGROUND_TERTIARY: 'var(--auth-bg-tertiary)',
     BORDER_PRIMARY: 'var(--auth-border-primary)',
     TEXT_PRIMARY: 'var(--auth-text-primary)',
+    ERROR_BORDER: 'var(--auth-error-border)',
 }
 
-interface FormFieldTextInputProps {
-    type: string
-    placeholder: string
-    id?: string
-    name?: string
-    autoComplete?: string
+interface FormFieldTextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+    hasError?: boolean
 }
 
 const FormFieldTextInput: React.FC<FormFieldTextInputProps> = ({
-    type,
-    placeholder,
-    id,
-    name,
-    autoComplete,
+    hasError,
+    ...props
 }) => {
     return (
         <input
-            type={type}
-            id={id}
-            name={name}
-            placeholder={placeholder}
-            autoComplete={autoComplete}
+            {...props}
             className="auth-input w-full px-4 py-3 rounded-lg text-sm transition-all duration-200"
             style={{
                 backgroundColor: COLORS.BACKGROUND_TERTIARY,
-                border: `1px solid ${COLORS.BORDER_PRIMARY}`,
+                border: `1px solid ${hasError ? COLORS.ERROR_BORDER : COLORS.BORDER_PRIMARY}`,
                 color: COLORS.TEXT_PRIMARY,
             }}
         />

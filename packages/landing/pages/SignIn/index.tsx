@@ -1,15 +1,7 @@
-import { useToast } from '@shared/contexts/ToastContext'
-import Title from '@/app/components/AuthForm/Title'
-import FormField from '@/app/components/AuthForm/FormField'
-import FormFieldLabel from '@/app/components/AuthForm/FormLabel'
-import FormFieldTextInput from '@/app/components/AuthForm/TextInput'
-import FormDivider from '@/app/components/AuthForm/FormDivider'
-import SubmitButton from '@/app/components/AuthForm/SubmitButton'
-import GoogleButton from '@/app/components/AuthForm/GoogleButton'
+import { Title, FormField, FormFieldLabel, FormFieldTextInput, FormDivider, SubmitButton, GoogleButton } from '@/app/components/AuthForm'
 import { BRAND_NAME } from '@shared/config/brand'
 import './index.css'
 
-// Local color constants (since landing doesn't have the GLOBAL config from academic)
 const COLORS = {
     BACKGROUND_SECONDARY: 'var(--auth-bg-secondary)',
     BACKGROUND_TERTIARY: 'var(--auth-bg-tertiary)',
@@ -24,8 +16,6 @@ const COLORS = {
 }
 
 const SignIn: React.FC = () => {
-    const { showToast } = useToast()
-
     return (
         <div className="auth-page min-h-[100dvh] flex items-center justify-center p-4">
             {/* Login card */}
@@ -61,7 +51,7 @@ const SignIn: React.FC = () => {
                         />
                     </FormField>
 
-                    <SubmitButton onClick={() => { showToast('Toast error', 'error') }}>
+                    <SubmitButton>
                         Sign In
                     </SubmitButton>
                 </form>

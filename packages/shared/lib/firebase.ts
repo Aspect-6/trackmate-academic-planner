@@ -1,0 +1,18 @@
+import { initializeApp } from "firebase/app"
+import { getAuth, GoogleAuthProvider } from "firebase/auth"
+import { getFirestore } from "firebase/firestore"
+
+export const app = initializeApp({
+    apiKey: "AIzaSyBJOCTTREW16d0xFHrCXUCDfqIcBCWYgv4",
+    authDomain: "trackmate-fb7cd.firebaseapp.com",
+    projectId: "trackmate-fb7cd",
+    storageBucket: "trackmate-fb7cd.firebasestorage.app",
+    messagingSenderId: "308955083111",
+    appId: "1:308955083111:web:d72d3ccf9bc000d4e57fc2",
+    measurementId: "G-XCLSH716RS"
+})
+
+export const auth = getAuth(app)
+export const db = getFirestore(app)
+
+export const googleAuthProvider = new GoogleAuthProvider()

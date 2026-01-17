@@ -8,10 +8,11 @@ const COLORS = {
 }
 
 interface GoogleButtonProps {
+    onClick: () => void
     children: React.ReactNode
 }
 
-const GoogleButton: React.FC<GoogleButtonProps> = ({ children }) => {
+const GoogleButton: React.FC<GoogleButtonProps> = ({ onClick, children }) => {
     return (
         <button
             type="button"
@@ -21,7 +22,7 @@ const GoogleButton: React.FC<GoogleButtonProps> = ({ children }) => {
                 border: `1px solid ${COLORS.BORDER_PRIMARY}`,
                 color: COLORS.TEXT_PRIMARY,
             }}
-            onClick={(e) => e.preventDefault()}
+            onClick={onClick}
         >
             {/* Google Icon */}
             <GoogleIcon className="w-5 h-5" />

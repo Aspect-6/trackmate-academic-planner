@@ -5,6 +5,8 @@ import { ToastProvider } from "@shared/contexts/ToastContext";
 
 const rootElement = document.getElementById("root");
 
+document.documentElement.classList = "dark";
+
 if (!rootElement) {
 	throw new Error("Root element not found");
 }
