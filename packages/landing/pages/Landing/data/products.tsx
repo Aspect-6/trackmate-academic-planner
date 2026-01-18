@@ -1,5 +1,5 @@
 import React from 'react'
-import { GraduationCap } from 'lucide-react'
+import { FolderOpen, GraduationCap } from 'lucide-react'
 
 export interface Product {
     title: string
@@ -21,7 +21,7 @@ export const PRODUCTS: Product[] = [
     {
         title: 'TrackMate Projects',
         description: 'Organize long-term projects, milestones, and shared work from start to finish.',
-        icon: <GraduationCap className="w-10 h-10" />,
+        icon: <FolderOpen className="w-10 h-10" />,
         href: '/',
         accentColor: 'hsl(210, 35%, 41%)',
         comingSoon: true,
