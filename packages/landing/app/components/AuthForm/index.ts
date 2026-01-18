@@ -7,3 +7,4 @@ export { default as FormCheckbox } from "./FormCheckbox";
 export { default as SubmitButton } from "./SubmitButton";
 export { default as GoogleButton } from "./GoogleButton";
 export { default as FormLink } from "./FormLink";
+export { default as HomeLink } from "./HomeLink";

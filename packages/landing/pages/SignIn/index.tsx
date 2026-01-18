@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Title, FormField, FormFieldLabel, FormFieldTextInput, FormDivider, FormCheckbox, SubmitButton, GoogleButton, FormLink } from '@/app/components/AuthForm'
+import { Title, FormField, FormFieldLabel, FormFieldTextInput, FormDivider, FormCheckbox, SubmitButton, GoogleButton, FormLink, HomeLink } from '@/app/components/AuthForm'
 import { useForm } from 'react-hook-form'
 import { useSignIn } from '@/app/hooks/useSignIn'
 import { BRAND_NAME } from '@shared/config/brand'
@@ -74,6 +74,7 @@ const SignIn: React.FC = () => {
                     boxShadow: '0 0 60px rgba(59, 130, 246, 0.15), 0 0 20px rgba(59, 130, 246, 0.04)',
                 }}
             >
+                <HomeLink />
                 <Title>Sign in to {BRAND_NAME}</Title>
 
                 <form className="space-y-5" onSubmit={handleSubmit(onSubmit)} noValidate>
