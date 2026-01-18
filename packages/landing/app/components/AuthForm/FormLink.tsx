@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useHover } from '@shared/hooks/ui/useHover'
 import { AUTH } from '@/app/styles/colors'
 
@@ -9,10 +10,11 @@ interface FormLinkProps {
 
 const FormLink: React.FC<FormLinkProps> = ({ href, children }) => {
     const { isHovered, hoverProps } = useHover()
+    const navigate = useNavigate()
 
     return (
-        <a
-            href={href}
+        <button
+            onClick={() => navigate(href)}
             className="font-medium transition-all duration-200"
             style={{
                 color: AUTH.FOCUS_COLOR,
@@ -22,7 +24,7 @@ const FormLink: React.FC<FormLinkProps> = ({ href, children }) => {
             {...hoverProps}
         >
             {children}
-        </a>
+        </button>
     )
 }
 
