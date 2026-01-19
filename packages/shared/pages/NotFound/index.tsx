@@ -21,7 +21,7 @@ const NotFound: React.FC<NotFoundProps> = ({ text, path, buttonBg, buttonBgHover
             className="not-found-page radial-background min-h-dvh flex flex-col items-center justify-center p-8 text-center"
             style={{ backgroundColor: TRACKMATE.WEBPAGE_BACKGROUND }}
         >
-            <h1 className="text-5xl sm:text-8xl font-semibold text-white/80 mb-2 select-none">
+            <h1 className="text-5xl sm:text-8xl font-extrabold text-white/80 mb-2 select-none">
                 404
             </h1>
 
