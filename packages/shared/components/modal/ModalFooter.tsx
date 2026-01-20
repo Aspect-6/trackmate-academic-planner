@@ -10,7 +10,7 @@ export const ModalFooter: React.FC<ModalFooterProps> = ({
     className = '',
 }) => {
     return (
-        <div className={`flex justify-end space-x-3 mt-6 ${className}`.trim()}>
+        <div className={`flex justify-end gap-2 mt-6 ${className}`.trim()}>
             {children}
         </div>
     )
