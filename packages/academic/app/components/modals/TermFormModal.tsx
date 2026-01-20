@@ -206,7 +206,7 @@ export const TermFormModal: React.FC<TermFormModalProps> = ({ onClose, termId })
                             ? 'Add a term with Fall and Spring semesters.'
                             : 'Add a term with four quarters with two quarters for the Fall and Spring semesters each.'}
                     </div>
-                    <div className="width-full"><div className="border-t mb-4" style={{ borderColor: GLOBAL.SIDEBAR_BORDER }}></div></div>
+                    <div className="width-full"><div className="border-t mb-4" style={{ borderColor: GLOBAL.BORDER_PRIMARY }}></div></div>
                 </>
             )}
 
