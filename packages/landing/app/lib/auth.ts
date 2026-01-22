@@ -10,6 +10,7 @@ import {
     linkWithPopup,
     unlink,
     getAdditionalUserInfo,
+    sendEmailVerification,
     User
 } from "firebase/auth"
 
@@ -75,4 +76,10 @@ export const linkGoogleAccount = async (): Promise<void> => {
 export const unlinkGoogleAccount = async (): Promise<void> => {
     if (!auth.currentUser) throw new Error("No user signed in")
     await unlink(auth.currentUser, "google.com")
+}
+
+// Email Verification
+export const sendUserEmailVerification = async (): Promise<void> => {
+    if (!auth.currentUser) throw new Error("No user signed in")
+    await sendEmailVerification(auth.currentUser)
 }

@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useCurrentUser } from '@/app/hooks/useCurrentUser'
 import { useAccount } from '@/app/hooks/useAccount'
-import { signOutUser } from '@/app/lib/auth'
-import { ArrowLeft, User, Mail, Lock, Trash2, LogOut, Check, X, Link2, Copy, Hash } from 'lucide-react'
+import { signOutUser, sendUserEmailVerification } from '@/app/lib/auth'
+import { ArrowLeft, User, Mail, Lock, Trash2, LogOut, Check, X, Link2, Copy, Hash, ShieldCheck } from 'lucide-react'
 import { AUTH } from '@/app/styles/colors'
 
 type ActiveSection = 'profile' | 'linked' | 'security' | 'danger'
@@ -34,6 +34,8 @@ const Account: React.FC = () => {
     const [linkError, setLinkError] = useState('')
     const [linkSuccess, setLinkSuccess] = useState('')
     const [copied, setCopied] = useState(false)
+    const [verificationSent, setVerificationSent] = useState(false)
+    const [verificationError, setVerificationError] = useState('')
 
     useEffect(() => {
         if (!userLoading && !user) {
@@ -578,6 +580,74 @@ const Account: React.FC = () => {
                         <p className="mb-8" style={{ color: AUTH.TEXT_SECONDARY }}>
                             Manage your password and security settings
                         </p>
+
+                        {/* Email Verification Row */}
+                        <div
+                            className="p-5 rounded-xl mb-4"
+                            style={{
+                                backgroundColor: AUTH.BACKGROUND_SECONDARY,
+                                border: `1px solid ${AUTH.BORDER_PRIMARY}`,
+                            }}
+                        >
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-4">
+                                    <div
+                                        className="w-10 h-10 rounded-lg flex items-center justify-center"
+                                        style={{ backgroundColor: user.emailVerified ? 'rgba(34, 197, 94, 0.15)' : AUTH.FOCUS_COLOR_30 }}
+                                    >
+                                        <ShieldCheck size={20} style={{ color: user.emailVerified ? '#22c55e' : AUTH.FOCUS_COLOR }} />
+                                    </div>
+                                    <div>
+                                        <p className="text-sm" style={{ color: AUTH.TEXT_SECONDARY }}>Email Verification</p>
+                                        <p className="font-medium" style={{ color: user.emailVerified ? '#22c55e' : AUTH.TEXT_PRIMARY }}>
+                                            {user.emailVerified ? 'Verified' : 'Not verified'}
+                                        </p>
+                                    </div>
+                                </div>
+                                {!user.emailVerified && (
+                                    <button
+                                        onClick={async () => {
+                                            setVerificationError('')
+                                            setVerificationSent(false)
+                                            try {
+                                                await sendUserEmailVerification()
+                                                setVerificationSent(true)
+                                            } catch (error: any) {
+                                                if (error.code === 'auth/too-many-requests') {
+                                                    setVerificationError('Too many requests. Please try again later.')
+                                                } else {
+                                                    setVerificationError('Failed to send verification email.')
+                                                }
+                                            }
+                                        }}
+                                        className="px-4 py-2 rounded-lg text-sm font-medium transition-opacity hover:opacity-80"
+                                        style={{
+                                            backgroundColor: AUTH.FOCUS_COLOR,
+                                            color: '#fff',
+                                        }}
+                                    >
+                                        Resend Email
+                                    </button>
+                                )}
+                                {user.emailVerified && (
+                                    <span
+                                        className="px-3 py-1 rounded-full text-xs font-medium"
+                                        style={{
+                                            backgroundColor: 'rgba(34, 197, 94, 0.15)',
+                                            color: '#22c55e',
+                                        }}
+                                    >
+                                        Secured
+                                    </span>
+                                )}
+                            </div>
+                            {verificationSent && (
+                                <p className="text-sm mt-3" style={{ color: '#22c55e' }}>Verification email sent! Check your inbox.</p>
+                            )}
+                            {verificationError && (
+                                <p className="text-sm mt-3" style={{ color: AUTH.TEXT_DANGER }}>{verificationError}</p>
+                            )}
+                        </div>
 
                         {/* Password Row */}
                         <div
