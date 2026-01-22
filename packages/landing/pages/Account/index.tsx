@@ -192,9 +192,7 @@ const Account: React.FC = () => {
             setLinkSuccess('Google account linked successfully')
         } else {
             const code = result.error?.code || ''
-            if (code === 'auth/credential-already-in-use') {
-                setLinkError('This Google account is already linked to another user')
-            } else if (code === 'auth/popup-closed-by-user') {
+            if (code === 'auth/popup-closed-by-user') {
                 setLinkError('Popup was closed')
             } else {
                 setLinkError('Failed to link Google account')
