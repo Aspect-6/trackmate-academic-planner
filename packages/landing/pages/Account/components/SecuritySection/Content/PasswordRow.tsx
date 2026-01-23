@@ -1,0 +1,128 @@
+import React from 'react'
+import { Lock, Check, X } from 'lucide-react'
+import { AUTH } from '@/app/styles/colors'
+import type { SecuritySection } from '@/pages/Account/types'
+
+const PasswordRow: React.FC<SecuritySection.Content.PasswordRowProps> = ({
+    hasPassword,
+    isEditing,
+    currentPassword,
+    newPassword,
+    confirmPassword,
+    error,
+    success,
+    loading,
+    onEditStart,
+    onEditCancel,
+    onCurrentPasswordChange,
+    onNewPasswordChange,
+    onConfirmPasswordChange,
+    onSave,
+}) => {
+    return (
+        <div
+            className="p-5 rounded-xl"
+            style={{
+                backgroundColor: AUTH.BACKGROUND_SECONDARY,
+                border: `1px solid ${AUTH.BORDER_PRIMARY}`,
+            }}
+        >
+            <div className="flex items-start justify-between">
+                <div className="flex items-start gap-4">
+                    <div
+                        className="w-10 h-10 rounded-lg flex items-center justify-center"
+                        style={{ backgroundColor: hasPassword ? AUTH.FOCUS_COLOR_30 : AUTH.BACKGROUND_TERTIARY }}
+                    >
+                        <Lock size={20} style={{ color: hasPassword ? AUTH.FOCUS_COLOR : AUTH.TEXT_SECONDARY }} />
+                    </div>
+                    <div>
+                        <p className="text-sm" style={{ color: AUTH.TEXT_SECONDARY }}>Password</p>
+                        {!hasPassword ? (
+                            <p className="text-sm" style={{ color: AUTH.TEXT_SECONDARY }}>
+                                Not available — Must sign up with email and password to use this feature
+                            </p>
+                        ) : !isEditing ? (
+                            <p className="font-medium" style={{ color: AUTH.TEXT_PRIMARY }}>••••••••</p>
+                        ) : (
+                            <div className="space-y-3 mt-2">
+                                <input
+                                    type="password"
+                                    value={currentPassword}
+                                    onChange={(e) => onCurrentPasswordChange(e.target.value)}
+                                    placeholder="Current password"
+                                    className="px-3 py-2 rounded-lg text-sm outline-none w-64 block"
+                                    style={{
+                                        backgroundColor: AUTH.BACKGROUND_TERTIARY,
+                                        border: `1px solid ${AUTH.BORDER_PRIMARY}`,
+                                        color: AUTH.TEXT_PRIMARY,
+                                    }}
+                                    autoFocus
+                                />
+                                <input
+                                    type="password"
+                                    value={newPassword}
+                                    onChange={(e) => onNewPasswordChange(e.target.value)}
+                                    placeholder="New password"
+                                    className="px-3 py-2 rounded-lg text-sm outline-none w-64 block"
+                                    style={{
+                                        backgroundColor: AUTH.BACKGROUND_TERTIARY,
+                                        border: `1px solid ${AUTH.BORDER_PRIMARY}`,
+                                        color: AUTH.TEXT_PRIMARY,
+                                    }}
+                                />
+                                <input
+                                    type="password"
+                                    value={confirmPassword}
+                                    onChange={(e) => onConfirmPasswordChange(e.target.value)}
+                                    placeholder="Confirm new password"
+                                    className="px-3 py-2 rounded-lg text-sm outline-none w-64 block"
+                                    style={{
+                                        backgroundColor: AUTH.BACKGROUND_TERTIARY,
+                                        border: `1px solid ${AUTH.BORDER_PRIMARY}`,
+                                        color: AUTH.TEXT_PRIMARY,
+                                    }}
+                                />
+                            </div>
+                        )}
+                    </div>
+                </div>
+                {hasPassword && (
+                    !isEditing ? (
+                        <button
+                            onClick={onEditStart}
+                            className="px-4 py-2 rounded-lg text-sm font-medium transition-opacity hover:opacity-80"
+                            style={{
+                                backgroundColor: AUTH.BACKGROUND_TERTIARY,
+                                color: AUTH.TEXT_PRIMARY,
+                            }}
+                        >
+                            Change
+                        </button>
+                    ) : (
+                        <div className="flex gap-2">
+                            <button
+                                onClick={onSave}
+                                disabled={loading}
+                                className="p-2 rounded-lg transition-opacity hover:opacity-80"
+                                style={{ backgroundColor: '#22c55e', color: '#fff' }}
+                            >
+                                <Check size={18} />
+                            </button>
+                            <button
+                                onClick={onEditCancel}
+                                className="p-2 rounded-lg transition-opacity hover:opacity-80"
+                                style={{ backgroundColor: AUTH.BACKGROUND_TERTIARY, color: AUTH.TEXT_PRIMARY }}
+                            >
+                                <X size={18} />
+                            </button>
+                        </div>
+                    )
+                )}
+            </div>
+            {error && <p className="text-sm mt-3" style={{ color: AUTH.TEXT_DANGER }}>{error}</p>}
+            {success && <p className="text-sm mt-3" style={{ color: '#22c55e' }}>{success}</p>}
+        </div>
+    )
+}
+
+export default PasswordRow

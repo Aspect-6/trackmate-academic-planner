@@ -1,0 +1,46 @@
+import React from 'react'
+import { AUTH } from '@/app/styles/colors'
+import type { LinkedAccountsSection } from '@/pages/Account/types'
+
+const ComingSoonRow: React.FC<LinkedAccountsSection.Content.ComingSoonRowProps> = ({
+    providerName,
+    Icon,
+}) => {
+    return (
+        <div
+            className="p-5 rounded-xl opacity-60 mb-4"
+            style={{
+                backgroundColor: AUTH.BACKGROUND_SECONDARY,
+                border: `1px solid ${AUTH.BORDER_PRIMARY}`,
+            }}
+        >
+            <div className="flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                    <div
+                        className="w-10 h-10 rounded-lg flex items-center justify-center"
+                        style={{ backgroundColor: AUTH.BACKGROUND_TERTIARY }}
+                    >
+                        <Icon className="w-5 h-5" />
+                    </div>
+                    <div>
+                        <p className="font-medium" style={{ color: AUTH.TEXT_PRIMARY }}>{providerName}</p>
+                        <p className="text-sm" style={{ color: AUTH.TEXT_SECONDARY }}>
+                            Not connected
+                        </p>
+                    </div>
+                </div>
+                <span
+                    className="px-3 py-1 rounded-full text-xs font-medium"
+                    style={{
+                        backgroundColor: AUTH.BACKGROUND_QUATERNARY,
+                        color: AUTH.TEXT_SECONDARY,
+                    }}
+                >
+                    Coming Soon
+                </span>
+            </div>
+        </div>
+    )
+}
+
+export default ComingSoonRow
