@@ -3,12 +3,12 @@ import { useNavigate } from 'react-router-dom'
 import { useCurrentUser } from '@/app/hooks/useCurrentUser'
 import { useAccount } from '@/app/hooks/useAccount'
 import { signOutUser, sendUserEmailVerification } from '@/app/lib/auth'
-import { ArrowLeft, User, Mail, Lock, Trash2, LogOut, Check, X, Link2, Copy, Hash, ShieldCheck, Pencil } from 'lucide-react'
+import { ArrowLeft, User, Mail, Lock, Trash2, LogOut, Check, X, Link2, Copy, Hash, ShieldCheck, Pencil, Database } from 'lucide-react'
 import { AUTH } from '@/app/styles/colors'
 import MicrosoftIcon from '@/app/assets/microsoft-icon.svg?react'
 import FacebookIcon from '@/app/assets/facebook-icon.svg?react'
 
-type ActiveSection = 'profile' | 'linked' | 'security' | 'danger'
+type ActiveSection = 'profile' | 'linked' | 'security' | 'data'
 
 const Account: React.FC = () => {
     const { user, loading: userLoading } = useCurrentUser()
@@ -215,7 +215,7 @@ const Account: React.FC = () => {
         { id: 'profile' as const, label: 'Profile', icon: User },
         { id: 'linked' as const, label: 'Linked Accounts', icon: Link2 },
         { id: 'security' as const, label: 'Security', icon: Lock },
-        { id: 'danger' as const, label: 'Delete Account', icon: Trash2 },
+        { id: 'data' as const, label: 'Your Data', icon: Database },
     ]
 
     return (
@@ -872,14 +872,19 @@ const Account: React.FC = () => {
                     </div>
                 )}
 
-                {activeSection === 'danger' && (
+                {activeSection === 'data' && (
                     <div>
-                        <h2 className="text-2xl font-bold mb-2" style={{ color: '#ef4444' }}>
-                            Delete Account
+                        <h2 className="text-2xl font-bold mb-2" style={{ color: AUTH.TEXT_PRIMARY }}>
+                            Your Data
                         </h2>
                         <p className="mb-8" style={{ color: AUTH.TEXT_SECONDARY }}>
-                            Permanently remove your account and all data
+                            Manage your account data
                         </p>
+
+                        {/* Delete Account Section */}
+                        <h3 className="text-lg font-semibold mb-4" style={{ color: '#ef4444' }}>
+                            Delete Account
+                        </h3>
 
                         <div
                             className="p-6 rounded-xl max-w-xl"
