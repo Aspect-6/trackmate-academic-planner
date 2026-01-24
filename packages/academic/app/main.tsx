@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { ModalProvider } from '@/app/contexts/ModalContext'
 import { ScheduleComponentsProvider } from '@/app/contexts/ScheduleComponentsContext'
 import { ToastProvider } from '@shared/contexts/ToastContext'
+import { AuthProvider } from '@shared/contexts/AuthContext'
 import App from '@/app/App'
 import { APP_FULL_NAME } from '@/app/config/brand'
 
@@ -28,11 +29,13 @@ createRoot(rootElement).render(
 	<React.StrictMode>
 		<BrowserRouter>
 			<ToastProvider>
-				<ModalProvider>
-					<ScheduleComponentsProvider>
-						<App />
-					</ScheduleComponentsProvider>
-				</ModalProvider>
+				<AuthProvider>
+					<ModalProvider>
+						<ScheduleComponentsProvider>
+							<App />
+						</ScheduleComponentsProvider>
+					</ModalProvider>
+				</AuthProvider>
 			</ToastProvider>
 		</BrowserRouter>
 	</React.StrictMode>

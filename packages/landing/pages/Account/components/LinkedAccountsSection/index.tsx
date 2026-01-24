@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useCurrentUser } from '@shared/hooks/useCurrentUser'
+import { useAuth } from '@shared/contexts/AuthContext'
 import { useAccount } from '@/app/hooks/useAccount'
 import { AUTH } from '@/app/styles/colors'
 import MicrosoftIcon from '@/app/assets/microsoft-icon.svg?react'
@@ -9,7 +9,7 @@ import EmailPasswordRow from './Content/EmailPasswordRow'
 import ComingSoonRow from './Content/ComingSoonRow'
 
 const LinkedAccountsSection: React.FC = () => {
-    const { user } = useCurrentUser()
+    const { user } = useAuth()
     const { linkGoogle, unlinkGoogle, loading } = useAccount()
 
     // Check linked providers

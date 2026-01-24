@@ -1,6 +1,6 @@
 import React from 'react'
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
-import { useCurrentUser } from '../../hooks/useCurrentUser'
+import { useAuth } from '../../contexts/AuthContext'
 
 interface RequireAuthProps {
     redirectTo?: string
@@ -17,7 +17,7 @@ const RequireAuth: React.FC<RequireAuthProps> = ({
     requireEmailVerification = false,
     unverifiedRedirectTo = '/account?tab=security'
 }) => {
-    const { user, loading } = useCurrentUser()
+    const { user, loading } = useAuth()
     const location = useLocation()
 
     if (loading) {

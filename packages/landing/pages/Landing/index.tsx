@@ -6,14 +6,14 @@ import HeroTitle from '@/pages/Landing/components/Hero/HeroTitle'
 import HeroMessage from '@/pages/Landing/components/Hero/HeroMessage'
 import ProductCard from '@/pages/Landing/components/ProductCard'
 import Button from '@/pages/Landing/components/Button'
-import { useCurrentUser } from '@shared/hooks/useCurrentUser'
+import { useAuth } from '@shared/contexts/AuthContext'
 import { BRAND_NAME } from '@shared/config/brand'
 import { LANDING } from '@/app/styles/colors'
 import { PRODUCTS } from '@/pages/Landing/data/products'
 
 const Landing: React.FC = () => {
     const navigate = useNavigate()
-    const { user, loading } = useCurrentUser()
+    const { user, loading } = useAuth()
 
     return (
         <div className="min-h-dvh flex flex-col items-center p-8">

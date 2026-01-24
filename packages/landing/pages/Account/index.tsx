@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { Menu } from 'lucide-react'
-import { useCurrentUser } from '@shared/hooks/useCurrentUser'
+import { useAuth } from '@shared/contexts/AuthContext'
 import { useToast } from '@shared/contexts/ToastContext'
 import { signOutUser } from '@/app/lib/auth'
 import { AUTH } from '@/app/styles/colors'
@@ -14,7 +14,7 @@ import SecuritySection from './components/SecuritySection'
 import DataSection from './components/DataSection'
 
 const Account: React.FC = () => {
-    const { user, loading: userLoading } = useCurrentUser()
+    const { user, loading: userLoading } = useAuth()
     const { showToast } = useToast()
     const navigate = useNavigate()
     const [searchParams, setSearchParams] = useSearchParams()

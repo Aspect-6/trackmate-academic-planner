@@ -1,12 +1,12 @@
 import React from 'react'
-import { useCurrentUser } from '@shared/hooks/useCurrentUser'
+import { useAuth } from '@shared/contexts/AuthContext'
 import { AUTH } from '@/app/styles/colors'
 import AvatarDisplay from './Content/AvatarDisplay'
 import EmailRow from './Content/EmailRow'
 import AccountIdRow from './Content/AccountIdRow'
 
 const ProfileSection: React.FC = () => {
-    const { user } = useCurrentUser()
+    const { user } = useAuth()
 
     if (!user) return null
 

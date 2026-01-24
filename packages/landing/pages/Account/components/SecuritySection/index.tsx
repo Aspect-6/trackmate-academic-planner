@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useCurrentUser } from '@shared/hooks/useCurrentUser'
+import { useAuth } from '@shared/contexts/AuthContext'
 import { useAccount } from '@/app/hooks/useAccount'
 import { sendUserEmailVerification } from '@/app/lib/auth'
 import { AUTH } from '@/app/styles/colors'
@@ -7,7 +7,7 @@ import EmailVerificationRow from './Content/EmailVerificationRow'
 import PasswordRow from './Content/PasswordRow'
 
 const SecuritySection: React.FC = () => {
-    const { user } = useCurrentUser()
+    const { user } = useAuth()
     const { changePassword, loading } = useAccount()
 
     // Check linked providers
