@@ -33,14 +33,14 @@ const SidebarTab: React.FC<SidebarTabProps> = ({
                 onClick={onClick}
                 {...hoverProps}
                 style={({ isActive: linkActive }) => {
-                    const active = isActive ?? linkActive
+                    const active = isActive || linkActive
                     return {
                         backgroundColor: active ? accentColor : (isHovered ? hoverColor : 'transparent'),
                         color: active ? undefined : TRACKMATE.TEXT_PRIMARY
                     }
                 }}
                 className={({ isActive: linkActive }) =>
-                    `${baseClasses} ${(isActive ?? linkActive) ? "active text-white" : ""}`
+                    `${baseClasses} ${!(isActive || linkActive) && "active text-white"}`
                 }
             >
                 <Icon className="w-5 h-5 mr-3" />
