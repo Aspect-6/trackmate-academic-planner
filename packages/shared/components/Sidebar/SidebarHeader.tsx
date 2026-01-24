@@ -5,6 +5,7 @@ interface SidebarHeaderProps {
     isMobile?: boolean
     onClose?: () => void
     brandName: string
+    subtitle?: string
     accentColor?: string
     textColor?: string
     borderColor?: string
@@ -14,6 +15,7 @@ const SidebarHeader: React.FC<SidebarHeaderProps> = ({
     isMobile = false,
     onClose,
     brandName,
+    subtitle,
     accentColor,
     textColor,
     borderColor,
@@ -28,7 +30,14 @@ const SidebarHeader: React.FC<SidebarHeaderProps> = ({
                 borderBottom: `${isMobile ? '1px' : '0px'} solid ${borderColor || 'transparent'}`,
             }}
         >
-            <h1 className="text-2xl font-black" style={{ color: accentColor }}>{brandName}</h1>
+            <div>
+                <h1 className="text-2xl font-black" style={{ color: accentColor }}>{brandName}</h1>
+                {subtitle && (
+                    <p className="text-xs font-bold uppercase tracking-widest mt-1" style={{ color: textColor, opacity: 0.6 }}>
+                        {subtitle}
+                    </p>
+                )}
+            </div>
 
             {isMobile && onClose && (
                 <button

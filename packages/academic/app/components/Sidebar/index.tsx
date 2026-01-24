@@ -31,6 +31,7 @@ const Sidebar: React.FC<SidebarProps> = ({ variant, isOpen, onClose }) => {
                 isMobile={isMobile}
                 onClose={onClose}
                 brandName={BRAND_NAME}
+                subtitle="Academic"
                 accentColor={GLOBAL.GLOBAL_ACCENT}
                 textColor={GLOBAL.TEXT_SECONDARY}
                 borderColor={GLOBAL.BORDER_PRIMARY}

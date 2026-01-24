@@ -31,6 +31,7 @@ const AccountSidebar: React.FC<AccountSidebarTypes.Props & { isMobile?: boolean;
                 isMobile={isMobile}
                 onClose={onClose}
                 brandName={BRAND_NAME}
+                subtitle="Account"
                 accentColor={AUTH.GLOBAL_ACCENT}
                 textColor={AUTH.TEXT_SECONDARY}
                 borderColor={AUTH.BORDER_PRIMARY}
