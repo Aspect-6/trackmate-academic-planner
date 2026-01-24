@@ -50,7 +50,7 @@ const SidebarNav: React.FC<SidebarNavProps> = ({
                 })}
             </div>
 
-            <div className="flex-shrink-0 px-4">
+            <div className="flex-shrink-0 px-4 space-y-2">
                 <div className="mb-2" style={{ borderBottom: `1px solid ${AUTH.BORDER_PRIMARY}` }}></div>
                 <SidebarTab
                     label="Back to Home"

@@ -36,8 +36,8 @@ const SidebarNav: React.FC<SidebarNavProps> = ({ onLinkClick, className }) => {
                 ))}
             </div>
 
-            <div className="flex-shrink-0 px-4">
-                <div className="mb-2" style={{ borderBottom: `1px solid ${GLOBAL.BORDER_PRIMARY}` }}></div>
+            <div className="flex-shrink-0 px-4 space-y-2">
+                <div className="mb-2" style={{ borderBottom: `1px solid ${GLOBAL.BORDER_PRIMARY}` }} />
                 <SidebarTab
                     label="Account"
                     icon={User}
