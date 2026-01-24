@@ -19,7 +19,7 @@ const FormFieldTextInput: React.FC<FormFieldTextInputProps> = ({ hasError, ...pr
         <input
             {...props}
             {...focusProps}
-            className="authform-input w-full px-4 py-3 rounded-lg text-sm transition-all duration-200"
+            className="authform-input w-full px-4 py-3 rounded-lg text-base sm:text-sm transition-all duration-200"
             style={{
                 backgroundColor: AUTH.BACKGROUND_TERTIARY,
                 border: `1px solid ${getBorderColor()}`,
