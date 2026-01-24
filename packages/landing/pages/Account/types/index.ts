@@ -16,33 +16,14 @@ export namespace ProfileSection {
     export namespace Content {
         export interface AvatarDisplayProps {
             user: User
-            isEditingDisplayName: boolean
-            newDisplayName: string
-            displayNameError: string
-            displayNameSuccess: string
-            onEditStart: () => void
-            onEditCancel: () => void
-            onDisplayNameChange: (value: string) => void
-            onDisplayNameSave: () => void
         }
 
         export interface EmailRowProps {
             user: User
-            hasPassword: boolean
-            isEditing: boolean
-            newEmail: string
-            error: string
-            success: string
-            onEditStart: () => void
-            onEditCancel: () => void
-            onEmailChange: (value: string) => void
-            onSave: () => void
         }
 
         export interface AccountIdRowProps {
             userId: string
-            copied: boolean
-            onCopy: () => void
         }
     }
 }

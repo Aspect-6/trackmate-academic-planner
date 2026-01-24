@@ -1,13 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Hash, Copy, Check } from 'lucide-react'
 import { AUTH } from '@/app/styles/colors'
 import type { ProfileSection } from '@/pages/Account/types'
 
 const AccountIdRow: React.FC<ProfileSection.Content.AccountIdRowProps> = ({
     userId,
-    copied,
-    onCopy,
 }) => {
+    const [copied, setCopied] = useState(false)
+
+    const handleCopy = () => {
+        navigator.clipboard.writeText(userId)
+        setCopied(true)
+        setTimeout(() => setCopied(false), 2000)
+    }
+
     return (
         <div
             className="p-5 rounded-xl"
@@ -30,7 +36,7 @@ const AccountIdRow: React.FC<ProfileSection.Content.AccountIdRowProps> = ({
                     </div>
                 </div>
                 <button
-                    onClick={onCopy}
+                    onClick={handleCopy}
                     className="p-2 rounded-lg transition-all duration-200 hover:opacity-80"
                     style={{
                         backgroundColor: copied ? 'rgba(34, 197, 94, 0.15)' : AUTH.BACKGROUND_TERTIARY,

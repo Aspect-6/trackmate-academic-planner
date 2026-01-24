@@ -1,19 +1,51 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useAccount } from '@/app/hooks/useAccount'
 import { Pencil, Check, X } from 'lucide-react'
 import { AUTH } from '@/app/styles/colors'
 import type { ProfileSection } from '@/pages/Account/types'
 
 const AvatarDisplay: React.FC<ProfileSection.Content.AvatarDisplayProps> = ({
     user,
-    isEditingDisplayName,
-    newDisplayName,
-    displayNameError,
-    displayNameSuccess,
-    onEditStart,
-    onEditCancel,
-    onDisplayNameChange,
-    onDisplayNameSave,
 }) => {
+    const { changeDisplayName } = useAccount()
+    const [isEditing, setIsEditing] = useState(false)
+    const [newDisplayName, setNewDisplayName] = useState('')
+    const [error, setError] = useState('')
+    const [success, setSuccess] = useState('')
+
+    const handleSave = async () => {
+        setError('')
+        setSuccess('')
+        if (!newDisplayName.trim()) {
+            setError('Display name cannot be empty')
+            return
+        }
+        if (newDisplayName.length > 50) {
+            setError('Display name must be 50 characters or less')
+            return
+        }
+        const result = await changeDisplayName(newDisplayName.trim())
+        if (result.success) {
+            setIsEditing(false)
+            setNewDisplayName('')
+        } else {
+            setError(result.error?.message || 'Failed to update display name')
+        }
+    }
+
+    const handleEditStart = () => {
+        setSuccess('')
+        setError('')
+        setNewDisplayName(user.displayName || '')
+        setIsEditing(true)
+    }
+
+    const handleEditCancel = () => {
+        setIsEditing(false)
+        setNewDisplayName('')
+        setError('')
+    }
+
     return (
         <div className="flex items-center gap-6 mb-10">
             {user.photoURL ? (
@@ -35,13 +67,13 @@ const AvatarDisplay: React.FC<ProfileSection.Content.AvatarDisplayProps> = ({
                 </div>
             )}
             <div>
-                {!isEditingDisplayName ? (
+                {!isEditing ? (
                     <div className="flex items-center gap-2">
                         <p className="text-lg font-semibold" style={{ color: AUTH.TEXT_PRIMARY }}>
                             {user.displayName || user.email?.split('@')[0]}
                         </p>
                         <button
-                            onClick={onEditStart}
+                            onClick={handleEditStart}
                             className="p-1.5 rounded-md hover:opacity-70 transition-opacity"
                             style={{ color: AUTH.TEXT_SECONDARY, willChange: 'opacity' }}
                             title="Edit display name"
@@ -55,7 +87,7 @@ const AvatarDisplay: React.FC<ProfileSection.Content.AvatarDisplayProps> = ({
                             <input
                                 type="text"
                                 value={newDisplayName}
-                                onChange={(e) => onDisplayNameChange(e.target.value)}
+                                onChange={(e) => setNewDisplayName(e.target.value)}
                                 placeholder="Enter display name"
                                 className="pl-3 pr-16 py-1.5 rounded-lg text-sm outline-none w-full"
                                 style={{
@@ -65,13 +97,13 @@ const AvatarDisplay: React.FC<ProfileSection.Content.AvatarDisplayProps> = ({
                                 }}
                                 autoFocus
                                 onKeyDown={(e) => {
-                                    if (e.key === 'Enter') onDisplayNameSave()
-                                    if (e.key === 'Escape') onEditCancel()
+                                    if (e.key === 'Enter') handleSave()
+                                    if (e.key === 'Escape') handleEditCancel()
                                 }}
                             />
                             <div className="absolute right-1 top-1/2 -translate-y-1/2 flex items-center gap-1">
                                 <button
-                                    onClick={onDisplayNameSave}
+                                    onClick={handleSave}
                                     className="p-1 rounded hover:bg-white/10 transition-colors"
                                     style={{ color: '#22c55e' }}
                                     title="Save"
@@ -79,7 +111,7 @@ const AvatarDisplay: React.FC<ProfileSection.Content.AvatarDisplayProps> = ({
                                     <Check size={14} />
                                 </button>
                                 <button
-                                    onClick={onEditCancel}
+                                    onClick={handleEditCancel}
                                     className="p-1 rounded hover:bg-white/10 transition-colors"
                                     style={{ color: AUTH.TEXT_SECONDARY }}
                                     title="Cancel"
@@ -88,8 +120,8 @@ const AvatarDisplay: React.FC<ProfileSection.Content.AvatarDisplayProps> = ({
                                 </button>
                             </div>
                         </div>
-                        {displayNameError && <p className="text-xs" style={{ color: AUTH.TEXT_DANGER }}>{displayNameError}</p>}
-                        {displayNameSuccess && <p className="text-xs" style={{ color: '#22c55e' }}>{displayNameSuccess}</p>}
+                        {error && <p className="text-xs" style={{ color: AUTH.TEXT_DANGER }}>{error}</p>}
+                        {success && <p className="text-xs" style={{ color: '#22c55e' }}>{success}</p>}
                     </div>
                 )}
                 <p className="text-sm" style={{ color: AUTH.TEXT_SECONDARY }}>

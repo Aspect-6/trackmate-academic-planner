@@ -1,20 +1,50 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useAccount } from '@/app/hooks/useAccount'
 import { Mail, Check, X } from 'lucide-react'
 import { AUTH } from '@/app/styles/colors'
 import type { ProfileSection } from '@/pages/Account/types'
 
 const EmailRow: React.FC<ProfileSection.Content.EmailRowProps> = ({
     user,
-    hasPassword,
-    isEditing,
-    newEmail,
-    error,
-    success,
-    onEditStart,
-    onEditCancel,
-    onEmailChange,
-    onSave,
 }) => {
+    const { changeEmail } = useAccount()
+    const [isEditing, setIsEditing] = useState(false)
+    const [newEmail, setNewEmail] = useState('')
+    const [error, setError] = useState('')
+    const [success, setSuccess] = useState('')
+
+    // Check if user has password provider
+    const hasPassword = user.providerData.some(p => p.providerId === 'password')
+
+    const handleSave = async () => {
+        setError('')
+        setSuccess('')
+        if (!newEmail) {
+            setError('Please enter a new email')
+            return
+        }
+        const result = await changeEmail(newEmail)
+        if (result.success) {
+            setSuccess('Verification email sent to new address')
+            setIsEditing(false)
+            setNewEmail('')
+        } else {
+            setError(result.error?.message || 'Failed to update email')
+        }
+    }
+
+    const handleEditStart = () => {
+        setSuccess('')
+        setError('')
+        setIsEditing(true)
+    }
+
+    const handleEditCancel = () => {
+        setIsEditing(false)
+        setNewEmail('')
+        setError('')
+    }
+
     return (
         <div
             className="p-5 rounded-xl mb-4 relative"
@@ -39,7 +69,7 @@ const EmailRow: React.FC<ProfileSection.Content.EmailRowProps> = ({
                             <input
                                 type="email"
                                 value={newEmail}
-                                onChange={(e) => onEmailChange(e.target.value)}
+                                onChange={(e) => setNewEmail(e.target.value)}
                                 placeholder="New email"
                                 className="mt-1 px-3 py-2 rounded-lg text-sm outline-none w-full sm:w-64"
                                 style={{
@@ -56,7 +86,7 @@ const EmailRow: React.FC<ProfileSection.Content.EmailRowProps> = ({
                     {hasPassword ? (
                         !isEditing ? (
                             <button
-                                onClick={onEditStart}
+                                onClick={handleEditStart}
                                 className="px-4 py-2 rounded-lg text-sm font-medium transition-opacity hover:opacity-80"
                                 style={{
                                     backgroundColor: AUTH.BACKGROUND_TERTIARY,
@@ -68,14 +98,14 @@ const EmailRow: React.FC<ProfileSection.Content.EmailRowProps> = ({
                         ) : (
                             <div className="flex gap-2">
                                 <button
-                                    onClick={onSave}
+                                    onClick={handleSave}
                                     className="p-2 rounded-lg transition-opacity hover:opacity-80"
                                     style={{ backgroundColor: '#22c55e', color: '#fff' }}
                                 >
                                     <Check size={18} />
                                 </button>
                                 <button
-                                    onClick={onEditCancel}
+                                    onClick={handleEditCancel}
                                     className="p-2 rounded-lg transition-opacity hover:opacity-80"
                                     style={{ backgroundColor: AUTH.BACKGROUND_TERTIARY, color: AUTH.TEXT_PRIMARY }}
                                 >
