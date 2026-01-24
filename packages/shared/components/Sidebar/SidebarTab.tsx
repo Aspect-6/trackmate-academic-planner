@@ -12,6 +12,7 @@ interface SidebarTabProps {
     isActive: boolean
     accentColor: string
     hoverColor: string
+    BadgeIcon?: LucideIcon
 }
 
 const SidebarTab: React.FC<SidebarTabProps> = ({
@@ -21,7 +22,8 @@ const SidebarTab: React.FC<SidebarTabProps> = ({
     onClick,
     isActive,
     accentColor,
-    hoverColor
+    hoverColor,
+    BadgeIcon
 }) => {
     const { isHovered, hoverProps } = useHover()
     const baseClasses = "w-full flex items-center p-3 rounded-lg font-medium transition duration-150"
@@ -44,7 +46,8 @@ const SidebarTab: React.FC<SidebarTabProps> = ({
                 }
             >
                 <Icon className="w-5 h-5 mr-3" />
-                {label}
+                <span className="flex-grow text-left">{label}</span>
+                {BadgeIcon && <BadgeIcon className="w-3.5 h-3.5 opacity-50 ml-2" />}
             </NavLink>
         )
     }
@@ -60,7 +63,8 @@ const SidebarTab: React.FC<SidebarTabProps> = ({
             }}
         >
             <Icon className="w-5 h-5 mr-3" />
-            {label}
+            <span className="flex-grow text-left">{label}</span>
+            {BadgeIcon && <BadgeIcon className="w-3.5 h-3.5 opacity-50 ml-2" />}
         </button>
     )
 }

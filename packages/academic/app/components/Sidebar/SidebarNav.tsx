@@ -1,5 +1,5 @@
 import React from 'react'
-import { LayoutDashboard, Calendar, FileText, BookOpen, Clock, Settings } from 'lucide-react'
+import { LayoutDashboard, Calendar, FileText, BookOpen, Clock, Settings, User, ExternalLink } from 'lucide-react'
 import { SidebarTab } from '@shared/components/Sidebar'
 import { GLOBAL } from '@/app/styles/colors'
 import { PATHS, ROUTES } from '@/app/config/paths'
@@ -39,11 +39,23 @@ const SidebarNav: React.FC<SidebarNavProps> = ({ onLinkClick, className }) => {
             <div className="flex-shrink-0 px-4">
                 <div className="mb-2" style={{ borderBottom: `1px solid ${GLOBAL.BORDER_PRIMARY}` }}></div>
                 <SidebarTab
+                    label="Account"
+                    icon={User}
+                    onClick={() => {
+                        window.location.href = '/account'
+                        onLinkClick?.()
+                    }}
+                    isActive={false}
+                    accentColor={GLOBAL.GLOBAL_ACCENT}
+                    hoverColor={GLOBAL.BACKGROUND_QUATERNARY}
+                    BadgeIcon={ExternalLink}
+                />
+                <SidebarTab
                     to={PATHS['settings']}
                     label={ROUTES['settings'].title}
                     icon={Settings}
                     onClick={onLinkClick}
-                    isActive={false} // Handled by NavLink internally
+                    isActive={false}
                     accentColor={GLOBAL.GLOBAL_ACCENT}
                     hoverColor={GLOBAL.BACKGROUND_QUATERNARY}
                 />
