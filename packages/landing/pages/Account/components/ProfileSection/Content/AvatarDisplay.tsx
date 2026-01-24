@@ -51,13 +51,13 @@ const AvatarDisplay: React.FC<ProfileSection.Content.AvatarDisplayProps> = ({
                     </div>
                 ) : (
                     <div className="flex flex-col gap-2">
-                        <div className="flex items-center gap-2">
+                        <div className="relative w-full max-w-[200px]">
                             <input
                                 type="text"
                                 value={newDisplayName}
                                 onChange={(e) => onDisplayNameChange(e.target.value)}
                                 placeholder="Enter display name"
-                                className="px-3 py-1.5 rounded-lg text-sm outline-none"
+                                className="pl-3 pr-16 py-1.5 rounded-lg text-sm outline-none w-full"
                                 style={{
                                     backgroundColor: AUTH.BACKGROUND_TERTIARY,
                                     border: `1px solid ${AUTH.BORDER_PRIMARY}`,
@@ -69,22 +69,24 @@ const AvatarDisplay: React.FC<ProfileSection.Content.AvatarDisplayProps> = ({
                                     if (e.key === 'Escape') onEditCancel()
                                 }}
                             />
-                            <button
-                                onClick={onDisplayNameSave}
-                                className="p-1.5 rounded-md transition-opacity hover:opacity-80"
-                                style={{ backgroundColor: '#22c55e', color: '#fff' }}
-                                title="Save"
-                            >
-                                <Check size={14} />
-                            </button>
-                            <button
-                                onClick={onEditCancel}
-                                className="p-1.5 rounded-md transition-opacity hover:opacity-80"
-                                style={{ backgroundColor: AUTH.BACKGROUND_TERTIARY, color: AUTH.TEXT_PRIMARY }}
-                                title="Cancel"
-                            >
-                                <X size={14} />
-                            </button>
+                            <div className="absolute right-1 top-1/2 -translate-y-1/2 flex items-center gap-1">
+                                <button
+                                    onClick={onDisplayNameSave}
+                                    className="p-1 rounded hover:bg-white/10 transition-colors"
+                                    style={{ color: '#22c55e' }}
+                                    title="Save"
+                                >
+                                    <Check size={14} />
+                                </button>
+                                <button
+                                    onClick={onEditCancel}
+                                    className="p-1 rounded hover:bg-white/10 transition-colors"
+                                    style={{ color: AUTH.TEXT_SECONDARY }}
+                                    title="Cancel"
+                                >
+                                    <X size={14} />
+                                </button>
+                            </div>
                         </div>
                         {displayNameError && <p className="text-xs" style={{ color: AUTH.TEXT_DANGER }}>{displayNameError}</p>}
                         {displayNameSuccess && <p className="text-xs" style={{ color: '#22c55e' }}>{displayNameSuccess}</p>}

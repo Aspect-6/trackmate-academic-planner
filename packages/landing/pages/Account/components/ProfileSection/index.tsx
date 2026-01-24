@@ -44,7 +44,6 @@ const ProfileSection: React.FC = () => {
         }
         const result = await changeDisplayName(newDisplayName.trim())
         if (result.success) {
-            setDisplayNameSuccess('Display name updated')
             setIsEditingDisplayName(false)
             setNewDisplayName('')
         } else {
@@ -90,6 +89,8 @@ const ProfileSection: React.FC = () => {
                 displayNameError={displayNameError}
                 displayNameSuccess={displayNameSuccess}
                 onEditStart={() => {
+                    setDisplayNameSuccess('')
+                    setDisplayNameError('')
                     setNewDisplayName(user.displayName || '')
                     setIsEditingDisplayName(true)
                 }}
@@ -108,7 +109,11 @@ const ProfileSection: React.FC = () => {
                 newEmail={newEmail}
                 error={emailError}
                 success={emailSuccess}
-                onEditStart={() => setIsEditingEmail(true)}
+                onEditStart={() => {
+                    setEmailSuccess('')
+                    setEmailError('')
+                    setIsEditingEmail(true)
+                }}
                 onEditCancel={() => {
                     setIsEditingEmail(false)
                     setNewEmail('')
