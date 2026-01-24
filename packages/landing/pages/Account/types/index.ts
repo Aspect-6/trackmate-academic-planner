@@ -11,7 +11,7 @@ export namespace AccountSidebar {
     }
 }
 
-// ProfileSection sub-component props
+// ProfileSection props
 export namespace ProfileSection {
     export namespace Content {
         export interface AvatarDisplayProps {
@@ -47,7 +47,7 @@ export namespace ProfileSection {
     }
 }
 
-// LinkedAccountsSection sub-component props
+// LinkedAccountsSection props
 export namespace LinkedAccountsSection {
     export namespace Content {
         export interface GoogleProviderRowProps {
@@ -70,7 +70,7 @@ export namespace LinkedAccountsSection {
     }
 }
 
-// SecuritySection sub-component props
+// SecuritySection props
 export namespace SecuritySection {
     export namespace Content {
         export interface EmailVerificationRowProps {
@@ -99,7 +99,7 @@ export namespace SecuritySection {
     }
 }
 
-// DataSection sub-component props
+// DataSection props
 export namespace DataSection {
     export namespace Content {
         export interface DeleteAccountCardProps {
