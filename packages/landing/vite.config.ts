@@ -9,7 +9,16 @@ export default defineConfig({
     base: '/',
     build: {
         outDir: path.resolve(__dirname, '../../dist'),
-        emptyOutDir: false
+        emptyOutDir: false,
+        rollupOptions: {
+            output: {
+                manualChunks: {
+                    'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+                    'firebase-vendor': ['firebase/app', 'firebase/auth', 'firebase/firestore'],
+                    'ui-vendor': ['lucide-react']
+                }
+            }
+        }
     },
     resolve: {
         alias: {
