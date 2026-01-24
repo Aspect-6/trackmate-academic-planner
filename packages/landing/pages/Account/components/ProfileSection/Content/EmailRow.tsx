@@ -29,7 +29,7 @@ const EmailRow: React.FC<ProfileSection.Content.EmailRowProps> = ({
             setIsEditing(false)
             setNewEmail('')
         } else {
-            setError(result.error?.message || 'Failed to update email')
+            setError(result.error.message || 'Failed to update email')
         }
     }
 

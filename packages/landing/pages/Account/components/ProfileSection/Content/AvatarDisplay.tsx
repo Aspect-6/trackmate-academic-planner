@@ -29,7 +29,7 @@ const AvatarDisplay: React.FC<ProfileSection.Content.AvatarDisplayProps> = ({
             setIsEditing(false)
             setNewDisplayName('')
         } else {
-            setError(result.error?.message || 'Failed to update display name')
+            setError(result.error.message || 'Failed to update display name')
         }
     }
 

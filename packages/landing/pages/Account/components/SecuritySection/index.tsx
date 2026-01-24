@@ -78,11 +78,11 @@ const SecuritySection: React.FC = () => {
             setNewPassword('')
             setConfirmPassword('')
         } else {
-            const code = result.error?.code || ''
+            const code = result.error.code || ''
             if (code === 'auth/wrong-password' || code === 'auth/invalid-credential') {
                 setPasswordError('Current password is incorrect')
             } else {
-                setPasswordError(result.error?.message || 'Failed to update password')
+                setPasswordError(result.error.message || 'Failed to update password')
             }
         }
     }

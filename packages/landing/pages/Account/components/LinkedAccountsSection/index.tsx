@@ -31,7 +31,7 @@ const LinkedAccountsSection: React.FC = () => {
         if (result.success) {
             setLinkSuccess('Google account linked successfully')
         } else {
-            const code = result.error?.code || ''
+            const code = result.error.code || ''
             if (code === 'auth/popup-closed-by-user') {
                 setLinkError('Popup was closed')
             } else {

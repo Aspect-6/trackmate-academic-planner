@@ -17,7 +17,7 @@ const DataSection: React.FC = () => {
         if (result.success) {
             navigate('/landing')
         } else {
-            setDeleteError(result.error?.message || 'Failed to delete account')
+            setDeleteError(result.error.message || 'Failed to delete account')
         }
     }
 

@@ -9,10 +9,9 @@ import {
 } from "@/app/lib/auth"
 import type { AuthError } from "@/app/types"
 
-interface AccountOperationResult {
-    success: boolean
-    error: AuthError | null
-}
+type AccountOperationResult =
+    | { success: true; error: null }
+    | { success: false; error: AuthError }
 
 /**
  * Hook that manages account-related operations like changing password,
