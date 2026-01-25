@@ -49,11 +49,13 @@ const Account: React.FC = () => {
     }, [searchParams, setSearchParams, showToast])
 
     useEffect(() => {
-        setSearchParams(params => {
-            params.set('tab', activeSection)
-            return params
-        }, { replace: true })
-    }, [activeSection, setSearchParams])
+        if (searchParams.get('tab') !== activeSection) {
+            setSearchParams(params => {
+                params.set('tab', activeSection)
+                return params
+            }, { replace: true })
+        }
+    }, [activeSection, searchParams, setSearchParams])
 
     if (userLoading) {
         return (
