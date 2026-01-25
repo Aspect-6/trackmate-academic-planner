@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { applyActionCode } from 'firebase/auth'
 import { auth } from '@shared/lib'
 import { Title, HomeLink } from '@/app/components/AuthForm'
@@ -9,9 +9,12 @@ import { useHover } from '@shared/hooks/ui/useHover'
 
 type VerificationState = 'loading' | 'success' | 'error'
 
-const EmailAction: React.FC = () => {
+interface VerifyEmailActionProps {
+    oobCode: string
+}
+
+const VerifyEmailAction: React.FC<VerifyEmailActionProps> = ({ oobCode }) => {
     const navigate = useNavigate()
-    const [searchParams] = useSearchParams()
     const [state, setState] = useState<VerificationState>('loading')
     const [errorMessage, setErrorMessage] = useState<string>('')
     const { isHovered, hoverProps } = useHover()
@@ -20,14 +23,6 @@ const EmailAction: React.FC = () => {
         let isMounted = true
 
         const handleEmailVerification = async () => {
-            const mode = searchParams.get('mode')
-            const oobCode = searchParams.get('oobCode')
-
-            if (mode !== 'verifyEmail' || !oobCode) {
-                navigate('/sign-in')
-                return
-            }
-
             try {
                 await applyActionCode(auth, oobCode)
                 if (auth.currentUser) {
@@ -63,7 +58,7 @@ const EmailAction: React.FC = () => {
         handleEmailVerification()
 
         return () => { isMounted = false }
-    }, [searchParams, navigate])
+    }, [oobCode])
 
     const handleContinue = () => {
         if (auth.currentUser) {
@@ -140,4 +135,4 @@ const EmailAction: React.FC = () => {
     )
 }
 
-export default EmailAction
+export default VerifyEmailAction
