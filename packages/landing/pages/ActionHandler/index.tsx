@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import VerifyEmailAction from './components/VerifyEmailAction'
+import VerifyEmailAction from './components/VerifyEmail'
 import { useEffect } from 'react'
 
 type ActionMode = 'verifyEmail' | 'resetPassword' | 'recoverEmail'
