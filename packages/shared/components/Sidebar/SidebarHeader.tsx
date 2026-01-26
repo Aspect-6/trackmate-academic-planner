@@ -45,7 +45,6 @@ const SidebarHeader: React.FC<SidebarHeaderProps> = ({
                     className="text-gray-400 hover:text-white"
                     style={{ color: textColor }}
                     onTouchStart={(e) => { if (textColor) e.currentTarget.style.color = textColor }}
-                // Note: simplified touch logic, can be enhanced via props if needed
                 >
                     <X className="w-8 h-8" />
                 </button>
