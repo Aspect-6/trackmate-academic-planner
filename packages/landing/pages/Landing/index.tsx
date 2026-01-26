@@ -1,7 +1,9 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import TrackMateLogo from '@shared/components/TrackMateLogo'
 import Header from '@/pages/Landing/components/Header'
 import Footer from '@/pages/Landing/components/Footer'
+import ProfileAvatar from '@/pages/Landing/components/ProfileAvatar'
 import HeroTitle from '@/pages/Landing/components/Hero/HeroTitle'
 import HeroMessage from '@/pages/Landing/components/Hero/HeroMessage'
 import ProductCard from '@/pages/Landing/components/ProductCard'
@@ -18,20 +20,25 @@ const Landing: React.FC = () => {
     return (
         <div className="min-h-dvh flex flex-col items-center p-8">
             <Header>
+                <TrackMateLogo size={50} showBackground={false} crop className='lg:ml-8' />
                 {!loading && (
                     user ? (
-                        <Button variant="primary" onClick={() => navigate('/account')}>
-                            Account
-                        </Button>
+                        <div className="flex items-center gap-2">
+                            <ProfileAvatar
+                                user={user}
+                                onClick={() => navigate('/account')}
+                                className="lg:mr-8 ml-2"
+                            />
+                        </div>
                     ) : (
-                        <>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                             <Button variant="secondary" onClick={() => navigate('/sign-in')}>
                                 Sign In
                             </Button>
-                            <Button variant="primary" onClick={() => navigate('/sign-up')}>
+                            <Button variant="primary" onClick={() => navigate('/sign-up')} className="lg:mr-8">
                                 Sign Up
                             </Button>
-                        </>
+                        </div>
                     )
                 )}
             </Header>
