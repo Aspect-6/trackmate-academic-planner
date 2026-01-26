@@ -5,12 +5,14 @@ import { generateId } from '@shared/lib'
 import { STORAGE_KEYS } from '@/app/config/storageKeys'
 import type { Class } from '@/app/types'
 
+const DEFAULT_CLASSES: Class[] = []
+
 /**
  * Hook for accessing and working with classes.
- * Manages state persistence via useLocalStorage.
+ * Provides filtered views, lookup functions, and CRUD operations.
  */
 export const useClasses = () => {
-    const [classes, setClasses] = useLocalStorage<Class[]>(STORAGE_KEYS.CLASSES, [])
+    const [classes, setClasses] = useLocalStorage<Class[]>(STORAGE_KEYS.CLASSES, DEFAULT_CLASSES)
     const { showToast } = useToast()
 
     // Counts

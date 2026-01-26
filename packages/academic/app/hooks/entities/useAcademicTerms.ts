@@ -4,12 +4,14 @@ import { generateId } from '@shared/lib'
 import { STORAGE_KEYS } from '@/app/config/storageKeys'
 import type { AcademicTerm, Semester, TermMode } from '@/app/types'
 
+const DEFAULT_TERMS: AcademicTerm[] = []
+
 /**
  * Hook for accessing and working with academic terms.
- * Should be used within AppContext or by components that need access to terms data.
+ * Provides filtered views, lookup functions, and CRUD operations.
  */
 export const useAcademicTerms = (termMode: TermMode = 'Semesters Only') => {
-    const [academicTerms, setAcademicTerms] = useLocalStorage<AcademicTerm[]>(STORAGE_KEYS.TERMS, [])
+    const [academicTerms, setAcademicTerms] = useLocalStorage<AcademicTerm[]>(STORAGE_KEYS.TERMS, DEFAULT_TERMS)
 
     // Computed: filter terms by current termMode
     const filteredAcademicTerms = useMemo(() =>

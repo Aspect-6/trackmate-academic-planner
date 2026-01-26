@@ -4,13 +4,14 @@ import { generateId, parseDateLocal, dateToLocalISOString } from '@shared/lib'
 import { STORAGE_KEYS } from '@/app/config/storageKeys'
 import type { NoSchoolPeriod } from '@/app/types'
 
+const DEFAULT_NO_SCHOOL: NoSchoolPeriod[] = []
+
 /**
  * Hook for accessing and working with no-school periods.
- * Manages state persistence via useLocalStorage.
  * Provides filtered views, lookup functions, and CRUD operations.
  */
 export const useNoSchool = () => {
-    const [noSchoolPeriods, setNoSchoolPeriods] = useLocalStorage<NoSchoolPeriod[]>(STORAGE_KEYS.NO_SCHOOL, [])
+    const [noSchoolPeriods, setNoSchoolPeriods] = useLocalStorage<NoSchoolPeriod[]>(STORAGE_KEYS.NO_SCHOOL, DEFAULT_NO_SCHOOL)
 
     // Indexed by date (expands date ranges into individual dates)
     const noSchoolByDate = useMemo(() => noSchoolPeriods.reduce<Record<string, NoSchoolPeriod>>((acc, period) => {

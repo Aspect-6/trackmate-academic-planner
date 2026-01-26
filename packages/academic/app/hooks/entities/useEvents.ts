@@ -4,13 +4,14 @@ import { generateId, todayString } from '@shared/lib'
 import { STORAGE_KEYS } from '@/app/config/storageKeys'
 import type { Event } from '@/app/types'
 
+const DEFAULT_EVENTS: Event[] = []
+
 /**
  * Hook for accessing and working with events.
- * Manages state persistence via useLocalStorage.
  * Provides filtered views, lookup functions, and CRUD operations.
  */
 export const useEvents = () => {
-    const [events, setEvents] = useLocalStorage<Event[]>(STORAGE_KEYS.EVENTS, [])
+    const [events, setEvents] = useLocalStorage<Event[]>(STORAGE_KEYS.EVENTS, DEFAULT_EVENTS)
 
     // Counts
     const totalNum = events.length

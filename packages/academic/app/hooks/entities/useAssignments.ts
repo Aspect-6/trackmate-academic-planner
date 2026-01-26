@@ -5,8 +5,14 @@ import { generateId, todayString } from '@shared/lib'
 import { STORAGE_KEYS } from '@/app/config/storageKeys'
 import type { Assignment, Status } from '@/app/types'
 
+const DEFAULT_ASSIGNMENTS: Assignment[] = []
+
+/**
+ * Hook for accessing and working with assignments.
+ * Provides filtered views, lookup functions, and CRUD operations.
+ */
 export const useAssignments = () => {
-    const [assignments, setAssignments] = useLocalStorage<Assignment[]>(STORAGE_KEYS.ASSIGNMENTS, [])
+    const [assignments, setAssignments] = useLocalStorage<Assignment[]>(STORAGE_KEYS.ASSIGNMENTS, DEFAULT_ASSIGNMENTS)
     const { assignmentTypes } = useSettings()
 
     // Counts
