@@ -5,7 +5,7 @@ import { useAuth } from '@shared/contexts/AuthContext'
 import { useToast } from '@shared/contexts/ToastContext'
 import { signOutUser } from '@/app/lib/auth'
 import { AUTH } from '@/app/styles/colors'
-
+import TrackMateLogo from '@shared/components/TrackMateLogo'
 import type { ActiveSection } from './types'
 import AccountSidebar from './components/AccountSidebar'
 import ProfileSection from './components/ProfileSection'
@@ -60,7 +60,7 @@ const Account: React.FC = () => {
     if (userLoading) {
         return (
             <div className="min-h-dvh flex items-center justify-center" style={{ backgroundColor: AUTH.BACKGROUND_PRIMARY }}>
-                <p style={{ color: AUTH.TEXT_SECONDARY }}>Loading...</p>
+                <p style={{ color: AUTH.TEXT_SECONDARY }}><TrackMateLogo size={100} showBackground={false} crop className='mr-2' /></p>
             </div>
         )
     }
