@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="2560" height="2560" role="img">
+    <defs>
+        <filter id="shadow" x="-20%" y="-20%" width="150%" height="150%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="3" /> <feOffset dx="2" dy="2" result="offsetblur" /> <feComponentTransfer>
+                <feFuncA type="linear" slope="0.3" /> </feComponentTransfer>
+            <feMerge>
+                <feMergeNode />
+                <feMergeNode in="SourceGraphic" /> </feMerge>
+        </filter>
+    </defs>
+
+    <rect width="100%" height="100%" fill="white" />
+
+    <g filter="url(#shadow)">
+        <g fill="none" stroke="hsl(206, 60%, 50%)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="40" y="30" width="120" height="140" rx="13" />
+            <line x1="30" y1="55" x2="50" y2="55" />
+            <line x1="30" y1="85" x2="50" y2="85" />
+            <line x1="30" y1="115" x2="50" y2="115" />
+            <line x1="30" y1="145" x2="50" y2="145" />
+        </g>
+
+        <g fill="none" stroke="hsl(206, 60%, 50%)" stroke-width="17" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="73" y1="70" x2="127" y2="70" />
+            <line x1="100" y1="70" x2="100" y2="135" />
+            <line x1="70" y1="70" x2="70" y2="80" stroke-width="12" />
+            <line x1="130" y1="70" x2="130" y2="80" stroke-width="12" />
+            <line x1="88" y1="138" x2="112" y2="138" stroke-width="12" />
+        </g>
+    </g>
+</svg>
