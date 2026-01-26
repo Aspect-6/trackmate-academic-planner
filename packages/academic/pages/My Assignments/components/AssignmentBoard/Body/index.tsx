@@ -36,6 +36,7 @@ const AssignmentBoardBody: React.FC<AssignmentBoard.Body.Props> = ({
 			<div
 				ref={(node) => {
 					droppableRef(node)
+					// eslint-disable-next-line react-hooks/immutability
 					if (node) (listRef as React.MutableRefObject<HTMLDivElement | null>).current = node
 				}}
 				id={contentId}
