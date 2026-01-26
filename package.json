@@ -5,14 +5,16 @@
 		"packages/*"
 	],
 	"scripts": {
-		"dev:academic": "npm run dev --workspace packages/academic",
 		"dev:landing": "npm run dev --workspace packages/landing",
-		"build:academic": "npm run build --workspace packages/academic",
+		"dev:academic": "npm run dev --workspace packages/academic",
 		"build:landing": "npm run build --workspace packages/landing",
-		"lint:academic": "npm run lint --workspace packages/academic",
+		"build:academic": "npm run build --workspace packages/academic",
+		"build:all": "npm run build --workspace packages/landing && npm run build --workspace packages/academic",
 		"lint:landing": "npm run lint --workspace packages/landing",
-		"preview:academic": "npm run preview --workspace packages/academic",
-		"preview:landing": "npm run preview --workspace packages/landing"
+		"lint:academic": "npm run lint --workspace packages/academic",
+		"lint:all": "npm run lint --workspace packages/landing && npm run lint --workspace packages/academic",
+		"preview:landing": "npm run preview --workspace packages/landing",
+		"preview:academic": "npm run preview --workspace packages/academic"
 	},
 	"type": "module",
 	"homepage": "https://trackmate.co",
