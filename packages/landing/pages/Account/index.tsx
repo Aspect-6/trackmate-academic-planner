@@ -12,6 +12,7 @@ import ProfileSection from './components/ProfileSection'
 import LinkedAccountsSection from './components/LinkedAccountsSection'
 import SecuritySection from './components/SecuritySection'
 import DataSection from './components/DataSection'
+import { BRAND_NAME } from '@shared/config/brand'
 
 const Account: React.FC = () => {
     const { user, loading: userLoading } = useAuth()
@@ -59,8 +60,11 @@ const Account: React.FC = () => {
 
     if (userLoading) {
         return (
-            <div className="min-h-dvh flex items-center justify-center" style={{ backgroundColor: AUTH.BACKGROUND_PRIMARY }}>
-                <p style={{ color: AUTH.TEXT_SECONDARY }}><TrackMateLogo size={100} showBackground={false} crop className='mr-2' /></p>
+            <div className="min-h-dvh flex flex-col items-center justify-center" style={{ backgroundColor: AUTH.BACKGROUND_PRIMARY }}>
+                <TrackMateLogo size={100} showBackground={false} crop className='mr-2 mb-4' />
+                <h1 className="text-3xl font-bold" style={{ color: AUTH.TEXT_SECONDARY }}>
+                    {BRAND_NAME}
+                </h1>
             </div>
         )
     }
