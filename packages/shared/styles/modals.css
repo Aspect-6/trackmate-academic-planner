@@ -81,7 +81,7 @@
     line-height: 1.25rem;
     border: 1px solid var(--modal-btn-border, transparent);
     background-color: var(--modal-btn-bg, transparent);
-    color: var(--modal-btn-text, #fff);
+    color: var(--modal-btn-text);
     transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
     white-space: nowrap;
 }
