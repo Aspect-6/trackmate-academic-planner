@@ -14,6 +14,7 @@ import {
     sendEmailVerification,
     reauthenticateWithCredential,
     EmailAuthProvider,
+    GoogleAuthProvider,
     User
 } from "firebase/auth"
 
@@ -25,6 +26,29 @@ export const signUpEmailAndPassword = async (email: string, password: string): P
 
 export const signUpGoogle = async (): Promise<User | null> => {
     const userCredential = await signInWithPopup(auth, googleAuthProvider)
+    const additionalInfo = getAdditionalUserInfo(userCredential)
+
+    if (!additionalInfo?.isNewUser) {
+        // If the user already exists, Firebase might have automatically linked this credential.
+        // We only want to unlink if it was a *merge* (i.e., user had other providers).
+        // If the user has ONLY Google (length === 1), then no merge happened (they just signed in),
+        // so we shouldn't unlink (which would leave them with 0 providers).
+        if (userCredential.user.providerData.length > 1) {
+            try {
+                await unlink(userCredential.user, GoogleAuthProvider.PROVIDER_ID)
+            } catch (unlinkError) {
+                // Ignore unlink errors (e.g. if it wasn't linked for some reason)
+                console.error("Failed to unlink provider during rollback", unlinkError)
+            }
+        }
+
+        await signOut(auth)
+        throw {
+            code: "auth/email-already-in-use",
+            message: "Account already exists. Please sign in."
+        }
+    }
+
     return userCredential.user
 }
 
