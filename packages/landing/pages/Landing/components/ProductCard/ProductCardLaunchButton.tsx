@@ -4,7 +4,7 @@ import type { Landing } from '@/pages/Landing/types'
 import { LANDING } from '@/app/styles/colors'
 import ArrowRight from '@/pages/Landing/assets/arrow-right.svg?react'
 
-const ProductCardLaunchButton: React.FC<Landing.ProductCard.ProductCardLaunchButton.Props> = ({ href }) => {
+const ProductCardLaunchButton: React.FC<Landing.ProductCard.ProductCardLaunchButtonProps> = ({ href }) => {
     const { isHovered, hoverProps } = useHover()
 
     return (

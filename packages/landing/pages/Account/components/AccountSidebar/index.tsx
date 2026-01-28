@@ -11,7 +11,7 @@ import {
 
 import SidebarNav from './SidebarNav'
 
-const AccountSidebar: React.FC<AccountSidebarTypes.Props & { isMobile?: boolean; isOpen?: boolean; onClose?: () => void }> = ({
+const AccountSidebar: React.FC<AccountSidebarTypes.Props> = ({
     activeSection,
     onSectionChange,
     onSignOut,

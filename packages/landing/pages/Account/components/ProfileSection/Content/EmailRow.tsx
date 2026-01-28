@@ -3,6 +3,7 @@ import { useAccount } from '@/app/hooks/useAccount'
 import { Mail, Check, X } from 'lucide-react'
 import { AUTH } from '@/app/styles/colors'
 import type { ProfileSection } from '@/pages/Account/types'
+import type { UserInfo } from 'firebase/auth'
 
 const EmailRow: React.FC<ProfileSection.Content.EmailRowProps> = ({
     user,
@@ -14,7 +15,7 @@ const EmailRow: React.FC<ProfileSection.Content.EmailRowProps> = ({
     const [success, setSuccess] = useState('')
 
     // Check if user has password provider
-    const hasPassword = user.providerData.some(p => p.providerId === 'password')
+    const hasPassword = user.providerData.some((p: UserInfo) => p.providerId === 'password')
 
     const handleSave = async () => {
         setError('')

@@ -1,6 +1,6 @@
 import type { Landing } from '@/pages/Landing/types'
 
-const Header: React.FC<Landing.Header.Props> = ({ children }) => {
+const Header: React.FC<Landing.HeaderProps> = ({ children }) => {
     return (
         <header style={{
             width: '100%',

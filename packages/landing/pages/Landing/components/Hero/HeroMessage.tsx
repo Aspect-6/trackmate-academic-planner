@@ -2,7 +2,7 @@ import React from 'react'
 import type { Landing } from '@/pages/Landing/types'
 import { LANDING } from '@/app/styles/colors'
 
-const HeroMessage: React.FC<Landing.Hero.HeroMessage.Props> = ({ children }) => {
+const HeroMessage: React.FC<Landing.Hero.HeroMessageProps> = ({ children }) => {
     return (
         <p style={{
             fontSize: 'clamp(0.9rem, 2vw, 1.35rem)',

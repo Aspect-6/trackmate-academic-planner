@@ -1,11 +1,8 @@
 export namespace ActionHandler {
     export interface Props { }
     // ======================
-
-    export namespace VerifyEmailAction {
-        export interface Props {
-            oobCode: string
-        }
+    export interface VerifyEmailActionProps {
+        oobCode: string
     }
 
     export namespace ResetPasswordAction {

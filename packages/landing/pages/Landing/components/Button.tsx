@@ -3,7 +3,7 @@ import { useHover } from '@shared/hooks/ui/useHover'
 import type { Landing } from '@/pages/Landing/types'
 import { LANDING } from '@/app/styles/colors'
 
-const Button: React.FC<Landing.Button.Props> = ({ onClick, children, variant = 'primary', className }) => {
+const Button: React.FC<Landing.ButtonProps> = ({ onClick, children, variant = 'primary', className }) => {
     const { isHovered, hoverProps } = useHover()
     const isPrimary = variant === 'primary'
 

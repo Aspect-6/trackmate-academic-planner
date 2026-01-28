@@ -1,10 +1,10 @@
 import React from 'react'
 import { Trash2 } from 'lucide-react'
 import { useHover } from '@shared/hooks/ui/useHover'
-import type { Account } from '@/pages/Account/types'
+import type { DataSection } from '@/pages/Account/types'
 import { AUTH } from '@/app/styles/colors'
 
-export const InitialView: React.FC<Account.DataSection.Content.DeleteAccountCard.InitialView.Props> = ({ onInitiateDelete }) => {
+export const InitialView: React.FC<DataSection.Content.DeleteAccountCard.InitialViewProps> = ({ onInitiateDelete }) => {
     const { isHovered, hoverProps } = useHover()
 
     return (

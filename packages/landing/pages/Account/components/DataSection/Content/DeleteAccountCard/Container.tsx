@@ -1,8 +1,8 @@
 import React from 'react'
-import type { Account } from '@/pages/Account/types'
+import type { DataSection } from '@/pages/Account/types'
 import { AUTH } from '@/app/styles/colors'
 
-export const Container: React.FC<Account.DataSection.Content.DeleteAccountCard.Container.Props> = ({ children }) => (
+export const Container: React.FC<DataSection.Content.DeleteAccountCard.ContainerProps> = ({ children }) => (
     <div
         className="relative overflow-hidden rounded-xl border transition-all duration-300 ease-in-out"
         style={{

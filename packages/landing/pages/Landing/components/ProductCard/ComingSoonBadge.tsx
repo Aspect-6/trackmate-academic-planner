@@ -2,7 +2,7 @@ import React from 'react'
 import type { Landing } from '@/pages/Landing/types'
 import { LANDING } from '@/app/styles/colors'
 
-const ComingSoonBadge: React.FC<Landing.ProductCard.ComingSoonBadge.Props> = () => {
+const ComingSoonBadge: React.FC<Landing.ProductCard.ComingSoonBadgeProps> = () => {
     return (
         <span
             className="absolute top-4 right-4 text-xs font-semibold px-3 py-1 rounded-full"

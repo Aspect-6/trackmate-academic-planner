@@ -1,6 +1,6 @@
 import { ArrowLeft, User, Link2, Lock, Database, LogOut } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
-import type { Account, ActiveSection } from '@/pages/Account/types'
+import type { AccountSidebar, ActiveSection } from '@/pages/Account/types'
 import { AUTH } from '@/app/styles/colors'
 import { SidebarTab } from '@shared/components/Sidebar'
 
@@ -11,7 +11,7 @@ const navItems: Array<{ id: ActiveSection; label: string; icon: typeof User }> =
     { id: 'data', label: 'Your Data', icon: Database },
 ]
 
-const SidebarNav: React.FC<Account.AccountSidebar.SidebarNav.Props> = ({
+const SidebarNav: React.FC<AccountSidebar.SidebarNavProps> = ({
     activeSection,
     onSectionChange,
     onSignOut,

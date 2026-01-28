@@ -10,7 +10,7 @@ import { AUTH } from '@/app/styles/colors'
 
 type VerificationState = 'loading' | 'success' | 'error'
 
-const VerifyEmailAction: React.FC<ActionHandler.VerifyEmailAction.Props> = ({ oobCode }) => {
+const VerifyEmailAction: React.FC<ActionHandler.VerifyEmailActionProps> = ({ oobCode }) => {
     const navigate = useNavigate()
     const [state, setState] = useState<VerificationState>('loading')
     const [errorMessage, setErrorMessage] = useState<string>('')

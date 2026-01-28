@@ -1,7 +1,7 @@
 import React from 'react'
 import type { Landing } from '@/pages/Landing/types'
 
-const HeroTitle: React.FC<Landing.Hero.HeroTitle.Props> = ({ children }) => {
+const HeroTitle: React.FC<Landing.Hero.HeroTitleProps> = ({ children }) => {
     return (
         <h1 style={{
             fontSize: 'clamp(2.5rem, 5vw, 4rem)',
