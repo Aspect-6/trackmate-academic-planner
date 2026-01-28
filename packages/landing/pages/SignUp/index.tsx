@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { useSignUp } from '@/app/hooks/useSignUp'
-import { Title, FormField, FormFieldLabel, FormFieldTextInput, FormDivider, FormCheckbox, SubmitButton, SocialButtons, FormLink, HomeLink } from '@/app/components/AuthForm'
+import { Title, FormField, FormFieldLabel, FormFieldTextInput, FormDivider, FormCheckbox, SubmitButton, ProviderButtons, FormLink, HomeLink } from '@/app/components/AuthForm'
 import { BRAND_NAME } from '@shared/config/brand'
 import { AUTH } from '@/app/styles/colors'
 
@@ -194,7 +194,7 @@ const SignUp: React.FC = () => {
 
                 <FormDivider />
 
-                <SocialButtons onGoogleClick={handleGoogleSignUp} onFacebookClick={handleFacebookSignUp} />
+                <ProviderButtons onGoogleClick={handleGoogleSignUp} onFacebookClick={handleFacebookSignUp} />
 
                 <p
                     className="mt-6 text-center text-sm"
