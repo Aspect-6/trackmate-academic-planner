@@ -294,7 +294,7 @@ export namespace TodaysClasses {
     }
 }
 ```
-* **Note:** The spacing and comments are important for code readability and maintainability.
+* **Note:** The spacing and comments are important for code readability and maintainability. The comments must *always* be present under any interface named `Props`, and that interface must always be the first among its siblings.
 * Top level namespaces always have one blank line between each item within it. Items nested one level still follow that same rule. Items nested two levels deep or more should have no blank lines between them.
 * Components that take no props should *still* have their prop interface defined in the appropriate namespace, and the value should be `{ }`, with one space always in the middle of the two curly braces.
 
