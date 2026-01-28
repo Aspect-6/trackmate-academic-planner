@@ -2,13 +2,13 @@ import React from 'react'
 import { useHover } from '@shared/hooks/ui/useHover'
 import { AUTH } from '@/app/styles/colors'
 
-interface SocialButtonProps {
+interface ProviderButtonProps {
     onClick: () => void
     disabled?: boolean
     children: React.ReactNode
 }
 
-const SocialButton: React.FC<SocialButtonProps> = ({ onClick, disabled, children }) => {
+const ProviderButton: React.FC<ProviderButtonProps> = ({ onClick, disabled, children }) => {
     const { isHovered, hoverProps } = useHover()
 
     return (
@@ -22,6 +22,7 @@ const SocialButton: React.FC<SocialButtonProps> = ({ onClick, disabled, children
                 border: `1px solid ${AUTH.BORDER_PRIMARY}`,
                 filter: isHovered && !disabled ? 'brightness(1.1)' : 'none',
                 transform: isHovered && !disabled ? 'translateY(-0.65px)' : 'none',
+                willChange: 'transform',
             }}
             {...hoverProps}
         >
@@ -30,4 +31,4 @@ const SocialButton: React.FC<SocialButtonProps> = ({ onClick, disabled, children
     )
 }
 
-export default SocialButton
+export default ProviderButton
