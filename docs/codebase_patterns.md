@@ -4,15 +4,78 @@ This document describes the architectural patterns, coding conventions, and stru
 
 ---
 
-## Overview
+## Table of Contents
+
+- [1. Overview](#1-overview)
+- [2. Architecture & File Organization](#2-architecture--file-organization)
+  - [2.1 Monorepo Structure](#21-monorepo-structure)
+  - [2.2 Package Purposes](#22-package-purposes)
+  - [2.3 Academic Package Structure](#23-academic-package-structure)
+  - [2.4 Landing Package Structure](#24-landing-package-structure)
+  - [2.5 Shared Package Structure](#25-shared-package-structure)
+  - [2.6 Page Module Pattern](#26-page-module-pattern)
+- [3. Technology Stack](#3-technology-stack)
+  - [3.1 Core Technologies](#31-core-technologies)
+  - [3.2 Additional Libraries](#32-additional-libraries)
+- [4. Component Patterns](#4-component-patterns)
+  - [4.1 Hierarchical Component Structure](#41-hierarchical-component-structure)
+  - [4.2 Import Order Convention](#42-import-order-convention)
+  - [4.3 Component Typing Pattern](#43-component-typing-pattern)
+- [5. Route Configuration](#5-route-configuration)
+  - [5.1 Academic App Routes](#51-academic-app-routes)
+  - [5.2 Landing App Routes](#52-landing-app-routes)
+  - [5.3 Centralized Route Configuration](#53-centralized-route-configuration)
+- [6. Color System](#6-color-system)
+  - [6.1 Two-Layer Architecture](#61-two-layer-architecture)
+  - [6.2 Page-Specific Color Objects](#62-page-specific-color-objects)
+  - [6.3 Usage Pattern](#63-usage-pattern)
+- [7. Styling Patterns](#7-styling-patterns)
+  - [7.1 Hybrid Approach](#71-hybrid-approach)
+  - [7.2 Modal Styling Pattern](#72-modal-styling-pattern)
+- [8. State Management](#8-state-management)
+  - [8.1 Data Persistence](#81-data-persistence)
+  - [8.2 Context-Based State](#82-context-based-state)
+  - [8.3 Modal State Pattern](#83-modal-state-pattern)
+- [9. Type Definitions](#9-type-definitions)
+  - [9.1 Primitives](#91-primitives)
+  - [9.2 Core Entities](#92-core-entities)
+  - [9.3 Academic Terms](#93-academic-terms)
+  - [9.4 Schedule Configuration](#94-schedule-configuration)
+- [10. Custom Hooks](#10-custom-hooks)
+  - [10.1 Entity Hooks](#101-entity-hooks)
+  - [10.2 UI Hooks](#102-ui-hooks)
+  - [10.3 Data Hooks](#103-data-hooks)
+  - [10.4 Page-Level Hooks](#104-page-level-hooks)
+- [11. Utility Functions](#11-utility-functions)
+  - [11.1 Shared Utilities](#111-shared-utilities)
+  - [11.2 Academic App Utilities](#112-academic-app-utilities)
+- [12. Build & Development](#12-build--development)
+  - [12.1 Scripts](#121-scripts)
+  - [12.2 Vite Configuration](#122-vite-configuration)
+  - [12.3 CI/CD](#123-cicd)
+  - [12.4 Firebase Hosting](#124-firebase-hosting)
+- [13. Key Features](#13-key-features)
+  - [13.1 Dashboard](#131-dashboard)
+  - [13.2 Calendar](#132-calendar)
+  - [13.3 My Assignments (Kanban Board)](#133-my-assignments-kanban-board)
+  - [13.4 My Classes](#134-my-classes)
+  - [13.5 My Schedule](#135-my-schedule)
+  - [13.6 Settings](#136-settings)
+  - [13.7 Authentication (Landing)](#137-authentication-landing)
+  - [13.8 Shared Modal System](#138-shared-modal-system)
+- [14. Key Conventions Summary](#14-key-conventions-summary)
+
+---
+
+## 1. Overview
 
 TrackMate is an academic tracking application built with React 19, TypeScript 5, and Vite 7. It uses a monorepo architecture with three packages: **academic** (core app), **landing** (auth/landing pages), and **shared** (reusable code).
 
 ---
 
-## Architecture & File Organization
+## 2. Architecture & File Organization
 
-### Monorepo Structure
+### 2.1 Monorepo Structure
 
 TrackMate uses npm workspaces with three packages:
 
@@ -35,7 +98,7 @@ TrackMate/
 └── firebase.json          # Firebase Hosting configuration
 ```
 
-### Package Purposes
+### 2.2 Package Purposes
 
 | Package | Purpose | URL Path |
 |---------|---------|----------|
@@ -43,7 +106,7 @@ TrackMate/
 | **landing** | Landing page, authentication, account management | `/` (root) |
 | **shared** | Reusable components, contexts, hooks, and utilities | N/A (library) |
 
-### Academic Package Structure
+### 2.3 Academic Package Structure
 
 ```
 packages/academic/
@@ -72,7 +135,7 @@ packages/academic/
 └── vite.config.ts         # Vite configuration
 ```
 
-### Landing Package Structure
+### 2.4 Landing Package Structure
 
 ```
 packages/landing/
@@ -95,7 +158,7 @@ packages/landing/
 └── vite.config.ts         # Vite configuration
 ```
 
-### Shared Package Structure
+### 2.5 Shared Package Structure
 
 ```
 packages/shared/
@@ -117,7 +180,7 @@ packages/shared/
 └── styles/                # Shared CSS
 ```
 
-### Page Module Pattern
+### 2.6 Page Module Pattern
 
 Each page follows a consistent structure:
 
@@ -132,9 +195,9 @@ pages/<PageName>/
 
 ---
 
-## Technology Stack
+## 3. Technology Stack
 
-### Core Technologies
+### 3.1 Core Technologies
 
 | Technology | Version | Purpose |
 |------------|---------|---------|
@@ -145,7 +208,7 @@ pages/<PageName>/
 | **Firebase** | 12.8.0 | Authentication & Database |
 | **React Router DOM** | 7.9.6 | Client-Side Routing |
 
-### Additional Libraries
+### 3.2 Additional Libraries
 
 | Library | Package | Purpose |
 |---------|---------|---------|
@@ -159,9 +222,9 @@ pages/<PageName>/
 
 ---
 
-## Component Patterns
+## 4. Component Patterns
 
-### Hierarchical Component Structure
+### 4.1 Hierarchical Component Structure
 
 Components are **deeply nested** following a tree structure that mirrors the UI:
 
@@ -179,28 +242,36 @@ components/TodaysClasses/
             └── index.tsx
 ```
 
-### Import Order Convention
+### 4.2 Import Order Convention
 
 Imports must follow this strict order:
 
-1. React imports and third-party hooks first
-2. Context imports second
-3. `import type { ... }` for types
-4. General function imports like from utilities or auth functions
-5. Component imports — Components from `@shared` are imported first and then others from the current package
-6. Second to last, or last if the final one is not present, is color imports
-7. CSS file imports
+1. Imports from `react`
+2. Imports from `react-router-dom`
+3. Imports from contexts
+4. Imports from hooks — Third party first, @shared second, `@/app/hooks` third, and `@/pages` fourth
+5. `import type { ... }` for types
+6. General function imports like from utilities or auth functions — `@shared` first, `@/app` second
+7. Component imports — Components from `@shared` first, `@/app` second, `@/pages` third
+8. Always second to last, or last if the final import is not present, are color imports
+9. CSS file imports
 
 **Example:**
 
 ```tsx
 import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { useModal } from '@/app/contexts/ModalContext'
+import { useHover } from '@shared/hooks/ui/useHover'
+import { useCalendarGrid } from '@/pages/Calendar/useCalendarGrid'
 import type { TodaysClasses } from '@/pages/Dashboard/types'
-import { DASHBOARD } from '@/app/styles/colors'
+import { PriorityBadge } from '@/app/components/PriorityBadge'
+import { TodaysClassesHeader } from '@/pages/Dashboard/TodaysClasses/TodaysClassesHeader'
+import { CALENDAR } from '@/app/styles/colors'
+import './index.css'
 ```
 
-### Component Typing Pattern
+### 4.3 Component Typing Pattern
 
 Props are defined using **TypeScript namespaces** in `types/index.ts`. Namespaces mirror the component hierarchy exactly, and follow the comment and spacing convention shown in the example below:
 
@@ -223,8 +294,9 @@ export namespace TodaysClasses {
     }
 }
 ```
-**Note:** The spacing and comments are important for code readability and maintainability.
-Top level namespaces always have one blank line between each item within it. Items nested one level still follow that same rule. Items nested two levels deep or more should have no blank lines between them.
+* **Note:** The spacing and comments are important for code readability and maintainability.
+* Top level namespaces always have one blank line between each item within it. Items nested one level still follow that same rule. Items nested two levels deep or more should have no blank lines between them.
+* Components that take no props should *still* have their prop interface defined in the appropriate namespace, and the value should be `{ }`, with one space always in the middle of the two curly braces.
 
 Components reference their props like:
 
@@ -234,9 +306,9 @@ const ClassItem: React.FC<TodaysClasses.Body.ClassList.ClassItemProps> = ({ ... 
 
 ---
 
-## Route Configuration
+## 5. Route Configuration
 
-### Academic App Routes
+### 5.1 Academic App Routes
 
 **Location:** `packages/academic/app/App.tsx` and `packages/academic/app/config/paths.ts`
 
@@ -252,7 +324,7 @@ const ClassItem: React.FC<TodaysClasses.Body.ClassList.ClassItemProps> = ({ ... 
 | `/academic/dev-login` | DevLogin | Development-only login (DEV mode) |
 | `*` | NotFound | 404 page |
 
-### Landing App Routes
+### 5.2 Landing App Routes
 
 **Location:** `packages/landing/app/App.tsx`
 
@@ -268,7 +340,7 @@ const ClassItem: React.FC<TodaysClasses.Body.ClassList.ClassItemProps> = ({ ... 
 | `/auth-action` | ActionHandler | Firebase auth action handler |
 | `*` | NotFound | 404 page |
 
-### Centralized Route Configuration
+### 5.3 Centralized Route Configuration
 
 **Location:** `packages/academic/app/config/paths.ts`
 
@@ -298,14 +370,14 @@ export const PATHS = {
 
 ---
 
-## Color System
+## 6. Color System
 
-### Two-Layer Architecture
+### 6.1 Two-Layer Architecture
 
 1. **CSS Variables** (`colors.css`) - Theme-aware values (`:root.dark` / `:root.light`)
 2. **TypeScript Constants** (`colors.ts`) - Reference CSS variables and export page-specific color objects
 
-### Page-Specific Color Objects
+### 6.2 Page-Specific Color Objects
 
 Each page has its own color export that spreads `GLOBAL`:
 
@@ -320,7 +392,7 @@ export const CALENDAR = {
 }
 ```
 
-### Usage Pattern
+### 6.3 Usage Pattern
 
 Colors are applied via inline styles accessing these constants:
 
@@ -334,15 +406,15 @@ Colors are applied via inline styles accessing these constants:
 
 ---
 
-## Styling Patterns
+## 7. Styling Patterns
 
-### Hybrid Approach
+### 7.1 Hybrid Approach
 
 - **Tailwind CSS** for utility classes (spacing, flex, grid)
 - **Inline styles** for dynamic colors from the color system
 - **CSS classes** for complex/reusable styles (`.modal-btn`, `.toast-notification`)
 
-### Modal Styling Pattern
+### 7.2 Modal Styling Pattern
 
 Modals use CSS custom properties passed via inline styles:
 
@@ -359,9 +431,9 @@ Modals use CSS custom properties passed via inline styles:
 
 ---
 
-## State Management
+## 8. State Management
 
-### Data Persistence
+### 8.1 Data Persistence
 
 **Pattern:** Custom `useLocalStorage` hook with `useSyncExternalStore`
 
@@ -385,7 +457,7 @@ STORAGE_KEYS = {
 }
 ```
 
-### Context-Based State
+### 8.2 Context-Based State
 
 | Context | Location | Purpose |
 |---------|----------|---------|
@@ -394,7 +466,7 @@ STORAGE_KEYS = {
 | **ModalContext** | `packages/academic/app/contexts/ModalContext.tsx` | Modal management |
 | **ScheduleComponentsContext** | `packages/academic/app/contexts/ScheduleComponentsContext.tsx` | Schedule-type-specific components |
 
-### Modal State Pattern
+### 8.3 Modal State Pattern
 
 Modal management is centralized in ModalContext:
 
@@ -407,13 +479,11 @@ closeModal: () => void
 
 ---
 
-## Type Definitions
-
-### Core Types
+## 9. Type Definitions
 
 **Location:** `packages/academic/app/types/index.ts`
 
-#### Primitives
+### 9.1 Primitives
 
 ```typescript
 type Priority = 'High' | 'Medium' | 'Low'
@@ -425,7 +495,7 @@ type TermMode = 'Semesters Only' | 'Semesters With Quarters'
 type ScheduleType = 'alternating-ab' | 'none'
 ```
 
-#### Core Entities
+### 9.2 Core Entities
 
 ```typescript
 interface Assignment {
@@ -471,7 +541,7 @@ interface NoSchoolPeriod {
 }
 ```
 
-#### Academic Terms
+### 9.3 Academic Terms
 
 ```typescript
 interface AcademicTerm {
@@ -499,7 +569,7 @@ interface Quarter {
 }
 ```
 
-#### Schedule Configuration
+### 9.4 Schedule Configuration
 
 ```typescript
 interface Schedules {
@@ -532,9 +602,9 @@ interface DaySchedule {
 
 ---
 
-## Custom Hooks
+## 10. Custom Hooks
 
-### Entity Hooks
+### 10.1 Entity Hooks
 
 **Location:** `packages/academic/app/hooks/entities/`
 
@@ -585,7 +655,7 @@ export const useAssignments = () => {
 }
 ```
 
-### UI Hooks
+### 10.2 UI Hooks
 
 **Location:** `packages/shared/hooks/` and `packages/academic/app/hooks/ui/`
 
@@ -601,7 +671,7 @@ const { isHovered, hoverProps } = useHover()
 <div {...hoverProps} style={{ backgroundColor: isHovered ? BG_HOVER : BG_DEFAULT }}>
 ```
 
-### Data Hooks
+### 10.3 Data Hooks
 
 **Location:** `packages/academic/app/hooks/data/`
 
@@ -609,7 +679,7 @@ const { isHovered, hoverProps } = useHover()
 |------|---------|
 | `useLocalStorage` | Persistent state with localStorage, cross-tab sync |
 
-### Page-Level Hooks
+### 10.4 Page-Level Hooks
 
 Feature-specific hooks live in `pages/<Page>/hooks/`:
 
@@ -620,9 +690,9 @@ Feature-specific hooks live in `pages/<Page>/hooks/`:
 
 ---
 
-## Utility Functions
+## 11. Utility Functions
 
-### Shared Utilities
+### 11.1 Shared Utilities
 
 **Location:** `packages/shared/lib/`
 
@@ -632,7 +702,7 @@ Feature-specific hooks live in `pages/<Page>/hooks/`:
 | `firebase.ts` | Firebase exports | Firebase app, auth, firestore initialization |
 | `id.ts` | `generateId()` | Unique ID generation (random + timestamp) |
 
-### Academic App Utilities
+### 11.2 Academic App Utilities
 
 **Location:** `packages/academic/app/lib/`
 
@@ -646,9 +716,9 @@ Feature-specific hooks live in `pages/<Page>/hooks/`:
 
 ---
 
-## Build & Development
+## 12. Build & Development
 
-### Scripts
+### 12.1 Scripts
 
 **Location:** Root `package.json`
 
@@ -665,7 +735,7 @@ Feature-specific hooks live in `pages/<Page>/hooks/`:
 }
 ```
 
-### Vite Configuration
+### 12.2 Vite Configuration
 
 Both packages use Vite with:
 - React plugin
@@ -680,7 +750,7 @@ manualChunks: {
 }
 ```
 
-### CI/CD
+### 12.3 CI/CD
 
 **Location:** `.github/workflows/firebase-hosting-merge.yml`
 
@@ -688,7 +758,7 @@ manualChunks: {
 - Runs `npm ci` and builds both workspaces
 - Deploys to Firebase Hosting live channel
 
-### Firebase Hosting
+### 12.4 Firebase Hosting
 
 **Location:** `firebase.json`
 
@@ -697,9 +767,9 @@ manualChunks: {
 
 ---
 
-## Key Features
+## 13. Key Features
 
-### Dashboard
+### 13.1 Dashboard
 
 **Location:** `packages/academic/pages/Dashboard/`
 
@@ -707,7 +777,7 @@ manualChunks: {
 - **Today's Events** - Events scheduled for today
 - **Today's Classes** - Classes based on current schedule rotation
 
-### Calendar
+### 13.2 Calendar
 
 **Location:** `packages/academic/pages/Calendar/`
 
@@ -717,7 +787,7 @@ manualChunks: {
 - Day type display (A/B day)
 - No-school period visualization
 
-### My Assignments (Kanban Board)
+### 13.3 My Assignments (Kanban Board)
 
 **Location:** `packages/academic/pages/My Assignments/`
 
@@ -726,7 +796,7 @@ manualChunks: {
 - Collapsible columns on mobile
 - Assignment cards with priority, class color, due date
 
-### My Classes
+### 13.4 My Classes
 
 **Location:** `packages/academic/pages/My Classes/`
 
@@ -734,7 +804,7 @@ manualChunks: {
 - CRUD operations via modals
 - Grid layout
 
-### My Schedule
+### 13.5 My Schedule
 
 **Location:** `packages/academic/pages/My Schedule/`
 
@@ -742,7 +812,7 @@ manualChunks: {
 - Alternating A/B day schedule table
 - Class assignment per period per day type
 
-### Settings
+### 13.6 Settings
 
 **Location:** `packages/academic/pages/Settings/`
 
@@ -752,7 +822,7 @@ manualChunks: {
 - **Term Settings** - Academic term management (semesters/quarters)
 - **Danger Zone** - Bulk delete operations
 
-### Authentication (Landing)
+### 13.7 Authentication (Landing)
 
 **Location:** `packages/landing/pages/`
 
@@ -762,7 +832,7 @@ manualChunks: {
 - Email verification
 - Account management (profile, security, linked accounts, data deletion)
 
-### Shared Modal System
+### 13.8 Shared Modal System
 
 **Location:** `packages/shared/components/modal/`
 
@@ -774,21 +844,58 @@ Comprehensive modal component library:
 
 ---
 
-## Key Conventions Summary
+## 14. Key Conventions Summary
 
-| Pattern | Convention |
-|---------|------------|
-| **Package organization** | Monorepo with `academic`, `landing`, `shared` packages |
-| **Folder naming** | CamelCase for pages, nested `components/types/hooks` |
-| **Component files** | `index.tsx` or `ComponentName.tsx` |
-| **Type imports** | `import type { ... } from '@/pages/.../types'` |
-| **Color usage** | Page-specific constants (`DASHBOARD`, `CALENDAR`, etc.) |
-| **CSS variables** | Use `var(--...)` referenced through colors.ts |
-| **State access** | Entity hooks for domain data, contexts for global state |
-| **Data persistence** | `useLocalStorage` hook with cross-tab sync |
-| **Props typing** | Namespaced interfaces mirroring component tree |
-| **Path aliases** | `@/` maps to `app/` (academic/landing) or package root (shared) |
-| **Route paths** | Centralized in `app/config/paths.ts` |
-| **Entity hooks** | Entity-specific hooks in `app/hooks/entities/` |
-| **Authentication** | Firebase Auth via shared AuthContext |
-| **Notifications** | Shared ToastContext |
+### Project Structure
+
+| Area | Convention |
+|------|------------|
+| Monorepo | Three packages: `academic`, `landing`, `shared` using npm workspaces |
+| Path Aliases | `@/` → `app/` in academic/landing; `@shared/` → shared package |
+| Page Folders | CamelCase names with nested `components/`, `hooks/`, `types/` |
+| Component Files | `index.tsx` for main component, `ComponentName.tsx` for siblings |
+
+### Components & Types
+
+| Area | Convention |
+|------|------------|
+| Props Typing | Namespaced interfaces in `types/index.ts` mirroring component tree |
+| Type Imports | `import type { ... } from '@/pages/.../types'` |
+| Import Order | React → Contexts → Types → Utils → Components (`@shared` first) → Colors → CSS |
+| Component Nesting | Deeply nested folders matching UI hierarchy |
+
+### Styling
+
+| Area | Convention |
+|------|------------|
+| Color System | Two-layer: CSS variables (`colors.css`) + TypeScript constants (`colors.ts`) |
+| Page Colors | Page-specific exports spreading `GLOBAL` (e.g., `DASHBOARD`, `CALENDAR`) |
+| Color Application | Inline styles referencing TypeScript constants |
+| Utilities | Tailwind for layout/spacing, inline styles for dynamic colors |
+
+### State & Data
+
+| Area | Convention |
+|------|------------|
+| Domain Data | Entity hooks in `app/hooks/entities/` (e.g., `useAssignments`, `useClasses`) |
+| Persistence | `useLocalStorage` hook with cross-tab sync via storage events |
+| Global State | Contexts: `AuthContext`, `ToastContext`, `ModalContext` |
+| Storage Keys | Centralized in `app/config/storageKeys.ts` |
+
+### Routing & Auth
+
+| Area | Convention |
+|------|------------|
+| Route Config | Centralized in `app/config/paths.ts` with `ROUTES` and `PATHS` exports |
+| Auth Provider | Firebase Auth via shared `AuthContext` |
+| Protected Routes | `RequireAuth` component wrapper |
+| Action Handling | `/auth-action` route handles Firebase email actions (verify, reset) |
+
+### Development
+
+| Area | Convention |
+|------|------------|
+| Dev Commands | `npm run dev:academic` / `npm run dev:landing` |
+| Build | `npm run build:all` builds both packages and `npm run build:academic` / `npm run build:landing` build each one separately |
+| Linting | `npm run lint:academic` / `npm run lint:landing` |
+| Deploy | `npm run deploy` builds all packages and deploys to Firebase Hosting |
