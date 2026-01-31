@@ -1,5 +1,17 @@
 {
 	"projects": {
 		"default": "trackmate-fb7cd"
+	},
+	"targets": {
+		"trackmate-fb7cd": {
+			"hosting": {
+				"production": [
+					"trackmate-fb7cd"
+				],
+				"dev": [
+					"dev-trackmate-fb7cd"
+				]
+			}
+		}
 	}
 }
